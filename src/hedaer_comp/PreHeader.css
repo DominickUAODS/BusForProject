@@ -8,11 +8,10 @@
     background-color: rgb(45, 209, 255);
     display: flex;
     align-items: center;
+    z-index: 10000;
     justify-content: space-between;
-    z-index: 1000; 
-    padding:  0 20% 0 20%;
-    font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
-    line-height: 1.42857;
+    padding:  0 17% 0 17%;
+
 }
 
 .logo-img{

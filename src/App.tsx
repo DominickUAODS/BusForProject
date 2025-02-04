@@ -1,13 +1,13 @@
 
 import './App.css'
-import PreHeader from './hedaer_comp/PreHeader'
+import Header from './hedaer_comp/Header'
 
 function App() {
 
 
   return (
     <>
-      <PreHeader/>
+      <Header/>
     </>
   )
 }
