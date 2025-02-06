@@ -1,0 +1,152 @@
+.partners-wrapper{
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+.responsive-cont{
+    padding: 0 32px;
+    width: 100%;
+    max-width: 1044px;
+    margin: 0 auto;
+}
+
+.partners {
+    min-height: 64px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.partners .ua-favorit {
+    width: 62px;
+}
+
+.partners .ua-prize {
+    width: 84px;
+}
+
+.partners .arda-tour, .partners .biomet, .partners .ecolines, .partners .eurolines, .partners .halva, .partners .krat-s, .partners .leo-express, .partners .mt-bank, .partners .neobus, .partners .polonus, .partners .regabus, .partners .regiojet, .partners .sindbad, .partners .sovest, .partners .tinkoff, .partners .union-ivkoni, .partners .vuso {
+    width: 90px;
+}
+
+.partners .maestro {
+    width: 45px;
+}
+
+.partners .mastercard {
+    width: 43px;
+}
+
+.partners .be-paid, .partners .visa {
+    width: 58px;
+}
+
+.partners__item img {
+    width: 100%;
+}
+
+.partners--mobile {
+    display: none;
+}
+
+.footer {
+    padding-top: 30px;
+    padding-bottom: 10px;
+    font-size: 12px;
+    background-color: #fff;
+}
+
+.row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.footer__list li {
+    margin-bottom: 12px;
+}
+
+.footer .text-muted{
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    color: #a7a7a7;
+}
+
+.footer__list a {
+    color: inherit;
+    font-size: 14px;
+    line-height: 18px;
+    text-decoration: none;
+}
+
+.footer__interactive {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    float: right;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.footer__mobile-app {
+    padding-bottom: 27px;
+}
+
+.footer__block {
+    width: 100%;
+}
+
+.icon {
+    display: inline-block;
+    line-height: normal;
+}
+
+.footer__social-container .icon {
+    height: 24px;
+    margin-right: 30px;
+}
+
+.footer__social-container .icon-facebook {
+    background: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/facebook-icon-482e5cc2c71585fa0c8ff1c89670f1ef.svg) no-repeat;
+    width: 11.2px;
+}
+
+.footer__social-container .icon-telegram {
+    background: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/telegram-icon-a2e04f82d433d04319b5b8fbd99e160e.svg) no-repeat;
+    width: 28.2px;
+}
+
+.footer__social-container .icon-twitter {
+    background: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/twitter-icon-d2bbe3f055ce48ca6b6ee037a6a383b5.svg) no-repeat;
+    width: 29.1px;
+}
+
+.footer__legal {
+    font-size: 12px;
+    background-color: #fff;
+    padding: 15px 0;
+}
+
+.footer__legal .info-cookie {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    color: #a7a7a7;
+    margin-bottom: 10px;
+}
+
+.footer__legal a{
+
+        color: #f9253f;
+        text-decoration: none;
+
+}
+
+.footer__legal p {
+    color: #a7a7a7;
+}

@@ -1,7 +1,7 @@
 import "./IndexComp.css";
 
 
-export default function Header() {
+export default function IndexComp() {
 
 	return (
         <div className="index-cont">
