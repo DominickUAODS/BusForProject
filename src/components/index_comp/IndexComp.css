@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+.index-cont{
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.index-block-v0{
+    margin-top: 30px;
+    padding-left: 17%;
+}
+
+.index-block-v0-v0{
+    padding: 0px 16px;
+}
+
+.index-block-v0-v0-h1{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: black;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.i-b-v0-v0-s1{
+    display: block;
+    font-size: 38px;
+    text-align: left;
+}
+
+.i-b-v0-v0-s2{
+    display: block;
+    margin-top: 8px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.i-b-v1{
+    padding-top: 48px;
+    padding-bottom: 48px;
+    background-color: white;
+}
+
+.i-b-v1-v0{
+    width: 100%;
+    max-width: 1044px;
+    padding: 0px 32px;
+    margin: 0px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.i-b-v1-v0-v0,
+.i-b-v1-v0-v1,
+.i-b-v1-v0-v2,
+.i-b-v1-v0-v3{
+    flex-basis: 25%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.i-clock,
+.i-road,
+.i-card,
+.i-tckt{
+    margin-bottom: 8px;
+    width: 45px;
+    height: 45px;
+    margin-right: 16px;
+    background-image: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/Advantages/clock-f5613906f2f35858502db202ede5e2f1.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.i-road{
+    background-image: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/Advantages/road-f33333248012df4ea53c105637f62e0c.svg);
+}
+
+.i-card{
+    background-image: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/Advantages/card-fbe8baced1196ba995e2fb6defe1a76d.svg);
+}
+
+.i-tckt{
+    background-image: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/Advantages/return_ticket-9865f1c8d69af87172356b8e175a6285.svg);
+}
+
+.i-b-v1-v0-v0-h5,
+.i-b-v1-v0-v1-h5,
+.i-b-v1-v0-v2-h5,
+.i-b-v1-v0-v3-h5{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.i-b-v1-v0-v0-p,
+.i-b-v1-v0-v1-p,
+.i-b-v1-v0-v2-p,
+.i-b-v1-v0-v3-p{
+    font-size: 16px;
+}
+
+.i-b-v2-v0,
+.i-b-v3-v0{
+    width: 100%;
+    max-width: 1044px;
+    padding: 0px 32px;
+    margin: 0px auto;
+}
+
+.i-b-v2-v0-seo{
+    background-color: #fff;
+}
+
+.i-b-v2-v0-seo .h3{
+    padding-top: 50px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: 400
+}
+
+p{
+    margin: 0 0 10px;
+}
+
+.i-b-v3{
+    padding-top: 50px;
+    padding-bottom: 35px;
+    background: white;
+}
+
+.i-b-v3-v0-v0{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.i-b-v3-v0-v0-v1,
+.i-b-v3-v0-v0-v2,
+.i-b-v3-v0-v0-v3,
+.i-b-v3-v0-v0-v4{
+    flex: 1 1 0%;
+    padding: 0px 10px;
+}
+
+.i-b-v3-v0-v0-v1-a{
+    color: rgb(51, 51, 51);
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.i-b-v3-v0-v0-v1-ul,
+.i-b-v3-v0-v0-v2-ul,
+.i-b-v3-v0-v0-v3-ul,
+.i-b-v3-v0-v0-v4-ul{
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+    list-style-type: none;
+}
+
+.i-b-v3-v0-v0-v1-li,
+.i-b-v3-v0-v0-v2-li,
+.i-b-v3-v0-v0-v3-li,
+.i-b-v3-v0-v0-v4-li{
+    margin: 7px 0px;
+}
+
+.i-b-v3-v0-v0-v1-a2,
+.i-b-v3-v0-v0-v2-a2,
+.i-b-v3-v0-v0-v3-a2,
+.i-b-v3-v0-v0-v4-a2{
+    color: rgb(51, 51, 51);
+    text-decoration: none;
+    font-weight: 490;
+}

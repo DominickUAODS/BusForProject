@@ -1,6 +1,7 @@
 
 import './App.css'
-import Header from './hedaer_comp/Header'
+import Header from './components/hedaer_comp/Header'
+import IndexComp from './components/index_comp/IndexComp'
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <Header/>
+      <IndexComp/>
     </>
   )
 }

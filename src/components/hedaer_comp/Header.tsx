@@ -1,6 +1,8 @@
 import "./Header.css";
 import PreHeader from "./PreHeader";
-import logo from "../assets/images/redirection-logo-bbc.svg"; 
+import logo from "../../assets/images/redirection-logo-bbc.svg";
+
+
 
 
 export default function Header() {

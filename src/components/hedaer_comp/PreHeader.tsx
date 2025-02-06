@@ -1,6 +1,6 @@
 
 import "./PreHeader.css";
-import logo from "../assets/images/mainLogo.svg"; 
+import logo from "../../assets/images/mainLogo.svg"; 
 export default function PreHeader() {
 
 	return (
