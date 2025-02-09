@@ -30,8 +30,8 @@ class Passenger(models.Model):
         db_table = 'passengers'
 
 class Ticket(models.Model):
-    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
-    race = models.ForeignKey(Race, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(Passenger, on_delete=models.PROTECT)
+    race = models.ForeignKey(Race, on_delete=models.SET_NULL, null=True)
     is_used = models.BooleanField(default=False)
 
     class Meta:
