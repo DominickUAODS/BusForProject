@@ -27,7 +27,7 @@ export default function Header() {
 					<div className="ticket-form">
 						<div className="field-from">
 							<div>
-								<div className="field-from-v1">
+								<div className="field-from-v1" tabIndex={0}>
 									<div className="field-from-info"> {/*from for form*/}
 										<label className="field-from-info-label">Звідки</label> 
 										<span className="span-input-field-from">

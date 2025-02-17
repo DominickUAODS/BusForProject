@@ -1,0 +1,198 @@
+.burger-menu-comp{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1000;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    overflow: scroll;
+    background-color: rgb(255, 255, 255);
+    opacity: 1;
+    transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+    transform: translateX(0px);
+    padding-right: 16px;
+}
+
+
+.b-m-c-v0{
+    height: 100%;
+    overflow: scroll;
+}
+
+.b-m-c-v0-v1{
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.burger-menu-header-info{
+
+    max-height: 61px;
+    width: 100%;
+    padding: 19px 12px;
+    background: rgb(255, 255, 255);
+    display: flex;
+    flex-flow: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 18px;
+    border-bottom: 1px solid rgb(233, 233, 233);
+
+}
+
+.b-m-h-i-img img{
+    width: 116px;
+    vertical-align: middle;
+    border: 0;
+}
+
+
+.b-m-h-i-svg{
+    padding-right: 28px;
+    top: 0px;
+    right: 0px;
+    margin-top: 6px;
+    position: absolute;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+}
+
+
+.b-m-c-i-0{
+    border-top: 0px;
+    padding: 24px 16px;
+}
+
+.eCQlBU,
+.support-a {
+    position: relative;
+    display: flex;
+    margin-bottom: 22px;
+    font-weight: 600;
+    color: rgb(66, 69, 67);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.support-a,
+.eCQlBU,
+.HiCWR,
+.bAHAae
+:hover{
+    color: rgb(66, 69, 67) !important;
+}
+
+.byOqhw {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 22px;
+    height: inherit;
+    margin-right: 6px;
+    text-align: left;
+}
+
+.fqMibr {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/ui-kit/icons/search-4012e5be6d0672cfc978b01a64379bf6.svg) center center no-repeat;
+}
+
+.cyGrlG {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/ui-kit/icons/support-cec75e1cbae3037cb333cf78bbe409a2.svg) center center no-repeat;
+}
+
+.kzVjtg {
+    position: absolute;
+    top: calc(50% - 8px);
+    right: 0px;
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/ui-kit/icons/arrow-bottom-small-5482f170ef587763854b9a8772a3667e.svg) no-repeat;
+    transition: transform 0.3s ease 0s;
+}
+
+.ReactCollapse--collapse {
+    transition: height 0.3s ease-in-out, overflow 0.3s ease-in-out;
+}
+
+.ReactCollapse--collapse.closed {
+    height: 0;
+    overflow: hidden;
+}
+
+.ReactCollapse--collapse.open {
+    height: auto;
+    overflow: initial;
+    padding-bottom: 22px;
+}
+
+.kOPHFp .ReactCollapse--content {
+    padding-bottom: 22px;
+}
+
+.czFZVj {
+    padding-left: 12px;
+    font-size: 18px;
+    line-height: 42px;
+}
+
+.iygtxu {
+    display: flex;
+    color: rgb(66, 69, 67);
+    text-decoration: none;
+}
+
+.section-header__dropdown-container__content-block__image {
+    width: 24px;
+}
+
+.iygtxu img {
+    width: 20px;
+    height: 20px;
+}
+
+img {
+    vertical-align: middle;
+}
+
+img {
+    border: 0;
+}
+
+.iaTXLO {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/packs/_/assets/javascripts/new/app/react/components/ui-kit/icons/passenger-bed43e58f408719289170f60ef05b0fc.svg) center center no-repeat;
+}
+
+
+.hyGwuC {
+    padding: 24px 16px;
+    border-top: 1px solid rgb(229, 229, 229);
+}
+
+.bAHAae {
+    display: flex;
+    width: 100%;
+    padding-bottom: 20px;
+    color: rgb(66, 69, 67);
+    text-decoration: none;
+}
+
+.HiCWR {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    color: rgb(66, 69, 67);
+    text-decoration: none;
+}
