@@ -1,0 +1,64 @@
+
+.pre-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    height: 80px;
+    background-color: rgb(45, 209, 255);
+    display: flex;
+    align-items: center;
+    z-index: 10000;
+    justify-content: space-between;
+    padding:  0 17% 0 17%;
+
+}
+
+.logo-img{
+    display: inline-block;
+    width: 116px;
+    vertical-align: middle;
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+}
+
+.support, .account{
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.15s ease-out 0s;
+    margin-right: 20px;
+}
+
+.support span{
+    margin-left: 8px;
+}
+
+.account span{
+    margin-left: 8px;
+}
+
+.language-switch{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 78px;
+    height: 36px;
+}
+
+.language-switch-box{
+    display: flex;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px 16px;
+    cursor: pointer;
+    border-radius: 18px;
+}
