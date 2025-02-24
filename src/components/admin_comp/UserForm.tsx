@@ -1,6 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 
 // Типизация для данных пользователя
 interface User {
@@ -24,14 +23,20 @@ function UserForm() {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			axios
-				.get(`/api/users/${id}`)
+			fetch(`/api/users/${id}`)
 				.then((response) => {
-					setUser(response.data);
+					if (!response.ok) {
+						// If response is not ok, throw an error
+						throw new Error("Failed to fetch user data.");
+					}
+					return response.json(); // Parse response JSON
+				})
+				.then((data) => {
+					setUser(data);
 					setLoading(false);
 				})
 				.catch((error) => {
-					setError(error.response ? error.response.data.message : error.message);
+					setError(error instanceof Error ? error.message : "An error occurred");
 					setLoading(false);
 				});
 		}
@@ -51,16 +56,24 @@ function UserForm() {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			if (id) {
-				// Update user if id exists
-				await axios.put(`/api/users/${id}`, user);
-			} else {
-				// Create new user
-				await axios.post("/api/users", user);
+			const requestOptions: RequestInit = {
+				method: id ? "PUT" : "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(user),
+			};
+
+			const url = id ? `/api/users/${id}` : "/api/users";
+
+			const response = await fetch(url, requestOptions);
+			if (!response.ok) {
+				// If the response status is not OK, throw an error
+				throw new Error("Failed to save user data.");
 			}
 			navigate("/users");  // Redirect after submit
 		} catch (error) {
-			setError(error.response ? error.response.data.message : error.message);
+			setError(error instanceof Error ? error.message : "An error occurred");
 			setLoading(false);
 		}
 	};

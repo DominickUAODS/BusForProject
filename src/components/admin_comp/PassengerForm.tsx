@@ -1,6 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios, { AxiosError } from "axios";
 
 // Типизация данных для пассажира
 interface Passenger {
@@ -24,14 +23,19 @@ function PassengerForm() {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			axios
-				.get(`/api/passengers/${id}`)
+			fetch(`/api/passengers/${id}`)
 				.then((response) => {
-					setPassenger(response.data);
+					if (!response.ok) {
+						throw new Error(`Error: ${response.statusText}`);
+					}
+					return response.json();
+				})
+				.then((data) => {
+					setPassenger(data);
 					setLoading(false);
 				})
-				.catch((error: AxiosError) => {
-					setError(error.response ? error.response.data.message : error.message);
+				.catch((error) => {
+					setError(error.message);
 					setLoading(false);
 				});
 		}
@@ -51,16 +55,21 @@ function PassengerForm() {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			if (id) {
-				// Update passenger if id exists
-				await axios.put(`/api/passengers/${id}`, passenger);
-			} else {
-				// Create new passenger
-				await axios.post("/api/passengers", passenger);
+			const requestOptions: RequestInit = {
+				method: id ? "PUT" : "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(passenger),
+			};
+
+			const response = await fetch(`/api/passengers/${id || ""}`, requestOptions);
+
+			if (!response.ok) {
+				throw new Error(`Error: ${response.statusText}`);
 			}
+
 			navigate("/passengers");  // Redirect after submit
-		} catch (error: AxiosError) {
-			setError(error.response ? error.response.data.message : error.message);
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 			setLoading(false);
 		}
 	};
@@ -70,10 +79,15 @@ function PassengerForm() {
 		if (id) {
 			setLoading(true);
 			try {
-				await axios.delete(`/api/passengers/${id}`);
+				const response = await fetch(`/api/passengers/${id}`, { method: "DELETE" });
+
+				if (!response.ok) {
+					throw new Error(`Error: ${response.statusText}`);
+				}
+
 				navigate("/passengers");  // Redirect after deletion
-			} catch (error: AxiosError) {
-				setError(error.response ? error.response.data.message : error.message);
+			} catch (error) {
+				setError(error instanceof Error ? error.message : "An unexpected error occurred");
 				setLoading(false);
 			}
 		}

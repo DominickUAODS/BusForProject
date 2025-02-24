@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Импортируем хук для использования контекста аутентификации
+import { useAuth } from '../../App'; // Импортируем хук для использования контекста аутентификации
 
 const LoginPage = () => {
 	const { login } = useAuth(); // Получаем функцию login из контекста

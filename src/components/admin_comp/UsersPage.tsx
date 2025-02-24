@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 interface User {
 	_id: string;
@@ -15,14 +14,20 @@ const UsersPage = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		axios
-			.get("/api/users")
+		fetch("/api/users")
 			.then((response) => {
-				setUsers(response.data);
+				if (!response.ok) {
+					// If the response is not OK, throw an error
+					throw new Error("Failed to load users.");
+				}
+				return response.json(); // Parse the response as JSON
+			})
+			.then((data) => {
+				setUsers(data);
 				setLoading(false);
 			})
 			.catch((error) => {
-				setError("Failed to load users.");
+				setError(error instanceof Error ? error.message : "An error occurred");
 				setLoading(false);
 			});
 	}, []);

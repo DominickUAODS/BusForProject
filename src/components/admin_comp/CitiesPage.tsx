@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 interface City {
 	_id: string;
@@ -14,13 +13,18 @@ const CitiesPage = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		axios
-			.get("/api/cities")
+		fetch("/api/cities")
 			.then((response) => {
-				setCities(response.data);
+				if (!response.ok) {
+					throw new Error("Failed to fetch cities");
+				}
+				return response.json();
+			})
+			.then((data) => {
+				setCities(data);
 				setLoading(false);
 			})
-			.catch((error) => {
+			.catch(() => {
 				setError("Failed to load cities.");
 				setLoading(false);
 			});

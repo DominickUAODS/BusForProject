@@ -13,9 +13,9 @@ import CityForm from "./components/admin_comp/CityForm";
 import RaceForm from "./components/admin_comp/RaceForm";
 import PassengerForm from "./components/admin_comp/PassengerForm";
 import TicketForm from "./components/admin_comp/TicketForm";
-import FooterComp from './components/footer_comp/FooterComp'
-import Header from './components/hedaer_comp/Header'
-import IndexComp from './components/index_comp/IndexComp'
+import FooterComp from './components/footer_comp/FooterComp';
+import Header from './components/hedaer_comp/Header';
+import IndexComp from './components/index_comp/IndexComp';
 
 // Типизация для контекста аутентификации
 interface AuthContextType {
@@ -23,18 +23,18 @@ interface AuthContextType {
 	role: "admin" | "user" | null;
 	login: (role: "admin" | "user") => void;
 	logout: () => void;
-}
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Хук для использования контекста аутентификации
-export function useAuth() {
+export function useAuth(): AuthContextType {
 	const context = useContext(AuthContext);
 	if (!context) {
 		throw new Error("useAuth must be used within an AuthProvider");
 	}
 	return context;
-}
+};
 
 // Компонент контекста аутентификации
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -62,13 +62,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	};
 
 	return <AuthContext.Provider value={{ ...authData, login, logout }}>{children}</AuthContext.Provider>;
-}
+};
 
 // Типы для маршрутов
 interface PrivateRouteProps {
 	children: ReactNode;
 	requiredRole?: "admin"; // Необязательный параметр для роли администратора
-}
+};
 
 // Компонент для защиты маршрутов
 function PrivateRoute({ children, requiredRole }: PrivateRouteProps) {
@@ -83,7 +83,7 @@ function PrivateRoute({ children, requiredRole }: PrivateRouteProps) {
 	}
 
 	return <>{children}</>;
-}
+};
 
 const queryClient = new QueryClient();
 
@@ -98,7 +98,7 @@ function App() {
 						<Route path="/login" element={<LoginPage />} />
 
 						{/* Основные страницы */}
-						<Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+						<Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 						<Route path="/cities" element={<PrivateRoute><CitiesPage /></PrivateRoute>} />
 						<Route path="/races" element={<PrivateRoute><RacesPage /></PrivateRoute>} />
 						<Route path="/passengers" element={<PrivateRoute><PassengersPage /></PrivateRoute>} />
@@ -125,6 +125,6 @@ function App() {
 			</AuthProvider>
 		</QueryClientProvider>
 	);
-}
+};
 
 export default App;

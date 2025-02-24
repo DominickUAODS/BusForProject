@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 interface Race {
 	_id: string;
@@ -15,14 +14,19 @@ const RacesPage = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		axios
-			.get("/api/races")
+		fetch("/api/races")
 			.then((response) => {
-				setRaces(response.data);
+				if (!response.ok) {
+					throw new Error("Failed to load races.");
+				}
+				return response.json();
+			})
+			.then((data) => {
+				setRaces(data);
 				setLoading(false);
 			})
 			.catch((error) => {
-				setError("Failed to load races.");
+				setError(error.message);
 				setLoading(false);
 			});
 	}, []);

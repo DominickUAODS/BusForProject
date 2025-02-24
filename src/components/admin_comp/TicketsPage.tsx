@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 interface Ticket {
 	_id: string;
@@ -15,17 +14,23 @@ const TicketsPage = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		axios
-			.get("/api/tickets")
+		fetch("/api/tickets")
 			.then((response) => {
-				setTickets(response.data);
-				setLoading(false);
+				if (!response.ok) {
+					// If the response status is not OK (200-299), throw an error
+					throw new Error("Failed to load tickets.");
+				}
+				return response.json();  // Parse the JSON data from the response
+			})
+			.then((data) => {
+				setTickets(data);  // Set the tickets data
+				setLoading(false);  // Turn off loading
 			})
 			.catch((error) => {
-				setError("Failed to load tickets.");
-				setLoading(false);
+				setError(error instanceof Error ? error.message : "An unexpected error occurred");
+				setLoading(false);  // Turn off loading even if there's an error
 			});
-	}, []);
+	}, []); // Empty dependency array to run the effect only once on component mount
 
 	if (loading) return <div>Loading tickets...</div>;
 	if (error) return <div style={{ color: "red" }}>{error}</div>;

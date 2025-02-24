@@ -1,6 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios, { AxiosError } from "axios";
 
 // Типизация для данных города
 interface City {
@@ -22,14 +21,19 @@ function CityForm() {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			axios
-				.get(`/api/cities/${id}`)
+			fetch(`/api/cities/${id}`)
 				.then((response) => {
-					setCity(response.data);
+					if (!response.ok) {
+						throw new Error("Failed to fetch city");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					setCity(data);
 					setLoading(false);
 				})
 				.catch((error) => {
-					setError(error.response ? error.response.data.message : error.message);
+					setError(error.message);
 					setLoading(false);
 				});
 		}
@@ -49,16 +53,19 @@ function CityForm() {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			if (id) {
-				// Update city if id exists
-				await axios.put(`/api/cities/${id}`, city);
-			} else {
-				// Create new city
-				await axios.post("/api/cities", city);
+			const response = await fetch(id ? `/api/cities/${id}` : "/api/cities", {
+				method: id ? "PUT" : "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(city),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to save city");
 			}
+
 			navigate("/cities");  // Redirect after submit
-		} catch (error: AxiosError) {
-			setError(error.response ? error.response.data.message : error.message);
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "Unknown error");
 			setLoading(false);
 		}
 	};
@@ -68,10 +75,13 @@ function CityForm() {
 		if (id) {
 			setLoading(true);
 			try {
-				await axios.delete(`/api/cities/${id}`);
+				const response = await fetch(`/api/cities/${id}`, { method: "DELETE" });
+				if (!response.ok) {
+					throw new Error("Failed to delete city");
+				}
 				navigate("/cities");  // Redirect after deletion
-			} catch (error: AxiosError) {
-				setError(error.response ? error.response.data.message : error.message);
+			} catch (error) {
+				setError(error instanceof Error ? error.message : "Unknown error");
 				setLoading(false);
 			}
 		}

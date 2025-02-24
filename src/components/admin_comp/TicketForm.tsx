@@ -1,6 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios, { AxiosError } from "axios";
 
 // Типизация данных для билета
 interface Ticket {
@@ -11,7 +10,7 @@ interface Ticket {
 
 function TicketForm() {
 	const navigate = useNavigate();
-	const { id } = useParams<{ id?: string }>();  // id может быть строкой или undefined для нового элемента
+	const { id } = useParams<{ id?: string }>(); // id может быть строкой или undefined для нового элемента
 	const [ticket, setTicket] = useState<Ticket>({
 		raceId: "",
 		passengerId: "",
@@ -24,14 +23,19 @@ function TicketForm() {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			axios
-				.get(`/api/tickets/${id}`)
+			fetch(`/api/tickets/${id}`)
 				.then((response) => {
-					setTicket(response.data);
+					if (!response.ok) {
+						throw new Error("Failed to fetch ticket data.");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					setTicket(data);
 					setLoading(false);
 				})
-				.catch((error: AxiosError) => {
-					setError(error.response ? error.response.data.message : error.message);
+				.catch((error) => {
+					setError(error.message);
 					setLoading(false);
 				});
 		}
@@ -50,19 +54,27 @@ function TicketForm() {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
+		const requestMethod = id ? "PUT" : "POST";
+		const url = id ? `/api/tickets/${id}` : "/api/tickets";
+
 		try {
-			if (id) {
-				// Update ticket if id exists
-				await axios.put(`/api/tickets/${id}`, ticket);
-			} else {
-				// Create new ticket
-				await axios.post("/api/tickets", ticket);
+			const response = await fetch(url, {
+				method: requestMethod,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(ticket),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to save ticket.");
 			}
-			navigate("/tickets");  // Redirect after submit
-		} catch (error: AxiosError) {
-			setError(error.response ? error.response.data.message : error.message);
+
+			navigate("/tickets"); // Redirect after submit
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 			setLoading(false);
-		}
+		  }
 	};
 
 	// Handle ticket deletion
@@ -70,10 +82,17 @@ function TicketForm() {
 		if (id) {
 			setLoading(true);
 			try {
-				await axios.delete(`/api/tickets/${id}`);
-				navigate("/tickets");  // Redirect after deletion
-			} catch (error: AxiosError) {
-				setError(error.response ? error.response.data.message : error.message);
+				const response = await fetch(`/api/tickets/${id}`, {
+					method: "DELETE",
+				});
+
+				if (!response.ok) {
+					throw new Error("Failed to delete ticket.");
+				}
+
+				navigate("/tickets"); // Redirect after deletion
+			} catch (error) {
+				setError(error instanceof Error ? error.message : "An unexpected error occurred");
 				setLoading(false);
 			}
 		}

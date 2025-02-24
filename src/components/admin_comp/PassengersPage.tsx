@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 interface Passenger {
 	_id: string;
@@ -15,14 +14,19 @@ const PassengersPage = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		axios
-			.get("/api/passengers")
+		fetch("/api/passengers")
 			.then((response) => {
-				setPassengers(response.data);
+				if (!response.ok) {
+					throw new Error("Failed to load passengers.");
+				}
+				return response.json();
+			})
+			.then((data) => {
+				setPassengers(data);
 				setLoading(false);
 			})
 			.catch((error) => {
-				setError("Failed to load passengers.");
+				setError(error.message);
 				setLoading(false);
 			});
 	}, []);

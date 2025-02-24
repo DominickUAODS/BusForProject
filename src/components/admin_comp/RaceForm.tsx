@@ -1,6 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios, { AxiosError } from "axios";
 
 // Типизация данных для гонки
 interface Race {
@@ -24,14 +23,19 @@ function RaceForm() {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			axios
-				.get(`/api/races/${id}`)
+			fetch(`/api/races/${id}`)
 				.then((response) => {
-					setRace(response.data);
+					if (!response.ok) {
+						throw new Error("Failed to load race data.");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					setRace(data);
 					setLoading(false);
 				})
-				.catch((error: AxiosError) => {  // Типизация ошибки
-					setError(error.response ? error.response.data.message : error.message);
+				.catch((error) => {
+					setError(error.message);
 					setLoading(false);
 				});
 		}
@@ -51,16 +55,21 @@ function RaceForm() {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			if (id) {
-				// Update race if id exists
-				await axios.put(`/api/races/${id}`, race);
-			} else {
-				// Create new race
-				await axios.post("/api/races", race);
+			const requestOptions: RequestInit = {
+				method: id ? "PUT" : "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(race),
+			};
+
+			const response = await fetch(`/api/races/${id || ""}`, requestOptions);
+
+			if (!response.ok) {
+				throw new Error("Failed to save race.");
 			}
+
 			navigate("/races");  // Redirect after submit
-		} catch (error: AxiosError) {  // Типизация ошибки
-			setError(error.response ? error.response.data.message : error.message);
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 			setLoading(false);
 		}
 	};
@@ -70,10 +79,15 @@ function RaceForm() {
 		if (id) {
 			setLoading(true);
 			try {
-				await axios.delete(`/api/races/${id}`);
+				const response = await fetch(`/api/races/${id}`, { method: "DELETE" });
+
+				if (!response.ok) {
+					throw new Error("Failed to delete race.");
+				}
+
 				navigate("/races");  // Redirect after deletion
-			} catch (error: AxiosError) {  // Типизация ошибки
-				setError(error.response ? error.response.data.message : error.message);
+			} catch (error) {
+				setError(error instanceof Error ? error.message : "An unexpected error occurred");
 				setLoading(false);
 			}
 		}

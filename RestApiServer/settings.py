@@ -107,6 +107,12 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+        'OPTIONS': {
+            'charset': os.getenv('DB_CHARSET'),
+            'connect_timeout': int(os.getenv('DB_TIMEOUT')),
+            'read_timeout': int(os.getenv('DB_TIMEOUT')),
+            'write_timeout': int(os.getenv('DB_TIMEOUT')),
+        },
     }
 }
 
