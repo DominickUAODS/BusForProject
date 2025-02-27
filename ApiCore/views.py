@@ -15,7 +15,8 @@ class StaffPermission(BasePermission):
 
 class CustomPagination(PageNumberPagination):
     page_size=10
-    max_page_size=10
+    max_page_size=100
+    page_size_query_param='page_size'
 
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
