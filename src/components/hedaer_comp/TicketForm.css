@@ -182,7 +182,7 @@
     background-image: none;
     border: 0px;
     outline: 0px;
-    color: rgb(255, 255, 255);
+    color: white;
     background-color: rgb(249, 37, 63);
     position: relative;
     overflow: hidden;
@@ -248,7 +248,16 @@
     border-radius: 6px;
 }
 
+.react-calendar__month-view__days__day--neighboringMonth {
+    visibility: hidden;
+}
+
 .react-calendar__tile--active {
     background-color: rgb(249, 37, 63) !important;
     color: white !important;
+}
+
+.react-calendar__tile[disabled] {
+    color: rgb(200, 200, 200);
+    cursor: not-allowed;
 }

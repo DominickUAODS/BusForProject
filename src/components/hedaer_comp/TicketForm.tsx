@@ -117,7 +117,7 @@ export default function TicketForm() {
                                 setOpenDatepicker(false);
                             }}
                             value={date}
-                            minDate={new Date()}
+                            minDate={new Date(Date.now())}
                         />
                         <button className="date-picker-close-button"  onClick={() => setOpenDatepicker(false)}>Cancel</button>
                     </div>
