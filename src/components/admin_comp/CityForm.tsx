@@ -1,27 +1,21 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
+import { ICity } from "../../interfaces/ICity";
 
-// Типизация для данных города
-interface City {
-	name: string;
-	country: string;
-}
-
-function CityForm() {
+export default function CityForm() {
+	const API_SERVER = import.meta.env.VITE_API_SERVER;
 	const navigate = useNavigate();
-	const { id } = useParams<{ id?: string }>();  // id может быть строкой или undefined для нового города
-	const [city, setCity] = useState<City>({
-		name: "",
-		country: "",
-	});
+	const { id } = useParams<{ id?: string }>();
+	const [city, setCity] = useState<ICity>();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
+	const { accessToken } = GetAuthTokensFromLocalStorage();
 
-	// Fetch city data if editing an existing city
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			fetch(`/api/cities/${id}`)
+			fetch(`${API_SERVER}/cities/${id}`)
 				.then((response) => {
 					if (!response.ok) {
 						throw new Error("Failed to fetch city");
@@ -37,49 +31,56 @@ function CityForm() {
 					setLoading(false);
 				});
 		}
-	}, [id]);
+	}, [API_SERVER, id]);
 
-	// Handle input changes
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setCity((prevCity) => ({
-			...prevCity,
-			[name]: value,
-		}));
+			setCity((prevCity) => ({
+				...prevCity!,
+				[name]: value,
+			}));
 	};
 
-	// Handle form submission
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
+		console.log(JSON.stringify(city));
 		try {
-			const response = await fetch(id ? `/api/cities/${id}` : "/api/cities", {
+			const response = await fetch(id ? `${API_SERVER}/cities/${id}/` : `${API_SERVER}/cities/`, {
 				method: id ? "PUT" : "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${accessToken}`,
+				},
 				body: JSON.stringify(city),
 			});
-
+			console.log(response);
 			if (!response.ok) {
 				throw new Error("Failed to save city");
 			}
 
-			navigate("/cities");  // Redirect after submit
+			navigate("/cities");
 		} catch (error) {
 			setError(error instanceof Error ? error.message : "Unknown error");
 			setLoading(false);
 		}
 	};
 
-	// Handle city deletion
 	const handleDelete = async () => {
 		if (id) {
 			setLoading(true);
 			try {
-				const response = await fetch(`/api/cities/${id}`, { method: "DELETE" });
+				const response = await fetch(`${API_SERVER}/cities/${id}/`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${accessToken}`,
+					},
+				});
 				if (!response.ok) {
 					throw new Error("Failed to delete city");
 				}
-				navigate("/cities");  // Redirect after deletion
+				navigate("/cities");
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Unknown error");
 				setLoading(false);
@@ -95,21 +96,21 @@ function CityForm() {
 			{error && <div style={{ color: "red" }}>{error}</div>}
 			<form onSubmit={handleSubmit}>
 				<div>
-					<label>Name</label>
+					<label>Name EN</label>
 					<input
 						type="text"
-						name="name"
-						value={city.name}
+						name="name_en"
+						value={city?.name_en}
 						onChange={handleChange}
 						required
 					/>
 				</div>
 				<div>
-					<label>Country</label>
+					<label>Name UA</label>
 					<input
 						type="text"
-						name="country"
-						value={city.country}
+						name="name_ua"
+						value={city?.name_ua}
 						onChange={handleChange}
 						required
 					/>
@@ -129,6 +130,4 @@ function CityForm() {
 			)}
 		</div>
 	);
-}
-
-export default CityForm;
+};

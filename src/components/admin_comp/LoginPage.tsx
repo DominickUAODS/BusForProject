@@ -1,86 +1,44 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../App'; // Импортируем хук для использования контекста аутентификации
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../helpers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
-	const { login } = useAuth(); // Получаем функцию login из контекста
-	const navigate = useNavigate(); // Для перенаправления пользователя после успешного входа
-	const [role, setRole] = useState<'admin' | 'user'>('user'); // Состояние для выбора роли (по умолчанию 'user')
-	const [username, setUsername] = useState(''); // Имя пользователя
-	const [password, setPassword] = useState(''); // Пароль
-	const [error, setError] = useState<string>(''); // Для ошибок при входе
+const Login: React.FC = () => {
+	const API_SERVER = import.meta.env.VITE_API_SERVER;
+	const auth = useContext(AuthContext);
+	const navigate = useNavigate();
 
-	// Функция для обработки отправки формы
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
 
-		// Проверка данных (можно добавить вашу логику валидации или подключение к API)
-		if (username && password) {
-			// Пример успешной аутентификации
-			login(role);
-			navigate('/'); // Перенаправляем на главную страницу после успешного входа
+	// Проверяем, что контекст доступен
+	if (!auth) {
+		throw new Error("Login must be used within an AuthProvider");
+	}
+
+	const handleLogin = async (event: React.FormEvent) => {
+		event.preventDefault();
+		const response = await fetch(`${API_SERVER}/token-access/`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ username, password }),
+		});
+
+		if (response.ok) {
+			const data = await response.json();
+			auth.login(data.access, data.refresh, data.is_staff);
+			navigate("/dashboard");
 		} else {
-			setError('Пожалуйста, заполните все поля');
+			alert("Ошибка входа");
 		}
 	};
 
 	return (
-		<div className="login-container">
-			<h2>Вход в систему</h2>
-			<form onSubmit={handleSubmit}>
-				<div className="form-group">
-					<label htmlFor="username">Имя пользователя</label>
-					<input
-						type="text"
-						id="username"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						required
-						placeholder="Введите имя пользователя"
-					/>
-				</div>
-
-				<div className="form-group">
-					<label htmlFor="password">Пароль</label>
-					<input
-						type="password"
-						id="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						required
-						placeholder="Введите пароль"
-					/>
-				</div>
-
-				<div className="form-group">
-					<label>
-						<input
-							type="radio"
-							name="role"
-							value="user"
-							checked={role === 'user'}
-							onChange={() => setRole('user')}
-						/>
-						Пользователь
-					</label>
-					<label>
-						<input
-							type="radio"
-							name="role"
-							value="admin"
-							checked={role === 'admin'}
-							onChange={() => setRole('admin')}
-						/>
-						Администратор
-					</label>
-				</div>
-
-				{error && <div className="error-message">{error}</div>}
-
-				<button type="submit">Войти</button>
-			</form>
-		</div>
+		<form onSubmit={handleLogin}>
+			<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Логин" />
+			<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Пароль" />
+			<button type="submit">Войти</button>
+		</form>
 	);
 };
 
-export default LoginPage;
+export default Login;

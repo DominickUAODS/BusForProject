@@ -29,7 +29,6 @@ router.register('tickets', TicketViewSet, 'ticket')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('token-access/', TokenObtainPairView.as_view(),name="token-access"),
-    path('token-refresh/', TokenRefreshView.as_view(),name="token-refresh")
-
+    path('token-access/', CustomTokenObtainPairView.as_view(),name="token-access"),
+    path('token-refresh/', TokenRefreshView.as_view(),name="token-refresh"),
 ]

@@ -1,5 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate,  } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoginPage from "./components/admin_comp/LoginPage";
 import Dashboard from "./components/admin_comp/Dashboard";
@@ -16,86 +15,82 @@ import TicketForm from "./components/admin_comp/TicketForm";
 import FooterComp from './components/footer_comp/FooterComp';
 import Header from './components/hedaer_comp/Header';
 import IndexComp from './components/index_comp/IndexComp';
+import { AuthProvider, useAuth } from "./helpers/AuthProvider";
 
-// Типизация для контекста аутентификации
-interface AuthContextType {
-	isAuthenticated: boolean;
-	role: "admin" | "user" | null;
-	login: (role: "admin" | "user") => void;
-	logout: () => void;
-};
+// // Типизация для контекста аутентификации
+// interface AuthContextType {
+// 	isAuthenticated: boolean;
+// 	role: "admin" | "user" | null;
+// 	login: (role: "admin" | "user") => void;
+// 	logout: () => void;
+// };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Хук для использования контекста аутентификации
-export function useAuth(): AuthContextType {
-	const context = useContext(AuthContext);
-	if (!context) {
-		throw new Error("useAuth must be used within an AuthProvider");
-	}
-	return context;
-};
-
-// Компонент контекста аутентификации
-export function AuthProvider({ children }: { children: ReactNode }) {
-	const [authData, setAuthData] = useState<{ isAuthenticated: boolean; role: "admin" | "user" | null }>({
-		isAuthenticated: false,
-		role: null,
-	});
-
-	useEffect(() => {
-		// Получаем данные о пользователе (например, из localStorage или API)
-		const storedAuthData = localStorage.getItem("authData");
-		if (storedAuthData) {
-			setAuthData(JSON.parse(storedAuthData));
-		}
-	}, []);
-
-	const login = (role: "admin" | "user") => {
-		setAuthData({ isAuthenticated: true, role });
-		localStorage.setItem("authData", JSON.stringify({ isAuthenticated: true, role }));
-	};
-
-	const logout = () => {
-		setAuthData({ isAuthenticated: false, role: null });
-		localStorage.removeItem("authData");
-	};
-
-	return <AuthContext.Provider value={{ ...authData, login, logout }}>{children}</AuthContext.Provider>;
-};
+// // Хук для использования контекста аутентификации
+// export function useAuth(): AuthContextType {
+// 	const context = useContext(AuthContext);
+// 	if (!context) {
+// 		throw new Error("useAuth must be used within an AuthProvider");
+// 	}
+// 	return context;
+// };
 
 // Типы для маршрутов
-interface PrivateRouteProps {
-	children: ReactNode;
-	requiredRole?: "admin"; // Необязательный параметр для роли администратора
-};
+// interface PrivateRouteProps {
+// 	children: ReactNode;
+// 	requiredRole?: "admin"; // Необязательный параметр для роли администратора
+// };
 
-// Компонент для защиты маршрутов
-function PrivateRoute({ children, requiredRole }: PrivateRouteProps) {
-	const { isAuthenticated, role } = useAuth();
+// // Компонент для защиты маршрутов
+// function PrivateRoute({ children, requiredRole }: PrivateRouteProps) {
+// 	const { isAuthenticated, role } = useAuth();
 
-	if (!isAuthenticated) {
-		return <Navigate to="/login" />;
-	}
+// 	if (!isAuthenticated) {
+// 		return <Navigate to="/loginAdmin" />;
+// 	}
 
-	if (requiredRole && role !== requiredRole) {
-		return <Navigate to="/" />;
-	}
+// 	if (requiredRole && role !== requiredRole) {
+// 		return <Navigate to="/" />;
+// 	}
 
-	return <>{children}</>;
-};
+// 	return <>{children}</>;
+// };
 
 const queryClient = new QueryClient();
 
+function PrivateRoute({ children, requiredRole }: { children: React.ReactNode; requiredRole?: "admin" }) {
+	const auth = useAuth();
+	if (!auth.isAuthenticated) {
+		return <Navigate to="/loginadmin" />;
+	}
+	if (requiredRole && auth.role !== requiredRole) {
+		return <Navigate to="/" />;
+	}
+	return <>{children}</>;
+}
+
 function App() {
+	// const location = useLocation();
+
+	// // Условие для скрытия Header и Footer на определенных страницах
+	// const showHeaderFooter = !(
+	// 	location.pathname === '/dashboard' ||
+	// 	location.pathname.startsWith('/races') ||
+	// 	location.pathname.startsWith('/cities') ||
+	// 	location.pathname.startsWith('/passengers') ||
+	// 	location.pathname.startsWith('/tickets')
+	// );
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
 				<Router>
-					<Header /> {/* Добавляем Header */}
+					{/* Условное отображение Header */}
+					{<Header />}
 
 					<Routes>
-						<Route path="/login" element={<LoginPage />} />
+						<Route path="/loginAdmin" element={<LoginPage />} />
 
 						{/* Основные страницы */}
 						<Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
@@ -118,13 +113,15 @@ function App() {
 						<Route path="/tickets/edit/:id" element={<PrivateRoute requiredRole="admin"><TicketForm /></PrivateRoute>} />
 					</Routes>
 
-					<IndexComp /> {/* Добавляем основной контент IndexComp */}
+					{/* Условное отображение IndexComp */}
+					{<IndexComp />}
 
-					<FooterComp /> {/* Добавляем Footer */}
+					{/* Условное отображение Footer */}
+					{<FooterComp />}
 				</Router>
 			</AuthProvider>
 		</QueryClientProvider>
 	);
-};
+}
 
 export default App;

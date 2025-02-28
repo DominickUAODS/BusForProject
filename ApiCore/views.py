@@ -6,8 +6,9 @@ from rest_framework.exceptions import PermissionDenied
 from django.db.models import Q
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from .models import City, Race, Passenger, Ticket
-from .serializers import CitySerializer, RaceSerializer, PassengerSerializer, TicketSerializer
+from .serializers import CitySerializer, CustomTokenObtainPairSerializer, RaceSerializer, PassengerSerializer, TicketSerializer
 from .filters import CityFilter, RaceFilter, PassengerFilter, TicketFilter
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class StaffPermission(BasePermission):
     def has_permission(self, request, view):
@@ -101,3 +102,6 @@ class TicketViewSet(viewsets.ModelViewSet):
         if not self.request.user.is_staff:
             raise PermissionDenied()
         instance.delete()
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
