@@ -28,21 +28,30 @@ export default function TicketForm() {
     const fromRef = useRef(null);
     const toRef = useRef(null);
 
-    const updateCities = async () => {
-        const response: Response = await fetch(`${import.meta.env.VITE_API_SERVER}/cities/?page_size=100`);
-        if (!response.ok) {
-            const error: Error = await response.json();
-            throw error;
+    const fetchCities = async () => {
+        try{
+            const response: Response = await fetch(`${import.meta.env.VITE_API_SERVER}/cities/?page_size=100`);
+            if (!response.ok) {
+                const error: Error = await response.json();
+                throw error;
+            }
+            const page: Page<City> = await response.json();
+            const newCities: City[] = page.results;
+            setCities(newCities);
+            fromRef.current!.value = newCities.find(city => city.name_ua === "Київ")?.id.toString() ?? "1";
+            toRef.current!.value = newCities.find(city => city.name_ua === "Одеса")?.id.toString() ?? "1";
+        } catch {
+            const errorCity: City = {
+                id: 0,
+                name_en: "Error",
+                name_ua: "Помилка"
+            }
+            setCities([errorCity]);
         }
-        const page: Page<City> = await response.json();
-        const newCities: City[] = page.results;
-        setCities(newCities);
-        fromRef.current!.value = newCities.find(city => city.name_ua === "Київ")?.id.toString() ?? "1";
-        toRef.current!.value = newCities.find(city => city.name_ua === "Одеса")?.id.toString() ?? "1";
     }
 
     useEffect(() => {
-        updateCities();
+        fetchCities();
     }, [])
 
     return (

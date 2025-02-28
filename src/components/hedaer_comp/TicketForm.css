@@ -215,10 +215,8 @@
 }
 
 .react-calendar {
-    margin: 0 auto;
     background-color: white;
     font-size: 13px;
-    width: 250px;
 }
 
 .react-calendar button {
