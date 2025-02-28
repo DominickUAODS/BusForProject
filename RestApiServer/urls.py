@@ -18,6 +18,7 @@ from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from ApiCore.views import *
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register('cities', CityViewSet, 'city')
@@ -27,5 +28,8 @@ router.register('tickets', TicketViewSet, 'ticket')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
-]
+    path('api/', include(router.urls)),  # API роутинг
+    path('', index),  #React
+     path("send-code/", send_verification_code, name="send_code"),
+    path("verify-code/", verify_code, name="verify_code"),
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

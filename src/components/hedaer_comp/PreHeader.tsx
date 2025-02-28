@@ -3,11 +3,17 @@ import "./PreHeader.css";
 import logo from "../../assets/images/mainLogo.svg"; 
 import { useState } from "react";
 import BurgerMenu from "./BurgerMenu";
-export default function PreHeader() {
+import { useNavigate } from "react-router-dom";
+
+interface PreHeaderProps {
+  logoSrc?: string;
+}
+export default function PreHeader({ logoSrc }: PreHeaderProps) {
     const [isSupportOpen, setIsSupportOpen] = useState(false);
+    const navigate = useNavigate();
     return (
       <div className="pre-header">
-        <img className="logo-img" src={logo} alt="logo" />
+        <img className="logo-img" src={logoSrc || logo} alt="logo" />
   
         {/* Бургер-меню */}
         <BurgerMenu/>
@@ -58,7 +64,7 @@ export default function PreHeader() {
             </div>
           </div>
   
-          <div className="account">
+          <div className="account"  onClick={() => navigate("/new/account")}>
             <div className="account-img">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="#ffffff">
                 <path fill-rule="evenodd" d="M8 7.78c2.095 0 3.793-1.742 3.793-3.89C11.793 1.74 10.095 0 8 0S4.207 1.741 4.207 3.89c0 2.148 1.698 3.89 3.793 3.89zm0-1.203c-1.447 0-2.62-1.203-2.62-2.687 0-1.485 1.173-2.688 2.62-2.688s2.62 1.203 2.62 2.688c0 1.484-1.173 2.687-2.62 2.687z"></path>

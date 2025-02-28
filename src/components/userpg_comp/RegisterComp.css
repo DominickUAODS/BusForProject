@@ -190,7 +190,33 @@ a {
     text-decoration: none !important;
 }
 
+.eJiBVI {
+    margin-bottom: 12px;
+}
 
+.SIeTo {
+    margin-bottom: 0px;
+    font-size: 14px;
+}
+
+.TWjli {
+    margin-bottom: 0px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.lk-login__field {
+    height: 55px;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.TJFDT {
+    font-size: 12px;
+    line-height: 1.17;
+    margin-top: 0px;
+    margin-bottom: 16px;
+}
 @media only screen and (max-width: 766px) {
     .register-comp {
         align-items: flex-start;

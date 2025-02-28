@@ -2,9 +2,13 @@ import { useState } from "react";
 import "./PreHeader.css";
 import "./BurgerMenu.css"
 import logo from "../../assets/images/mainLogo-dark.png"; 
+import { useNavigate } from "react-router-dom";
+
+
 export default function BurgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const navigate = useNavigate();
   return(
     <div className="burger-menu" onClick={() => setIsOpen(!isOpen)}>
         <div className="burger-menu2">
@@ -75,8 +79,9 @@ export default function BurgerMenu() {
                                     </div>
                                 </div>
                             </div>
-                            <a href="/uk/new/account" className="Style__LinkItem-ctbghn-9 eCQlBU" onClick={(e) => {
-                                    e.stopPropagation(); // Останавливаем всплытие, чтобы не закрывалось всё меню
+                            <a  className="Style__LinkItem-ctbghn-9 eCQlBU" onClick={(e) => {
+                                    e.stopPropagation(); 
+                                    navigate("/new/account")
                                 }}>
                                 <div className="Style__LinkItemIcon-ctbghn-8 byOqhw">
                                     <div className="Style__BackgroundIcon-mn97w4-0 iaTXLO"></div>

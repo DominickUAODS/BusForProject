@@ -1,19 +1,84 @@
+import { useState } from "react";
 import "./RegisterComp.css";
+import { useNavigate } from "react-router-dom";
 
-export default function RegisterComp(){
+export default function RegisterComp() {
+    const [email, setEmail] = useState("");
+    const [code, setCode] = useState("");
+    const [isCodeSent, setIsCodeSent] = useState(false);
+    const navigate = useNavigate();
 
-    return(
+    // Функция отправки кода на email
+    const sendCode = async () => {
+        if (!email) {
+            alert("Введіть e-mail");
+            return;
+        }
+    
+        try {
+            const response = await fetch("http://localhost:8000/send-code/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+                mode: "cors", 
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setIsCodeSent(true);
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error("Помилка з'єднання:", error);
+            alert("Сталася помилка, спробуйте ще раз.");
+        }
+    };
+    
+
+    // Функция проверки кода
+    const verifyCode = async () => {
+        if (!email || !code) {
+            alert("Введіть e-mail та код");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:8000/verify-code/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, code }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Код введен:", code);
+                navigate("/new/account/history");
+            } else {
+                alert(data.error);
+                setCode("");
+            }
+        } catch (error) {
+            console.error("Помилка з'єднання:", error);
+            alert("Сталася помилка, спробуйте ще раз.");
+        }
+    };
+
+    return (
         <div className="register-comp">
             <div className="register-cont">
-                <a  href="/" className="go-back-a">
+                <a href="/" className="go-back-a">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f9253f" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                        <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
                     </svg>
                     <span className="go-back-span">Повернутись назад</span>
                 </a>
+
                 <div className="register-form">
                     <div className="register-form-table">
-                        <div className="register-info">
+                    <div className="register-info">
                             <p className="lk-login__subtitle">В особистому кабінеті ви можете:</p>
                             <ul className="lk-login__action">
                                 <li>
@@ -50,26 +115,52 @@ export default function RegisterComp(){
                         </div>
                         <div className="register-form-gmail">
                             <div className="Style__Title-sc-1yhzwq5-8 eRZnvJ">Увійти або зареєструватися</div>
-                            <form className="lk-login__form"> {/*форма реєстрації*/}
+                            {/* Форма ввода email : Форма ввода кода */}
+                            {!isCodeSent ? (
+                            
+                            <form className="lk-login__form">
                                 <div>
                                     <label className="lk-login__subtitle">E-mail</label>
-                                    <div className="">
-                                        <div className="form-group">
-                                            <div>
-                                                <input type="email" id="auth" name="email" value=""  placeholder="mygmail@gmail.com" className="auth__input lk-login__field"/>
-                                            </div>
-                                        </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder="mygmail@gmail.com"
+                                            className="auth__input lk-login__field"
+                                        />
                                     </div>
                                     <div className="lk-login__form-action">
-                                        <div className="flex-1">
-                                            <button className="Styled__ResettedButton-sc-1dxewfu-0 Styled__ColoredButton-sc-1dxewfu-1 Styled__SizedButton-sc-1dxewfu-2 Styled__StyledButton-sc-1dxewfu-3 gMInnu btn btn-primary btn-block" aria-disabled="false" role="button">
-                                                <span className="Style__Title-oeifkd-0 dWlEuY">Надіслати код на пошту</span>
-                                            </button>
-                                        </div>
+                                        <button type="button" onClick={sendCode} className="btn btn-primary btn-block">
+                                            Надіслати код на пошту
+                                        </button>
                                     </div>
                                 </div>
                             </form>
+                            ):(
 
+                            
+                            <form className="lk-login__form">
+                                <div className="Style__TextContainer-sc-1ykzu8y-0 eJiBVI">
+                                    <p className="Style__Text-sc-1ykzu8y-1 SIeTo">Введіть код, відправлений на вашу пошту</p>
+                                </div>
+                                <div>
+                                    <label className="lk-login__subtitle">Код підтвердження</label>
+                                    <input
+                                        type="text"
+                                        className="form-control lk-login__field"
+                                        value={code}
+                                        onChange={(e) => setCode(e.target.value)}
+                                    />
+                                    <div className="lk-login__form-action">
+                                        <button type="button" onClick={verifyCode} className="btn btn-primary btn-block">
+                                            Підтвердити
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            )}
                         </div>
                     </div>
                 </div>
