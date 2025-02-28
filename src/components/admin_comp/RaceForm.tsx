@@ -4,6 +4,7 @@ import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLo
 import Select from "react-select"; // Импортируем компонент Select
 import { IRace } from "../../interfaces/IRace";
 import { ICity } from "../../interfaces/ICity";
+//import { parseISO, format } from 'date-fns';
 
 // Типизация данных для гонки
 interface Option {
@@ -46,7 +47,7 @@ function RaceForm() {
 					// Если на этой странице нет городов, выходим из цикла
 					if (data.results.length < 10) {
 						break;
-					}				
+					}
 
 					// Переходим к следующей странице
 					page++;
@@ -92,10 +93,10 @@ function RaceForm() {
 	// Handle input changes
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-			setRace((prevRace) => ({
-				...prevRace!,
-				[name]: value,
-			}));
+		setRace((prevRace) => ({
+			...prevRace!,
+			[name]: value,
+		}));
 	};
 
 
@@ -105,6 +106,7 @@ function RaceForm() {
 		e.preventDefault();
 		setLoading(true);
 		setError(null);
+		console.log(JSON.stringify(race))
 		try {
 			console.log(JSON.stringify(race))
 			const response = await fetch(id ? `${API_SERVER}/races/${id}/` : `${API_SERVER}/races/`, {
@@ -167,6 +169,15 @@ function RaceForm() {
 			}));
 		}
 	};
+
+	// const parseDateTime = (datetime: string | undefined): string => {
+	// 	if (!datetime) {
+	// 		throw new Error('Invalid date');
+	// 	}
+	// 	const parsedDate = parseISO(datetime);
+	// 	const formattedDate = format(parsedDate, 'yyyy-MM-dd HH:mm');
+	// 	return formattedDate;
+	// };
 
 	return (
 		<div>
