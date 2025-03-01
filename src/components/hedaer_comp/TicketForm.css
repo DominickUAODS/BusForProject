@@ -296,6 +296,7 @@
 .children-add-i,
 .children-remove-i{
     color: rgb(249, 37, 63);
+    cursor: pointer;
 }
 
 .adults-remove-i[aria-disabled=true],
