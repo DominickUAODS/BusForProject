@@ -3,9 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import Calendar from "react-calendar";
 import Page from "../../models/Page";
 import City from "../../models/City";
+import { useNavigate } from "react-router-dom";
 
 export default function TicketForm() {
     const day = 1000 * 60 * 60 * 24;
+    const minAdults = 1;
+    const minChildren = 0;
     const uaMonthNames: string[] = [
         "січня",
         "лютого",
@@ -20,13 +23,48 @@ export default function TicketForm() {
         "листопада",
         "грудня",
     ]
+    const getUaPassengersCountName = (count: number) => {
+        switch (count % 10) {
+            case 1:
+                switch (count) {
+                    case 1:
+                        return "дорослий";
+                    case 11:
+                        return "осіб";
+                    default:
+                        return "особа";
+                }
+            case 2:
+            case 3:
+            case 4:
+                switch (count) {
+                    case 12:
+                    case 13:
+                    case 14:
+                        return "осіб";
+                    default:
+                        return "особи";
+                }
+            default:
+                return "осіб";
+        }
+    }
 
     const [cities, setCities] = useState<City[]>([]);
     const [date, setDate] = useState<Date>(new Date(Date.now() + day));
     const [openDatepicker, setOpenDatepicker] = useState<boolean>(false);
+    const [adults, setAdults] = useState<number>(1);
+    const [children, setChildren] = useState<number>(0);
+    const [openPassengersModal, setOpenPassengersModal] = useState<boolean>(false);
 
+    const navigate = useNavigate();
     const fromRef = useRef(null);
     const toRef = useRef(null);
+
+    const closeAllModals = () => {
+        setOpenDatepicker(false);
+        setOpenPassengersModal(false);
+    };
 
     const fetchCities = async () => {
         try{
@@ -48,11 +86,11 @@ export default function TicketForm() {
             }
             setCities([errorCity]);
         }
-    }
+    };
 
     useEffect(() => {
         fetchCities();
-    }, [])
+    }, []);
 
     return (
         <div className="ticket-form">
@@ -69,7 +107,6 @@ export default function TicketForm() {
                                 </select>
                             </span>
                         </div>
-                        <div></div>
                     </div>
                 </div>
                 <div className="button-switch" onClick={() => {[fromRef.current!.value, toRef.current!.value] = [toRef.current!.value, fromRef.current!.value]}}>
@@ -91,7 +128,6 @@ export default function TicketForm() {
                                 </select>
                             </span>
                         </div>
-                        <div></div>
                     </div>
                 </div>
             </div>
@@ -102,7 +138,7 @@ export default function TicketForm() {
                             <div className="field-date-info"> {/*date for form*/}
                                 <label className="field-date-info-label">Дата поїздки</label>
                                 <span className="span-input-field-date">
-                                    <input type="text" id="on" className="form-field--datepicker" value={date.getDate() + " " + uaMonthNames[date.getMonth()]} onClick={() => setOpenDatepicker(true)} />
+                                    <input type="text" id="on" className="form-field--datepicker" value={date.getDate() + " " + uaMonthNames[date.getMonth()]} onClick={() => {closeAllModals(); setOpenDatepicker(true);}} />
                                     <div>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(249, 37, 63)" className="calendar-icon bi bi-calendar-heart" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM1 14V4h14v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1m7-6.507c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
@@ -115,7 +151,7 @@ export default function TicketForm() {
                     <div className="overlay">
                         <button type="button" onClick={() => setDate(new Date(Date.now() + day))} className="buttom-tommorow">Завтра</button>
                         <button type="button" onClick={() => setDate(new Date(Date.now() + day * 2))} className="button-tommorowX2">Післязавтра</button>
-                        <button type="button" onClick={() => setOpenDatepicker(true)} className="button-all-days">Всі дні</button>
+                        <button type="button" onClick={() => {closeAllModals(); setOpenDatepicker(true);}} className="button-all-days">Всі дні</button>
                     </div>
                 </div>
                 {openDatepicker && (
@@ -128,7 +164,7 @@ export default function TicketForm() {
                             value={date}
                             minDate={new Date(Date.now())}
                         />
-                        <button className="date-picker-close-button"  onClick={() => setOpenDatepicker(false)}>Cancel</button>
+                        <button className="date-picker-close-button" onClick={() => setOpenDatepicker(false)}>Cancel</button>
                     </div>
                 )}
             </div>
@@ -138,7 +174,7 @@ export default function TicketForm() {
                         <div className="field-psngrs-info"> {/*passengers for form*/}
                             <label className="field-psngrs-info-label">Пасажири</label>
                             <span className="span-input-field-psngrs">
-                                <input type="text" id="passengers" value="1 дорослий" />
+                                <input type="text" id="passengers" value={(adults + children) + " " + getUaPassengersCountName(adults + children)} onClick={() => {closeAllModals(); setOpenPassengersModal(true);}} />
                             </span>
                         </div>
                         <label className="label-for-psngrs">
@@ -148,9 +184,39 @@ export default function TicketForm() {
                         </label>
                     </div>
                 </div>
+                {openPassengersModal && (
+                    <div className="passengers-modal">
+                        <div className="passengers-field">
+                            <span>Дорослий</span>
+                            <label className="label-for-adults-field">
+                                <svg aria-disabled={adults === minAdults} onClick={() => setAdults(adults - 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="adults-remove-i bi bi-dash-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                                </svg>
+                                <span>{adults}</span>
+                                <svg onClick={() => setAdults(adults + 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="adults-add-i bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                </svg>
+                            </label>
+                        </div>
+                        <hr />
+                        <div className="passengers-field">
+                            <span>Дитячий</span>
+                            <label className="label-for-children-field">
+                                <svg aria-disabled={children === minChildren} onClick={() => setChildren(children - 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="children-remove-i bi bi-dash-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                                </svg>
+                                <span>{children}</span>
+                                <svg onClick={() => setChildren(children + 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="children-add-i bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                </svg>
+                            </label>
+                        </div>
+                        <button className="passengers-modal-close-button" onClick={() => setOpenPassengersModal(false)}>Close</button>
+                    </div>
+                )}
             </div>
             <div className="btn-search">
-                <button className="button-to-search" role="button" id="submit">
+                <button className="button-to-search" role="button" id="submit" onClick={() => navigate("/races")}>
                     <span>Знайти квиток</span>
                 </button>
             </div>

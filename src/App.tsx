@@ -3,6 +3,7 @@ import './App.css'
 import FooterComp from './components/footer_comp/FooterComp'
 import Header from './components/hedaer_comp/Header'
 import IndexComp from './components/index_comp/IndexComp'
+import TestRaces from "./components/TestRaces";
 
 function App() {
 
@@ -11,7 +12,8 @@ function App() {
     <Router>
       <Header /> {/* Добавляем Header */}
       <Routes>
-        {/* todo */}
+        <Route path="/" element={<></>} />
+        <Route path="/races" element={<TestRaces />} />
       </Routes>
       <IndexComp /> {/* Добавляем основной контент IndexComp */}
       <FooterComp /> {/* Добавляем Footer */}
