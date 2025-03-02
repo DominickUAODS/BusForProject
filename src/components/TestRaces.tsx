@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react"
 import Page from "../models/Page";
 import Race from "../models/Race";
+import { useSearchParams } from "react-router-dom";
 
 export default function TicketForm() {
+    const [searchParams] = useSearchParams();
+    const city_from: string = searchParams.get("city_from") ?? "";
+    const city_to: string = searchParams.get("city_to") ?? "";
+    const date_str: string = searchParams.get("date") ?? "";
+    const date: Date = new Date(date_str);
+    const time_from: Date = new Date(date);
+    time_from.setUTCHours(0, 0, 0, 0);
+    const time_to: Date = new Date(date);
+    time_to.setUTCHours(23, 59, 59, 999);
+    const passengers: string = searchParams.get("passengers") ?? "";
+
     const [races, setRaces] = useState<Race[]>([]);
+    const [racesFiltered, setRacesFiltered] = useState<Race[]>([]);
 
     const fetchRaces = async () => {
         try{
@@ -13,8 +26,24 @@ export default function TicketForm() {
                 throw error;
             }
             const page: Page<Race> = await response.json();
-            const newCities: Race[] = page.results;
-            setRaces(newCities);
+            const newRaces: Race[] = page.results;
+            setRaces(newRaces);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchRacesFiltered = async () => {
+        try{
+            const response: Response = await fetch(`${import.meta.env.VITE_API_SERVER}/races/?${new URLSearchParams({city_from, city_to, time_start_after: time_from.toISOString(), time_start_until: time_to.toISOString(), min_places: passengers})}`);
+            if (!response.ok) {
+                const error: Error = await response.json();
+                throw error;
+            }
+            const page: Page<Race> = await response.json();
+            const newRacesFiltered: Race[] = page.results;
+            setRacesFiltered(newRacesFiltered);
+            console.log(newRacesFiltered);
         } catch (error) {
             console.log(error);
         }
@@ -22,11 +51,14 @@ export default function TicketForm() {
 
     useEffect(() => {
         fetchRaces();
+        fetchRacesFiltered();
     }, [])
 
     return (
-        <div style={{backgroundColor: "darkgray"}}>
-            <span>First page: {JSON.stringify(races)}</span>
+        <div style={{backgroundColor: "gray"}}>
+            <span>First page (all): {JSON.stringify(races)}</span>
+            <br /><br />
+            <span style={{color: "white"}}>First page (filtered): {JSON.stringify(racesFiltered)}</span>
         </div>
     );
 }

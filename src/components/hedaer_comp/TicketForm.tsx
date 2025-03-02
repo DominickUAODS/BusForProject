@@ -216,7 +216,7 @@ export default function TicketForm() {
                 )}
             </div>
             <div className="btn-search">
-                <button className="button-to-search" role="button" id="submit" onClick={() => navigate("/races")}>
+                <button className="button-to-search" role="button" id="submit" onClick={() => navigate(`/races?${new URLSearchParams({ city_from: fromRef.current!.value, city_to: toRef.current!.value, date: date.toISOString(), passengers: (adults + children).toString() })}`)}>
                     <span>Знайти квиток</span>
                 </button>
             </div>
