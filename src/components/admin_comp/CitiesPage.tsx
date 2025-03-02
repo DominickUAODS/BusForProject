@@ -35,12 +35,8 @@ const CitiesPage = () => {
 			setCities(data.results);
 			setNextPage(data.next); // Сохраняем ссылку на следующую страницу
 			setPreviousPage(data.previous); // Сохраняем ссылку на предыдущую страницу
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				setError(error.message);
-			} else {
-				setError("An unknown error occurred.");
-			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 		} finally {
 			setLoading(false);
 		}
@@ -94,12 +90,8 @@ const CitiesPage = () => {
 			</table>
 
 			<div>
-				<button onClick={handlePreviousPage} disabled={!previousPage}>
-					Previous
-				</button>
-				<button onClick={handleNextPage} disabled={!nextPage}>
-					Next
-				</button>
+				<button onClick={handlePreviousPage} disabled={!previousPage}>Previous</button>
+				<button onClick={handleNextPage} disabled={!nextPage}>Next</button>
 			</div>
 		</div>
 	);

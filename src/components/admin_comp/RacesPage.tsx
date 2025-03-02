@@ -35,12 +35,8 @@ const RacesPage = () => {
 			console.log(data);
 			setNextPage(data.next); // Сохраняем ссылку на следующую страницу
 			setPreviousPage(data.previous); // Сохраняем ссылку на предыдущую страницу
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				setError(error.message);
-			} else {
-				setError("An unknown error occurred.");
-			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 		} finally {
 			setLoading(false);
 		}
@@ -59,12 +55,8 @@ const RacesPage = () => {
 			}
 			const data = await response.json();
 			return data; // Возвращаем данные города
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				setError(error.message);
-			} else {
-				setError("An unknown error occurred.");
-			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 		}
 	};
 
@@ -86,7 +78,6 @@ const RacesPage = () => {
 					cityToMap[race.city_to] = cityTo;
 				}
 			}
-
 
 			setCityFromData(cityFromMap);
 			setCityToData(cityToMap);
@@ -139,20 +130,14 @@ const RacesPage = () => {
 							<td>{race.places}</td>
 							<td>{cityFromData[race.city_from]?.name_ua}</td>
 							<td>{cityToData[race.city_to]?.name_ua}</td>
-							<td>
-								<Link to={`/races/edit/${race.id}`}>Edit</Link>
-							</td>
+							<td><Link to={`/races/edit/${race.id}`}>Edit</Link></td>
 						</tr>
 					))}
 				</tbody>
 			</table>
 			<div>
-				<button onClick={handlePreviousPage} disabled={!previousPage}>
-					Previous
-				</button>
-				<button onClick={handleNextPage} disabled={!nextPage}>
-					Next
-				</button>
+				<button onClick={handlePreviousPage} disabled={!previousPage}>Previous</button>
+				<button onClick={handleNextPage} disabled={!nextPage}>Next</button>
 			</div>
 		</div>
 	);

@@ -61,7 +61,7 @@ export default function CityForm() {
 
 			navigate("/cities");
 		} catch (error) {
-			setError(error instanceof Error ? error.message : "Unknown error");
+			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 			setLoading(false);
 		}
 	};
@@ -82,7 +82,7 @@ export default function CityForm() {
 				}
 				navigate("/cities");
 			} catch (error) {
-				setError(error instanceof Error ? error.message : "Unknown error");
+				setError(error instanceof Error ? error.message : "An unexpected error occurred");
 				setLoading(false);
 			}
 		}

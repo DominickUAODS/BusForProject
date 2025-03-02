@@ -1,29 +1,29 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
+import { IPassenger } from "../../interfaces/IPassenger";
 
 // Типизация данных для пассажира
-interface Passenger {
-	name: string;
-	age: string;
-	race: string;
-}
+// interface Passenger {
+// 	name: string;
+// 	age: string;
+// 	race: string;
+// }
 
 function PassengerForm() {
+	const API_SERVER = import.meta.env.VITE_API_SERVER;
 	const navigate = useNavigate();
 	const { id } = useParams<{ id?: string }>();  // id может быть строкой или undefined для нового элемента
-	const [passenger, setPassenger] = useState<Passenger>({
-		name: "",
-		age: "",
-		race: "",
-	});
+	const [passenger, setPassenger] = useState<IPassenger>();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
+	const { accessToken } = GetAuthTokensFromLocalStorage();
 
 	// Fetch passenger data if editing an existing passenger
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			fetch(`/api/passengers/${id}`)
+			fetch(`${API_SERVER}/passengers/${id}`)
 				.then((response) => {
 					if (!response.ok) {
 						throw new Error(`Error: ${response.statusText}`);
@@ -35,17 +35,17 @@ function PassengerForm() {
 					setLoading(false);
 				})
 				.catch((error) => {
-					setError(error.message);
+					setError(error instanceof Error ? error.message : "An unexpected error occurred");
 					setLoading(false);
 				});
 		}
-	}, [id]);
+	}, [API_SERVER, id]);
 
 	// Handle input changes
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setPassenger((prevPassenger) => ({
-			...prevPassenger,
+			...prevPassenger!,
 			[name]: value,
 		}));
 	};
@@ -55,19 +55,20 @@ function PassengerForm() {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			const requestOptions: RequestInit = {
+			const response = await fetch(id ? `${API_SERVER}/passengers/${id}/` : `${API_SERVER}/passengers/`, {
 				method: id ? "PUT" : "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${accessToken}`,
+				},
 				body: JSON.stringify(passenger),
-			};
-
-			const response = await fetch(`/api/passengers/${id || ""}`, requestOptions);
-
+			});
+			console.log(response);
 			if (!response.ok) {
-				throw new Error(`Error: ${response.statusText}`);
+				throw new Error("Failed to save city");
 			}
 
-			navigate("/passengers");  // Redirect after submit
+			navigate("/passengers"); // Redirect after submit
 		} catch (error) {
 			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 			setLoading(false);
@@ -79,13 +80,17 @@ function PassengerForm() {
 		if (id) {
 			setLoading(true);
 			try {
-				const response = await fetch(`/api/passengers/${id}`, { method: "DELETE" });
-
+				const response = await fetch(`${API_SERVER}/passengers/${id}/`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${accessToken}`,
+					},
+				});
 				if (!response.ok) {
-					throw new Error(`Error: ${response.statusText}`);
+					throw new Error("Failed to delete city");
 				}
-
-				navigate("/passengers");  // Redirect after deletion
+				navigate("/passengers"); // Redirect after deletion
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "An unexpected error occurred");
 				setLoading(false);
@@ -101,38 +106,18 @@ function PassengerForm() {
 			{error && <div style={{ color: "red" }}>{error}</div>}
 			<form onSubmit={handleSubmit}>
 				<div>
-					<label>Name</label>
-					<input
-						type="text"
-						name="name"
-						value={passenger.name}
-						onChange={handleChange}
-						required
-					/>
+					<label>First name</label>
+					<input type="text" name="first_name" value={passenger?.first_name} onChange={handleChange} required />
 				</div>
 				<div>
-					<label>Age</label>
-					<input
-						type="number"
-						name="age"
-						value={passenger.age}
-						onChange={handleChange}
-						required
-					/>
+					<label>Last name</label>
+					<input type="text" name="last_name" value={passenger?.last_name} onChange={handleChange} required />
 				</div>
 				<div>
-					<label>Race</label>
-					<input
-						type="text"
-						name="race"
-						value={passenger.race}
-						onChange={handleChange}
-						required
-					/>
+					<label>User ID</label>
+					<input type="text" name="user_id" value={passenger?.user_id} onChange={handleChange} required />
 				</div>
-				<button type="submit" disabled={loading}>
-					{id ? "Update Passenger" : "Create Passenger"}
-				</button>
+				<button type="submit" disabled={loading}>{id ? "Update Passenger" : "Create Passenger"}</button>
 			</form>
 			{id && (
 				<button

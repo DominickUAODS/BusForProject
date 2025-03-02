@@ -28,34 +28,46 @@ function RaceForm() {
 		const fetchAllCities = async () => {
 			setLoading(true);
 			let allCities: ICity[] = [];
-			let page = 1;
+			//let page = 1;
 
 			try {
-				while (true) {
-					// Запрашиваем города с текущей страницы
-					const response = await fetch(`${API_SERVER}/cities?page=${page}`);
+				// Запрашиваем города с текущей страницы
+				const response = await fetch(`${API_SERVER}/cities?page_size=100`);
 
-					if (!response.ok) {
-						throw new Error("Failed to fetch cities");
-					}
-
-					const data = await response.json();
-
-					// Добавляем города текущей страницы в общий список
-					allCities = [...allCities, ...data.results];
-
-					// Если на этой странице нет городов, выходим из цикла
-					if (data.results.length < 10) {
-						break;
-					}
-
-					// Переходим к следующей странице
-					page++;
+				if (!response.ok) {
+					throw new Error("Failed to fetch cities");
 				}
+
+				const data = await response.json();
+
+				// Добавляем города текущей страницы в общий список
+				allCities = [...allCities, ...data.results];
+
+				// while (true) {
+				// 	// Запрашиваем города с текущей страницы
+				// 	const response = await fetch(`${API_SERVER}/cities?page=${page}`);
+
+				// 	if (!response.ok) {
+				// 		throw new Error("Failed to fetch cities");
+				// 	}
+
+				// 	const data = await response.json();
+
+				// 	// Добавляем города текущей страницы в общий список
+				// 	allCities = [...allCities, ...data.results];
+
+				// 	// Если на этой странице нет городов, выходим из цикла
+				// 	if (data.results.length < 10) {
+				// 		break;
+				// 	}
+
+				// 	// Переходим к следующей странице
+				// 	page++;
+				// }
 
 				setCities(allCities); // Обновляем состояние с городами
 			} catch (error) {
-				setError(error instanceof Error ? error.message : "Unknown error");
+				setError(error instanceof Error ? error.message : "An unexpected error occurred");
 			} finally {
 				setLoading(false);
 			}
@@ -229,9 +241,7 @@ function RaceForm() {
 					/>
 				</div>
 
-				<button type="submit" disabled={loading}>
-					{id ? "Update Race" : "Create Race"}
-				</button>
+				<button type="submit" disabled={loading}>{id ? "Update Race" : "Create Race"}</button>
 			</form>
 			{id && (
 				<button
