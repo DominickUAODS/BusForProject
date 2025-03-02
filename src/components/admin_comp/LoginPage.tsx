@@ -26,7 +26,7 @@ const Login: React.FC = () => {
 		if (response.ok) {
 			const data = await response.json();
 			auth.login(data.access, data.refresh, data.is_staff);
-			navigate("/dashboard");
+			navigate("/admin/dashboard");
 		} else {
 			alert("Ошибка входа");
 		}

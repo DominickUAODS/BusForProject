@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate,  } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoginPage from "./components/admin_comp/LoginPage";
 import Dashboard from "./components/admin_comp/Dashboard";
@@ -12,57 +12,15 @@ import CityForm from "./components/admin_comp/CityForm";
 import RaceForm from "./components/admin_comp/RaceForm";
 import PassengerForm from "./components/admin_comp/PassengerForm";
 import TicketForm from "./components/admin_comp/TicketForm";
-import FooterComp from './components/footer_comp/FooterComp';
-import Header from './components/hedaer_comp/Header';
 import IndexComp from './components/index_comp/IndexComp';
 import { AuthProvider, useAuth } from "./helpers/AuthProvider";
-
-// // Типизация для контекста аутентификации
-// interface AuthContextType {
-// 	isAuthenticated: boolean;
-// 	role: "admin" | "user" | null;
-// 	login: (role: "admin" | "user") => void;
-// 	logout: () => void;
-// };
-
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// // Хук для использования контекста аутентификации
-// export function useAuth(): AuthContextType {
-// 	const context = useContext(AuthContext);
-// 	if (!context) {
-// 		throw new Error("useAuth must be used within an AuthProvider");
-// 	}
-// 	return context;
-// };
-
-// Типы для маршрутов
-// interface PrivateRouteProps {
-// 	children: ReactNode;
-// 	requiredRole?: "admin"; // Необязательный параметр для роли администратора
-// };
-
-// // Компонент для защиты маршрутов
-// function PrivateRoute({ children, requiredRole }: PrivateRouteProps) {
-// 	const { isAuthenticated, role } = useAuth();
-
-// 	if (!isAuthenticated) {
-// 		return <Navigate to="/loginAdmin" />;
-// 	}
-
-// 	if (requiredRole && role !== requiredRole) {
-// 		return <Navigate to="/" />;
-// 	}
-
-// 	return <>{children}</>;
-// };
 
 const queryClient = new QueryClient();
 
 function PrivateRoute({ children, requiredRole }: { children: React.ReactNode; requiredRole?: "admin" }) {
 	const auth = useAuth();
 	if (!auth.isAuthenticated) {
-		return <Navigate to="/loginadmin" />;
+		return <Navigate to="/login" />;
 	}
 	if (requiredRole && auth.role !== requiredRole) {
 		return <Navigate to="/" />;
@@ -71,29 +29,17 @@ function PrivateRoute({ children, requiredRole }: { children: React.ReactNode; r
 }
 
 function App() {
-	// const location = useLocation();
-
-	// // Условие для скрытия Header и Footer на определенных страницах
-	// const showHeaderFooter = !(
-	// 	location.pathname === '/dashboard' ||
-	// 	location.pathname.startsWith('/races') ||
-	// 	location.pathname.startsWith('/cities') ||
-	// 	location.pathname.startsWith('/passengers') ||
-	// 	location.pathname.startsWith('/tickets')
-	// );
-
 	return (
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
 				<Router>
-					{/* Условное отображение Header */}
-					{<Header />}
-
 					<Routes>
-						<Route path="/loginAdmin" element={<LoginPage />} />
+						<Route path="/" element={<IndexComp />} />
+
+						<Route path="/admin/login" element={<LoginPage />} />
 
 						{/* Основные страницы */}
-						<Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+						<Route path="/admin/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 						<Route path="/cities" element={<PrivateRoute><CitiesPage /></PrivateRoute>} />
 						<Route path="/races" element={<PrivateRoute><RacesPage /></PrivateRoute>} />
 						<Route path="/passengers" element={<PrivateRoute><PassengersPage /></PrivateRoute>} />
@@ -113,15 +59,10 @@ function App() {
 						<Route path="/tickets/edit/:id" element={<PrivateRoute requiredRole="admin"><TicketForm /></PrivateRoute>} />
 					</Routes>
 
-					{/* Условное отображение IndexComp */}
-					{<IndexComp />}
-
-					{/* Условное отображение Footer */}
-					{<FooterComp />}
 				</Router>
 			</AuthProvider>
 		</QueryClientProvider>
 	);
-}
+};
 
 export default App;

@@ -2,12 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ICity } from "../../interfaces/ICity";
 
-// interface City {
-// 	id: string;
-// 	name_en: string;
-// 	name_ua: string;
-// }
-
 const CitiesPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
 	const [cities, setCities] = useState<ICity[]>([]);
@@ -44,7 +38,7 @@ const CitiesPage = () => {
 
 	// Загружаем города при первом рендере
 	useEffect(() => {
-		fetchCities(`${API_SERVER}/cities`);
+		fetchCities(`${API_SERVER}/cities/`);
 	}, [API_SERVER]);
 
 	const handleNextPage = () => {

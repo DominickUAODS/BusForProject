@@ -1,14 +1,8 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+//import { format } from 'date-fns';
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { IUser } from "../../interfaces/IUser";
-
-// Типизация для данных пользователя
-// interface User {
-// 	name: string;
-// 	email: string;
-// 	role: string;
-// }
 
 function UserForm() {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -23,7 +17,12 @@ function UserForm() {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			fetch(`${API_SERVER}/users/${id}`)
+			fetch(`${API_SERVER}/users/${id}`, {
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${accessToken}`,
+				},
+			})
 				.then((response) => {
 					if (!response.ok) {
 						// If response is not ok, throw an error
@@ -34,20 +33,22 @@ function UserForm() {
 				.then((data) => {
 					setUser(data);
 					setLoading(false);
+					console.log(data);
 				})
 				.catch((error) => {
 					setError(error instanceof Error ? error.message : "An unexpected error occurred");
 					setLoading(false);
 				});
+
 		}
-	}, [API_SERVER, id]);
+	}, [API_SERVER, accessToken, id]);
 
 	// Handle input changes
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, value, type, checked } = e.target;
 		setUser((prevUser) => ({
 			...prevUser!,
-			[name]: value,
+			[name]: type === "checkbox" ? checked : value,
 		}));
 	};
 
@@ -123,15 +124,15 @@ function UserForm() {
 				</div>
 				<div>
 					<label>Is staff?</label>
-					<input type="checkbox" name="is_staff" value={user?.is_staff} onChange={handleChange} required />
+					<input type="checkbox" name="is_staff" checked={user?.is_staff} onChange={handleChange} />
 				</div>
 				<div>
 					<label>Is superuser?</label>
-					<input type="checkbox" name="is_superuser" value={user?.is_superuser} onChange={handleChange} required />
+					<input type="checkbox" name="is_superuser" checked={user?.is_superuser} onChange={handleChange} />
 				</div>
 				<div>
 					<label>Is superuser?</label>
-					<input type="checkbox" name="is_active" value={user?.is_active} onChange={handleChange} required />
+					<input type="checkbox" name="is_active" checked={user?.is_active} onChange={handleChange} />
 				</div>
 				<div>
 					<label>Last login</label>

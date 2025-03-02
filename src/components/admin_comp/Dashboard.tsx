@@ -49,7 +49,7 @@ function Dashboard() {
 
 	useEffect(() => {
 		if (!authContext?.isAuthenticated || authContext.role !== "admin") {
-			navigate("/loginAdmin");
+			navigate("/admin/login");
 		}
 	}, [authContext, navigate]);
 
@@ -86,7 +86,7 @@ function Dashboard() {
 		if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
 		if (!authContext?.accessToken) return;
 		try {
-			const response = await fetch(`/api/${type}/${id}`, {
+			const response = await fetch(`/${type}/${id}`, {
 				method: "DELETE",
 				headers: { Authorization: `Bearer ${authContext.accessToken}` },
 			});

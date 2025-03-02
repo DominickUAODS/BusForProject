@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import City, Race, Passenger, Ticket
+from .models import City, Race, Passenger, Ticket, User
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,3 +27,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data["is_staff"] = self.user.is_staff  # ✅ Добавляем `is_staff` в ответ
         return data
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

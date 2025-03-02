@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { ITicket } from "../../interfaces/ITicket";
-
-// interface Ticket {
-// 	_id: string;
-// 	raceId: string;
-// 	passengerId: string;
-// 	seatNumber: string;
-// }
 
 const TicketsPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -16,10 +10,16 @@ const TicketsPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [nextPage, setNextPage] = useState<string | null>(null); // Ссылка на следующую страницу
 	const [previousPage, setPreviousPage] = useState<string | null>(null); // Ссылка на предыдущую страницу
+	const { accessToken } = GetAuthTokensFromLocalStorage();
 
 	const fetchTickets = async (url: string) => {
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url, {
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${accessToken}`,
+				},
+			});
 
 			// Проверяем статус ответа
 			if (!response.ok) {

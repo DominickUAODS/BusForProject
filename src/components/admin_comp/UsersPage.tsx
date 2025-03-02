@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { format } from 'date-fns';
 import { IUser } from "../../interfaces/IUser";
-
-// interface User {
-// 	_id: string;
-// 	name: string;
-// 	email: string;
-// 	role: string;
-// }
+import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 
 const UsersPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -16,10 +11,16 @@ const UsersPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [nextPage, setNextPage] = useState<string | null>(null); // Ссылка на следующую страницу
 	const [previousPage, setPreviousPage] = useState<string | null>(null); // Ссылка на предыдущую страницу
+	const { accessToken } = GetAuthTokensFromLocalStorage();
 
 	const fetchUsers = async (url: string) => {
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url, {
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${accessToken}`,
+				},
+			});
 
 			// Проверяем статус ответа
 			if (!response.ok) {
@@ -33,6 +34,7 @@ const UsersPage = () => {
 			}
 
 			const data = await response.json();
+			console.log(data);
 			setUsers(data.results);
 			setNextPage(data.next); // Сохраняем ссылку на следующую страницу
 			setPreviousPage(data.previous); // Сохраняем ссылку на предыдущую страницу
@@ -49,7 +51,7 @@ const UsersPage = () => {
 
 	// Загружаем города при первом рендере
 	useEffect(() => {
-		fetchUsers(`${API_SERVER}/auth-user`);
+		fetchUsers(`${API_SERVER}/users`);
 	}, [API_SERVER]);
 
 	const handleNextPage = () => {
@@ -91,13 +93,13 @@ const UsersPage = () => {
 					{users.map((user) => (
 						<tr key={user.id}>
 							<td>{user.username}</td>
-							<td>{user.email}</td>
-							<td>{user.first_name}</td>
-							<td>{user.last_name}</td>
-							<td>{user.is_staff}</td>
-							<td>{user.is_superuser}</td>
-							<td>{user.is_active}</td>
-							<td>{user.last_login}</td>
+							<td>{user.email || 'N/A'}</td>
+							<td>{user.first_name || 'N/A'}</td>
+							<td>{user.last_name || 'N/A'}</td>
+							<td>{user.is_staff ? 'Yes' : 'No'}</td>
+							<td>{user.is_superuser ? 'Yes' : 'No'}</td>
+							<td>{user.is_active ? 'Yes' : 'No'}</td>
+							<td>{format(new Date(user.last_login), 'dd.MM.yyyy HH:mm') || 'Never logged in'}</td>
 							<td><Link to={`/users/edit/${user.id}`}>Edit</Link></td>
 						</tr>
 					))}

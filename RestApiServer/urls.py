@@ -25,6 +25,7 @@ router.register('cities', CityViewSet, 'city')
 router.register('races', RaceViewSet, 'race')
 router.register('passengers', PassengerViewSet, 'passenger')
 router.register('tickets', TicketViewSet, 'ticket')
+router.register('users', UserViewSet, 'users')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

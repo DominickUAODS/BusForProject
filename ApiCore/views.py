@@ -5,9 +5,9 @@ from rest_framework.filters import SearchFilter
 from rest_framework.exceptions import PermissionDenied
 from django.db.models import Q
 from django_filters.rest_framework.backends import DjangoFilterBackend
-from .models import City, Race, Passenger, Ticket
-from .serializers import CitySerializer, CustomTokenObtainPairSerializer, RaceSerializer, PassengerSerializer, TicketSerializer
-from .filters import CityFilter, RaceFilter, PassengerFilter, TicketFilter
+from .models import City, Race, Passenger, Ticket, User
+from .serializers import CitySerializer, CustomTokenObtainPairSerializer, RaceSerializer, PassengerSerializer, TicketSerializer, UserSerializer
+from .filters import CityFilter, RaceFilter, PassengerFilter, TicketFilter, UserFilter
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 class StaffPermission(BasePermission):
@@ -105,3 +105,30 @@ class TicketViewSet(viewsets.ModelViewSet):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    serializer_class = UserSerializer
+    filterset_class = UserFilter
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return User.objects.all()
+        return User.objects.filter(username=user.username)
+
+    def get_permissions(self):
+        if self.request.method in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']:
+            return [IsAuthenticated()]
+        return super().get_permissions()
+
+    def perform_update(self, serializer):
+        if not self.request.user.is_staff and serializer.instance.user != self.request.user:
+            raise PermissionDenied("You do not have permission to update this user.")
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        if not self.request.user.is_staff and instance.user != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this user.")
+        instance.delete()
