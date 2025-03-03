@@ -7,7 +7,7 @@ export default function UserPageHistoryComp()
     return(
         <div className="u-p-h">
         <PreHeader logoSrc={customLogo} backgroundColor="rgb(255, 255, 255)" />
-        <div className="account">
+        <div className="account-div">
             <div className="account-tabs-cont">
                 <div className="account-tabs">
                     <div className="grid-cont">
@@ -26,6 +26,13 @@ export default function UserPageHistoryComp()
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="Grid__GridContainer-qcjdad-0 frLZaI">
+                <div className="search-block">
+                    <div className="Styled__Title-sc-1vg1nn2-0 iEAUJq">У вас поки немає майбутніх поїздок</div>
+                    <div className="Styled__Caption-sc-1vg1nn2-1 lbrxpO">Щоб знайти квитки на автобус, виберіть напрямок, дату поїздки та кількість пасажирів</div>
+                    
                 </div>
             </div>
         </div>
