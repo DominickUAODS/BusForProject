@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import Page from "../models/Page";
 import Race from "../models/Race";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function TicketForm() {
     const [searchParams] = useSearchParams();
+    const location = useLocation();
+    
     const city_from: string = searchParams.get("city_from") ?? "";
     const city_to: string = searchParams.get("city_to") ?? "";
     const date_str: string = searchParams.get("date") ?? "";
@@ -52,7 +54,7 @@ export default function TicketForm() {
     useEffect(() => {
         fetchRaces();
         fetchRacesFiltered();
-    }, [])
+    }, [location]);
 
     return (
         <div style={{backgroundColor: "gray"}}>
