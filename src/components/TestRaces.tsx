@@ -10,9 +10,9 @@ export default function TicketForm() {
     const date_str: string = searchParams.get("date") ?? "";
     const date: Date = new Date(date_str);
     const time_from: Date = new Date(date);
-    time_from.setUTCHours(0, 0, 0, 0);
+    time_from.setHours(0, 0, 0, 0);
     const time_to: Date = new Date(date);
-    time_to.setUTCHours(23, 59, 59, 999);
+    time_to.setHours(23, 59, 59, 999);
     const passengers: string = searchParams.get("passengers") ?? "";
 
     const [races, setRaces] = useState<Race[]>([]);
