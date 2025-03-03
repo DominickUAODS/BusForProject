@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 .index-cont{
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0px auto;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 30px;
+    background-color:white;
 }
 .index-block-v0{
-    margin-top: 30px;
-    padding-left: 17%;
+    width: 100%;
+    max-width: 1044px;
+    padding: 0px 32px;
+    margin: 0px auto;
+    
+
 }
 
 .index-block-v0-v0{
@@ -142,7 +151,7 @@ p{
 }
 
 .i-b-v3-v0-v0-v1-a{
-    color: rgb(51, 51, 51);
+    color: rgb(51, 51, 51) !important;
     display: inline-block;
     margin-top: 15px;
     margin-bottom: 5px;
@@ -172,7 +181,7 @@ p{
 .i-b-v3-v0-v0-v2-a2,
 .i-b-v3-v0-v0-v3-a2,
 .i-b-v3-v0-v0-v4-a2{
-    color: rgb(51, 51, 51);
+    color: rgb(51, 51, 51) !important;
     text-decoration: none;
     font-weight: 490;
 }
@@ -186,6 +195,10 @@ p{
     margin-top: var(--bs-gutter-y);
 }
 
+.bg-gray{
+    width:100%;
+    background-color: white;
+}
 @media only screen and (max-width: 766px) {
 .index-block-v0-v0 {
 padding: 0px ;

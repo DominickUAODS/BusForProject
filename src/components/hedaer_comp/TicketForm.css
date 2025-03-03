@@ -1,0 +1,447 @@
+.ticket-form{
+    position: relative;
+    display: flex;
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+.field-from{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.field-psngrs{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.field-to,
+.field-date,
+.field-psngrs,
+.field-from{
+    position: relative;
+    flex: 1 1 100%;
+    margin-right: -1px;
+    margin-left: -1px;
+}
+
+.field-from-v1,
+.field-to-v1,
+.field-date-v1{
+    position: relative;
+}
+
+.field-from-info,
+.field-to-info,
+.field-date-info,
+.field-psngrs-info{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-height: 56px;
+    font-size: 16px;
+    cursor: text;
+    transition: all 0.15s ease-in-out 0s;
+}
+
+.field-to-info-label,
+.field-from-info-label,
+.field-date-info-label,
+.field-psngrs-info-label{
+    position: absolute;
+    left: 12px;
+    z-index: 1;
+    max-width: calc(100% - 40px);
+    margin: 0px;
+    overflow-x: hidden;
+    font-size: 10px;
+    color: rgb(180, 171, 171);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: all 0.15s ease-in-out 0s;
+    transform: translateY(10px);
+}
+
+.field-date-info-label,
+.field-psngrs-info-label{
+    color: rgb(180, 171, 171);
+    font-size: 10px;
+    transform: translateY(10px);
+}
+
+.span-input-field-from select{
+    border-bottom-left-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+}
+
+.span-input-field-from select,
+.span-input-field-to select,
+.span-input-field-date input,
+.span-input-field-psngrs input{
+    min-height: 60px;
+    padding: 26px 30px 10px 12px;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    color: inherit;
+    background-color: white;
+    border: 1px solid rgb(233, 233, 233);
+    border-radius: initial;
+    outline: none;
+    flex: 1 1 100% !important;
+}
+
+.span-input-field-psngrs input{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.span-input-field-psngrs input{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.select-from:focus,
+.select-to:focus{
+    outline: none;
+}
+
+.calendar-icon,
+.psngrs-i{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+.button-switch{
+    position: absolute;
+    top: calc(50% - 8px);
+    right: 13px;
+    z-index: 1;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 150ms ease 0ms;
+    transform: scaleX(-1);
+}
+
+.overlay{
+    position: absolute;
+    bottom: -30px;
+    left: 0px;
+    padding-bottom: 5px;
+    margin-left: 3.5px;
+    color: white;
+    white-space: nowrap;
+}
+
+.buttom-tommorow,
+.button-tommorowX2,
+.button-all-days{
+    padding: 0px;
+    margin: 0px 2.5px;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px dashed white;
+    background: none;
+    white-space: nowrap;
+    color:white ;
+}
+
+.label-for-psngrs{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 34px;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.psngrs-i{
+    display: inline-block;
+    line-height: normal;
+}
+
+.btn-search{
+    display: flex;
+    min-height: 60px;
+    margin-left: 10px;
+    position: relative;
+    flex: 1 1 100%;
+    margin-right: -1px;
+}
+
+.button-to-search{
+    display: inline-block;
+    width: auto;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 0px;
+    outline: 0px;
+    color: white;
+    background-color: rgb(249, 37, 63);
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0px, 0px, 0px);
+    padding: 13px 30px;
+    font-size: 16px;
+    border-radius: 4px;
+    line-height: 20px;
+    transition: all 0.28s ease-in-out 0s;
+    will-change: transform;
+    flex: 1 1 0%
+}
+
+.date-picker-modal,
+.passengers-modal{
+    position: absolute;
+    top: 100%;
+    margin-top: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    z-index: 10;
+    user-select: none;
+}
+
+.date-picker-modal{
+    left: 0;
+    width: 250px;
+}
+
+.passengers-modal{
+    right: 0;
+    width: 300px;
+    background-color: white;
+}
+
+.date-picker-close-button,
+.passengers-modal-close-button{
+    width: 100%;
+    background-color: rgb(249, 37, 63);
+}
+
+.react-calendar{
+    background-color: white;
+    font-size: 13px;
+}
+
+.react-calendar button{
+    background-color: white;
+    color: black;
+}
+
+.react-calendar__navigation button{
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button{
+    color: rgb(249, 37, 63) !important;
+    font-weight: bold;
+}
+
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button{
+    display: none;
+}
+
+.react-calendar__tile{
+    aspect-ratio: 1;
+    padding: 5px !important;
+    border-radius: 6px;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth{
+    visibility: hidden;
+}
+
+.react-calendar__tile--active{
+    background-color: rgb(249, 37, 63) !important;
+    color: white !important;
+}
+
+.react-calendar__tile[disabled]{
+    color: rgb(200, 200, 200);
+    cursor: not-allowed;
+}
+
+.passengers-modal hr {
+    margin: 0 14px;
+}
+
+.passengers-field{
+    background-color: white;
+    padding: 14px;
+    font-size: 18px;
+    text-align: left;
+}
+
+.label-for-adults-field,
+.label-for-children-field {
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.adults-add-i,
+.adults-remove-i,
+.children-add-i,
+.children-remove-i{
+    color: rgb(249, 37, 63);
+    cursor: pointer;
+}
+
+.adults-remove-i[aria-disabled=true],
+.children-remove-i[aria-disabled=true]{
+    color: black;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.span-input-field-from> * {
+    width:100%;
+   }
+   
+   .span-input-field-to> * {
+       width:100%;
+      }
+   
+   .field-from-info > *{
+       width:100%;
+   }
+   
+
+   
+   .field-to-info > *{
+       width:100%;
+   }
+   
+   .field-psngrs-info>*{
+       width: 100%;
+   }
+
+
+
+@media only screen and (max-width: 766px) {
+    .header-data{
+        padding-bottom: 10px;
+        padding-top: 20px;
+        padding-left:  12px;
+        padding-right:  16px;
+    }
+    .header-info{
+        margin-top: 20px;
+        flex-direction: column;
+        -webkit-box-align: start;
+        align-items: start;
+    }
+    .redirection-info-subtitle{
+        font-size: 16px;
+    }
+    
+    .ticket-form{
+        flex-wrap: wrap;
+        padding-right: 0px;
+        padding-left: 0px;
+        padding-top: 1px;
+        
+    }
+    .field-from,
+    .field-to{
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: -1px;
+        position: relative;
+        flex: 1 1 100%;
+    }
+    
+    .field-date{
+        margin-right: -1px;
+        margin-left: 0px;
+        margin-top: -1px;
+        flex: 1 1 50%;
+        position: relative;
+        border-bottom-left-radius: 4px;
+    }
+    
+    .field-from-v1{
+        position:unset;
+    }
+    
+    .button-switch{
+        top: calc(100% - 25px);
+        width: 50px;
+        height: 50px;
+        right: 1px;
+        background: white;
+        border-radius: 50%;
+        transform: rotate(90deg) scaleX(-1)
+    }
+    
+    .field-psngrs{
+        margin-right: -1px;
+        margin-left: 0px;
+        margin-top: -1px;
+        flex: 1 1 50%;
+        position: relative;
+        border-bottom-right-radius: 4px;
+    }
+    
+    .btn-search{
+        margin-left: 0px;
+        margin-top: 12px;
+    }
+    
+    .overlay{
+        display:none;
+    }
+    
+    .field-to-info{
+        display: flex;
+    }
+    
+    .span-input-field-to{
+        display: flex;
+    }
+    
+    .span-input-field-date{
+        display: flex;
+    }
+    
+    .span-input-field-psngrs{
+        display: flex;
+    }
+    
+    .header{
+        padding-bottom: 77px;
+    }
+    
+    .span-input-field-date input{
+        padding-right: 30px !important;
+        background-position-x: calc(100% - 10px);
+    }
+    
+    
+    
+    
+    
+    }
