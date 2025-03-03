@@ -124,15 +124,15 @@ function UserForm() {
 				</div>
 				<div>
 					<label>Is staff?</label>
-					<input type="checkbox" name="is_staff" checked={user?.is_staff} onChange={handleChange} />
+					<input type="checkbox" name="is_staff" value={user?.is_staff} onChange={handleChange} />
 				</div>
 				<div>
 					<label>Is superuser?</label>
-					<input type="checkbox" name="is_superuser" checked={user?.is_superuser} onChange={handleChange} />
+					<input type="checkbox" name="is_superuser" value={user?.is_superuser} onChange={handleChange} />
 				</div>
 				<div>
 					<label>Is superuser?</label>
-					<input type="checkbox" name="is_active" checked={user?.is_active} onChange={handleChange} />
+					<input type="checkbox" name="is_active" value={user?.is_active} onChange={handleChange} />
 				</div>
 				<div>
 					<label>Last login</label>

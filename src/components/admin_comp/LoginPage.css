@@ -1,0 +1,243 @@
+.login-comp {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	background-color: #E3E1DF;
+}
+
+.login-cont {
+	position: relative;
+	bottom: 50px;
+	width: 100%;
+	max-width: 728px;
+	margin: 0px auto;
+}
+
+.go-back-a {
+	display: inline-block;
+	margin-bottom: 20px;
+	color: #f9253f;
+	text-decoration: none;
+}
+
+.bi {
+	display: inline-block;
+	line-height: normal;
+}
+
+.go-back-span {
+	margin-left: 10px;
+}
+
+.login-form {
+	position: relative;
+	width: 100%;
+	padding: 90px 42px 42px;
+	background: rgb(255, 255, 255);
+	border-radius: 6px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 90px 0px;
+}
+
+.login-form-table {
+	display: flex;
+	flex-flow: row;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.lk-login__subtitle {
+	margin: 0 0 8px;
+	color: #a7a7a7;
+	text-transform: none;
+}
+
+.lk-login__action {
+	margin: 0;
+	padding: 0;
+}
+
+.lk-login__action li {
+	list-style-type: none;
+	font-size: 16px;
+	margin-bottom: 4px;
+	margin-left: -2px;
+}
+
+.lk-login__action li .bi {
+	font-size: 13px;
+	transform: translateY(-2px);
+	margin-right: 10px;
+}
+
+.gywEcu {
+	margin-top: 20px;
+	margin-bottom: 0px;
+	font-size: 12px;
+	line-height: 1.17;
+}
+
+a {
+	/* color: #f9253f !important; */
+	text-decoration: none !important;
+}
+
+.info-a {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.login-form-gmail {
+	width: 50%;
+}
+
+.eRZnvJ {
+	position: absolute;
+	top: 36px;
+	left: 40px;
+	font-size: 32px;
+	font-weight: 500;
+	line-height: 1.1;
+}
+
+.form-group {
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.lk-login__field {
+	height: 55px;
+	font-size: 18px;
+	margin-bottom: 12px;
+}
+
+.auth__input {
+	padding: 0 0 0 10px;
+	position: relative;
+	text-overflow: ellipsis;
+	box-shadow: none;
+	border-radius: 6px;
+	display: block;
+	width: 100%;
+	line-height: 1.42857;
+	color: #424543;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #d2d2d2;
+	font-family: inherit;
+}
+
+.flex-1 {
+	-webkit-box-flex: 1;
+}
+
+.lk-login__form-action .btn-primary {
+	width: 100%;
+	font-size: 14px;
+	padding: 16px 45px;
+	background-color: rgb(249, 37, 63);
+	border-radius: 4px;
+	color: rgb(255, 255, 255);
+	line-height: 20px;
+	transition: all 0.28s ease-in-out 0s;
+}
+
+.lk-login__form {
+	margin-left: 10px;
+}
+
+.gMInnu:hover,
+.gMInnu:focus {
+	background-color: rgb(230, 30, 50) !important;
+}
+
+.gMInnu:hover,
+.gMInnu:focus {
+	text-decoration: none !important;
+}
+
+.eJiBVI {
+	margin-bottom: 12px;
+}
+
+.SIeTo {
+	margin-bottom: 0px;
+	font-size: 14px;
+}
+
+.TWjli {
+	margin-bottom: 0px;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.lk-login__field {
+	height: 55px;
+	font-size: 18px;
+	margin-bottom: 12px;
+}
+
+.TJFDT {
+	font-size: 12px;
+	line-height: 1.17;
+	margin-top: 0px;
+	margin-bottom: 16px;
+}
+
+/* Mobile responsiveness */
+@media only screen and (max-width: 766px) {
+	.login-comp {
+		align-items: flex-start;
+		justify-content: flex-start;
+		background-color: #E3E1DF;
+	}
+
+	.login-cont {
+		bottom: 0px;
+		margin-top: 20px;
+		padding: 0px 25px;
+		align-self: flex-start;
+	}
+
+	.go-back-a {
+		margin-bottom: 18px;
+	}
+
+	.login-form {
+		padding: 0px;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.login-form-table {
+		flex-direction: column-reverse;
+	}
+
+	.login-info {
+		padding-left: 10px;
+	}
+
+	.lk-login__subtitle {
+		margin: 0 0 10px;
+	}
+
+	.login-form-gmail {
+		width: 100%;
+		margin-bottom: 30px;
+		padding: 30px 40px 35px;
+		background: rgb(255, 255, 255);
+		border-radius: 6px;
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 20px 50px 0px;
+	}
+
+	.eRZnvJ {
+		font-size: 24px;
+		position: static;
+		margin: 0px 0px 15px;
+	}
+
+	.lk-login__subtitle {
+		margin: 0 0 10px;
+	}
+}

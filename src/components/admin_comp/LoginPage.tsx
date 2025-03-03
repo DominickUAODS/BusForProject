@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../helpers/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import './LoginPage.css';
 
 const Login: React.FC = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -33,11 +34,24 @@ const Login: React.FC = () => {
 	};
 
 	return (
-		<form onSubmit={handleLogin}>
-			<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Логин" />
-			<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Пароль" />
-			<button type="submit">Войти</button>
-		</form>
+		<div className="login-comp"> {/* Контейнер для логина */}
+			<div className="login-cont"> {/* Контейнер для формы */}
+				<div className="login-form">
+					<h2>Вход</h2>
+					<form onSubmit={handleLogin}>
+						<div className="form-group">
+							<label htmlFor="username">Логин</label>
+							<input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="auth__input"	placeholder="Логин" />
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Пароль</label>
+							<input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="auth__input" placeholder="Пароль" />
+						</div>
+						<button type="submit" className="lk-login__form-action">Войти</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	);
 };
 

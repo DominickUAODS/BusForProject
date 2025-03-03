@@ -97,23 +97,11 @@ export default function CityForm() {
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label>Name EN</label>
-					<input
-						type="text"
-						name="name_en"
-						value={city?.name_en}
-						onChange={handleChange}
-						required
-					/>
+					<input type="text" name="name_en" value={city?.name_en} onChange={handleChange} required />
 				</div>
 				<div>
 					<label>Name UA</label>
-					<input
-						type="text"
-						name="name_ua"
-						value={city?.name_ua}
-						onChange={handleChange}
-						required
-					/>
+					<input type="text" name="name_ua" value={city?.name_ua} onChange={handleChange} required />
 				</div>
 				<button type="submit" disabled={loading}>
 					{id ? "Update City" : "Create City"}
