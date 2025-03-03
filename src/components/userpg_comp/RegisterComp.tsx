@@ -6,6 +6,7 @@ export default function RegisterComp() {
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
     const [isCodeSent, setIsCodeSent] = useState(false);
+    const [attempts, setAttempts] = useState(0);
     const navigate = useNavigate();
 
     // Функция отправки кода на email
@@ -16,7 +17,7 @@ export default function RegisterComp() {
         }
     
         try {
-            const response = await fetch("http://localhost:8000/send-code/", {
+            const response = await fetch(`${import.meta.env.VITE_API_SERVER}/send-code/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
@@ -45,7 +46,7 @@ export default function RegisterComp() {
         }
 
         try {
-            const response = await fetch("http://localhost:8000/verify-code/", {
+            const response = await fetch(`${import.meta.env.VITE_API_SERVER}/verify-code/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, code }),
@@ -57,9 +58,19 @@ export default function RegisterComp() {
                 console.log("Код введен:", code);
                 navigate("/new/account/history");
             } else {
-                alert(data.error);
+                const newAttempts = attempts + 1;
+                setAttempts(newAttempts);
                 setCode("");
+
+                if (newAttempts >= 3) {
+                    setIsCodeSent(false);
+                    setEmail("");
+                    setAttempts(0);
+                } else {
+
+                }
             }
+        
         } catch (error) {
             console.error("Помилка з'єднання:", error);
             alert("Сталася помилка, спробуйте ще раз.");
@@ -153,6 +164,7 @@ export default function RegisterComp() {
                                         value={code}
                                         onChange={(e) => setCode(e.target.value)}
                                     />
+                                    {attempts > 0 && <p style={{ color: "rgb(249, 37, 63)" }}>Спробуйте ще раз ({3 - attempts} спроб залишилось)</p>}
                                     <div className="lk-login__form-action">
                                         <button type="button" onClick={verifyCode} className="btn btn-primary btn-block">
                                             Підтвердити

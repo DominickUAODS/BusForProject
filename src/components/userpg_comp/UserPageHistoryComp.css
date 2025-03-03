@@ -22,11 +22,7 @@ body{
     color: black;
 }
 
-.support-img svg,
-.account-img svg,
-.switcher-img svg{
-    fill: rgb(249, 37, 63);;
-}
+
 
 .language-switch-box{
  
@@ -38,7 +34,7 @@ body{
     width: 100%;
     padding: 0px 16px;
     cursor: pointer;
-    border: 1px solid rgb(249, 37, 63);
+    border: 1px solid;
     border-radius: 18px;
 
 }
@@ -83,6 +79,13 @@ body{
     display: flex;
     margin: 0px 0px 0px -16px;
     list-style-type: none;
+}
+
+.u-p-h-div-form{
+    padding: 32px 12px 44px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px;
 }
 
 .eXYpNB {

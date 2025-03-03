@@ -4,8 +4,10 @@ import Calendar from "react-calendar";
 import Page from "../../models/Page";
 import City from "../../models/City";
 import { useNavigate } from "react-router-dom";
-
-export default function TicketForm() {
+type TicketFormProps = {
+    customClass?: string; 
+};
+export default function TicketForm({customClass}:TicketFormProps) {
     const day = 1000 * 60 * 60 * 24;
     const minAdults = 1;
     const minChildren = 0;
@@ -96,7 +98,7 @@ export default function TicketForm() {
 
 
     return (
-        <div className="ticket-form">
+        <div  className={`ticket-form ${customClass || ""}`}>
             <div className="field-from">
                 <div>
                     <div className="field-from-v1">

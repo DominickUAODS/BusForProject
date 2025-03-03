@@ -1,12 +1,15 @@
 import PreHeader from "../hedaer_comp/PreHeader";
 import "./UserPageHistoryComp.css";
 import customLogo from "../../assets/images/mainLogoHistory.png";
+import TicketForm from "../hedaer_comp/TicketForm";
+
+
 
 export default function UserPageHistoryComp()
 {
     return(
         <div className="u-p-h">
-        <PreHeader logoSrc={customLogo} backgroundColor="rgb(255, 255, 255)" />
+        <PreHeader logoSrc={customLogo} backgroundColor="rgb(255, 255, 255)" textColor="rgb(249, 37, 63)" />
         <div className="account-div">
             <div className="account-tabs-cont">
                 <div className="account-tabs">
@@ -32,7 +35,9 @@ export default function UserPageHistoryComp()
                 <div className="search-block">
                     <div className="Styled__Title-sc-1vg1nn2-0 iEAUJq">У вас поки немає майбутніх поїздок</div>
                     <div className="Styled__Caption-sc-1vg1nn2-1 lbrxpO">Щоб знайти квитки на автобус, виберіть напрямок, дату поїздки та кількість пасажирів</div>
-                    
+                    <div className="u-p-h-div-form">
+                        <TicketForm  customClass="history-page-style"/>
+                    </div>
                 </div>
             </div>
         </div>
