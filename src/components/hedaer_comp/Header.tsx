@@ -9,7 +9,7 @@ export default function Header() {
 
 	return (
 		<div className="header">
-           <PreHeader/>
+           <PreHeader backgroundColor=" rgb(45, 209, 255)"/>
 			<div className="header-data">
 				<div className="header-info">
 					<div className="header-info-title">

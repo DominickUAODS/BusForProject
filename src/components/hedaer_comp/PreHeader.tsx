@@ -7,12 +7,16 @@ import { useNavigate } from "react-router-dom";
 
 interface PreHeaderProps {
   logoSrc?: string;
+  backgroundColor?: string;
 }
-export default function PreHeader({ logoSrc }: PreHeaderProps) {
+export default function PreHeader({ logoSrc,backgroundColor }: PreHeaderProps) {
     const [isSupportOpen, setIsSupportOpen] = useState(false);
     const navigate = useNavigate();
     return (
-      <div className="pre-header">
+      <div className="pre-header"
+      style={{
+        backgroundColor: backgroundColor || 'defaultColor', 
+      }}>
         <img className="logo-img" src={logoSrc || logo} alt="logo" />
   
         {/* Бургер-меню */}
