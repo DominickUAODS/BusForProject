@@ -346,12 +346,7 @@ select {
        width: 100%;
    }
 
-   .history-page-style .ticket-form{
-    width: 100%;
-    max-width: 1044px;
-    padding: 0px 32px;
-    margin: 0px auto;
-   }
+
 
 @media only screen and (max-width: 766px) {
     .header-data{

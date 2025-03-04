@@ -4,15 +4,18 @@ import "./BurgerMenu.css"
 import logo from "../../assets/images/mainLogo-dark.png"; 
 import { useNavigate } from "react-router-dom";
 
+type BurgerMenuProps = {
+    iconColorBurger?:string
+}
 
-export default function BurgerMenu() {
+export default function BurgerMenu({iconColorBurger}:BurgerMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const navigate = useNavigate();
   return(
     <div className="burger-menu" onClick={() => setIsOpen(!isOpen)}>
         <div className="burger-menu2">
-            <svg height="16" viewBox="0 0 25 16" width="25" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <svg height="16" viewBox="0 0 25 16" width="25" fill={iconColorBurger} xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 1a1 1 0 0 1 1-1h23a1 1 0 0 1 0 2H1a1 1 0 0 1-1-1zm0 7a1 1 0 0 0 1 1h23a1 1 0 0 0 0-2H1a1 1 0 0 0-1 1zm0 7a1 1 0 0 0 1 1h23a1 1 0 0 0 0-2H1a1 1 0 0 0-1 1z" />
             </svg>
         </div>

@@ -56,7 +56,7 @@ export default function RegisterComp() {
 
             if (response.ok) {
                 console.log("Код введен:", code);
-                navigate("/new/account/history");
+                navigate("/new/account/future");
             } else {
                 const newAttempts = attempts + 1;
                 setAttempts(newAttempts);
