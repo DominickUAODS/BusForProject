@@ -4,51 +4,13 @@ import Calendar from "react-calendar";
 import Page from "../../models/Page";
 import City from "../../models/City";
 import { useNavigate } from "react-router-dom";
+import uaMonthNames from "../../ua_localize/uaMonthNames";
+import getUaPassengersCountName from "../../ua_localize/getUaPassengersCountName";
 
 export default function TicketForm() {
     const day = 1000 * 60 * 60 * 24;
     const minAdults = 1;
     const minChildren = 0;
-    const uaMonthNames: string[] = [
-        "січня",
-        "лютого",
-        "березня",
-        "квітня",
-        "травня",
-        "червня",
-        "липня",
-        "серпня",
-        "вересня",
-        "жовтня",
-        "листопада",
-        "грудня",
-    ]
-    const getUaPassengersCountName = (count: number) => {
-        switch (count % 10) {
-            case 1:
-                switch (count) {
-                    case 1:
-                        return "дорослий";
-                    case 11:
-                        return "осіб";
-                    default:
-                        return "особа";
-                }
-            case 2:
-            case 3:
-            case 4:
-                switch (count) {
-                    case 12:
-                    case 13:
-                    case 14:
-                        return "осіб";
-                    default:
-                        return "особи";
-                }
-            default:
-                return "осіб";
-        }
-    }
 
     const [cities, setCities] = useState<City[]>([]);
     const [date, setDate] = useState<Date>(new Date(Date.now() + day));

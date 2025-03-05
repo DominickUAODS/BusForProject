@@ -3,20 +3,19 @@ import './App.css'
 import FooterComp from './components/footer_comp/FooterComp'
 import Header from './components/hedaer_comp/Header'
 import IndexComp from './components/index_comp/IndexComp'
-import TestRaces from "./components/TestRaces";
+import RacesComp from "./components/races_comp/RacesComp";
 
 function App() {
 
 
   return (
     <Router>
-      <Header /> {/* Добавляем Header */}
+      <Header />
       <Routes>
-        <Route path="/" element={<></>} />
-        <Route path="/races" element={<TestRaces />} />
+        <Route path="/" element={<IndexComp />} />
+        <Route path="/races" element={<RacesComp />} />
       </Routes>
-      <IndexComp /> {/* Добавляем основной контент IndexComp */}
-      <FooterComp /> {/* Добавляем Footer */}
+      <FooterComp />
     </Router>
   )
 }

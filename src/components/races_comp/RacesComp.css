@@ -1,0 +1,35 @@
+.races-wrapper {
+    background-color: #f5f5f5;
+}
+
+.races-content {
+    max-width: 1044px;
+    margin: 0 auto;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.races-note-1 {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.races-direction {
+    margin-top: 8px;
+    font-size: 38px;
+    font-weight: 500;
+}
+
+.races-note-2 {
+    margin-top: 24px;
+    font-size: 14px;
+    color: #424543;
+    font-weight: 400;
+}
+
+.races-description {
+    font-size: 24px;
+    color: #424543;
+    font-weight: 400;
+}
