@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoginPage from "./components/admin_comp/LoginPage";
 import Dashboard from "./components/admin_comp/Dashboard";
@@ -14,6 +14,12 @@ import PassengerForm from "./components/admin_comp/PassengerForm";
 import TicketForm from "./components/admin_comp/TicketForm";
 import IndexComp from './components/index_comp/IndexComp';
 import RacesComp from "./components/races_comp/RacesComp";
+import RegisterComp from './components/userpg_comp/RegisterComp';
+import UserPageFutureComp from './components/userpg_comp/UserPageFutureComp';
+import TestRaces from "./components/TestRaces";
+import UserPageHistoryComp from "./components/userpg_comp/UserPageHistoryComp";
+import UserPageContactComp from "./components/userpg_comp/UserPageContactComp";
+
 import { AuthProvider, useAuth } from "./helpers/AuthProvider";
 
 const queryClient = new QueryClient();
@@ -38,6 +44,11 @@ function App() {
 					<Routes>
 						<Route path="/" element={<IndexComp />} />
 						<Route path="/races" element={<RacesComp />} />
+
+						<Route path="/new/account" element={<RegisterComp />} />
+						<Route path="/new/account/future" element={<UserPageFutureComp />} />
+						<Route path="/new/account/history" element={<UserPageHistoryComp />} />
+						<Route path="/new/account/contact" element={<UserPageContactComp />} />
 
 						<Route path="/admin/login" element={<LoginPage />} />
 

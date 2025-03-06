@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 .index-cont{
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0px auto;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 30px;
+    background-color:white;
 }
 .index-block-v0{
-    margin-top: 30px;
-    padding-left: 17%;
+    width: 100%;
+    max-width: 1044px;
+    padding: 0px 32px;
+    margin: 0px auto;
+    
+
 }
 
 .index-block-v0-v0{
@@ -142,7 +151,7 @@ p{
 }
 
 .i-b-v3-v0-v0-v1-a{
-    color: rgb(51, 51, 51);
+    color: rgb(51, 51, 51) !important;
     display: inline-block;
     margin-top: 15px;
     margin-bottom: 5px;
@@ -172,7 +181,118 @@ p{
 .i-b-v3-v0-v0-v2-a2,
 .i-b-v3-v0-v0-v3-a2,
 .i-b-v3-v0-v0-v4-a2{
-    color: rgb(51, 51, 51);
+    color: rgb(51, 51, 51) !important;
     text-decoration: none;
     font-weight: 490;
+}
+
+.row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)* .5);
+    padding-left: calc(var(--bs-gutter-x)* .5);
+    margin-top: var(--bs-gutter-y);
+}
+
+.bg-gray{
+    width:100%;
+    background-color: white;
+}
+@media only screen and (max-width: 766px) {
+.index-block-v0-v0 {
+padding: 0px ;
+
+}
+.index-block-v0-v0-h1{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 10px;
+
+}
+
+.i-b-v0-v0-s1 {
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.i-b-v0-v0-s2{
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.i-b-v1-v0{
+    padding: 0;
+}
+
+.index-block-v0{
+    padding: 0;
+}
+
+.i-b-v1{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.i-b-v1-v0-v0,
+.i-b-v1-v0-v1,
+.i-b-v1-v0-v2,
+.i-b-v1-v0-v3{
+    flex-basis: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.i-b-v1-v0-v0-h5,
+.i-b-v1-v0-v2-h5,
+.i-b-v1-v0-v3-h5,
+i.i-b-v1-v0-v1-h5{
+    margin-top: 0px;
+}
+.i-b-v1-v0-v0-p,
+.i-b-v1-v0-v1-p,
+.i-b-v1-v0-v2-p,
+.i-b-v1-v0-v3-p{
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.index-cont{
+    padding: 0px 12px;
+}
+.i-b-v2-v0-seo .h3{
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.col-sm-4{
+    margin-bottom: 26px;
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+    flex: none !important;
+    width: auto !important;
+}
+
+.i-b-v3-v0 {
+    padding: 0px 12px;
+}
+.i-b-v3-v0-v0-v1, .i-b-v3-v0-v0-v2, .i-b-v3-v0-v0-v3, .i-b-v3-v0-v0-v4{
+    flex-basis: 100%;
+}
+
+.i-b-v2-v0{
+padding: 0;
+}
+
+.col-sm-4{
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
 }

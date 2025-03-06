@@ -4,10 +4,10 @@ import Calendar from "react-calendar";
 import Page from "../../models/Page";
 import City from "../../models/City";
 import { useNavigate } from "react-router-dom";
-import uaMonthNames from "../../ua_localize/uaMonthNames";
-import getUaPassengersCountName from "../../ua_localize/getUaPassengersCountName";
-
-export default function TicketForm() {
+type TicketFormProps = {
+    customClass?: string; 
+};
+export default function TicketForm({customClass}:TicketFormProps) {
     const day = 1000 * 60 * 60 * 24;
     const minAdults = 1;
     const minChildren = 0;
@@ -19,18 +19,19 @@ export default function TicketForm() {
     const [children, setChildren] = useState<number>(0);
     const [openPassengersModal, setOpenPassengersModal] = useState<boolean>(false);
 
+
     const navigate = useNavigate();
-    const fromRef = useRef(null);
-    const toRef = useRef(null);
+
 
     const closeAllModals = () => {
         setOpenDatepicker(false);
         setOpenPassengersModal(false);
     };
-
+    const fromRef = useRef<any>(null);
+    const toRef = useRef<any>(null);
     const fetchCities = async () => {
         try{
-            const response: Response = await fetch(`${import.meta.env.VITE_API_SERVER}/cities/?page_size=100`);
+            const response: Response = await fetch(`${import.meta.env.VITE_API_SERVER}/api/cities/?page_size=100`);
             if (!response.ok) {
                 const error: Error = await response.json();
                 throw error;
@@ -54,8 +55,10 @@ export default function TicketForm() {
         fetchCities();
     }, []);
 
+
+
     return (
-        <div className="ticket-form">
+        <div  className={`ticket-form ${customClass || ""}`}>
             <div className="field-from">
                 <div>
                     <div className="field-from-v1">
@@ -73,7 +76,7 @@ export default function TicketForm() {
                 </div>
                 <div className="button-switch" onClick={() => {[fromRef.current!.value, toRef.current!.value] = [toRef.current!.value, fromRef.current!.value]}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(249, 37, 63)" className="bi bi-arrow-left-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5m14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5" />
+                        <path fillRule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5m14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5" />
                     </svg>
                 </div>
             </div>
@@ -103,7 +106,7 @@ export default function TicketForm() {
                                     <input type="text" id="on" className="form-field--datepicker" value={date.getDate() + " " + uaMonthNames[date.getMonth()]} onClick={() => {closeAllModals(); setOpenDatepicker(true);}} />
                                     <div>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(249, 37, 63)" className="calendar-icon bi bi-calendar-heart" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM1 14V4h14v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1m7-6.507c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
+                                            <path fillRule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM1 14V4h14v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1m7-6.507c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
                                         </svg>
                                     </div>
                                 </span>
@@ -152,11 +155,11 @@ export default function TicketForm() {
                             <span>Дорослий</span>
                             <label className="label-for-adults-field">
                                 <svg aria-disabled={adults === minAdults} onClick={() => setAdults(adults - 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="adults-remove-i bi bi-dash-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                                    <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
                                 </svg>
                                 <span>{adults}</span>
                                 <svg onClick={() => setAdults(adults + 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="adults-add-i bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                    <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                                 </svg>
                             </label>
                         </div>
@@ -165,11 +168,11 @@ export default function TicketForm() {
                             <span>Дитячий</span>
                             <label className="label-for-children-field">
                                 <svg aria-disabled={children === minChildren} onClick={() => setChildren(children - 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="children-remove-i bi bi-dash-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                                    <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
                                 </svg>
                                 <span>{children}</span>
                                 <svg onClick={() => setChildren(children + 1)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="children-add-i bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                    <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                                 </svg>
                             </label>
                         </div>
