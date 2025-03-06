@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { ITicket } from "../../interfaces/ITicket";
+import styles from "./TicketForm.module.css";
 
 // Типизация данных для билета
 // interface Ticket {
@@ -101,33 +102,65 @@ function TicketForm() {
 	if (loading) return <div>Loading...</div>;
 
 	return (
-		<div>
-			<h2>{id ? "Edit Ticket" : "Create Ticket"}</h2>
-			{error && <div style={{ color: "red" }}>{error}</div>}
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Is user</label>
-					<input type="text" name="is_used" value={ticket?.is_used} onChange={handleChange} required />
-				</div>
-				<div>
-					<label>Passenger ID</label>
-					<input type="text" name="passenger_id" value={ticket?.passenger_id} onChange={handleChange} required />
-				</div>
-				<div>
-					<label>Race ID</label>
-					<input type="text" name="race_id" value={ticket?.race_id} onChange={handleChange} required />
-				</div>
-				<button type="submit" disabled={loading}>{id ? "Update Ticket" : "Create Ticket"}</button>
-			</form>
-			{id && (
-				<button
-					onClick={handleDelete}
-					style={{ marginTop: "10px", backgroundColor: "red", color: "white" }}
-					disabled={loading}
-				>
-					Delete Ticket
-				</button>
-			)}
+		<div className={styles.comp}>
+			<div className={styles.cont}>
+				<h2>{id ? "Edit Ticket" : "Create Ticket"}</h2>
+
+				{error && <div className={styles.error}>{error}</div>}
+
+				<form onSubmit={handleSubmit}>
+					<div className={styles.formGroup}>
+						<label>Is User</label>
+						<input
+							type="text"
+							name="is_used"
+							value={ticket?.is_used}
+							onChange={handleChange}
+							required
+						/>
+					</div>
+
+					<div className={styles.formGroup}>
+						<label>Passenger ID</label>
+						<input
+							type="text"
+							name="passenger_id"
+							value={ticket?.passenger_id}
+							onChange={handleChange}
+							required
+						/>
+					</div>
+
+					<div className={styles.formGroup}>
+						<label>Race ID</label>
+						<input
+							type="text"
+							name="race_id"
+							value={ticket?.race_id}
+							onChange={handleChange}
+							required
+						/>
+					</div>
+
+					<button
+						type="submit"
+						className={styles.submitBtn}
+						disabled={loading}
+					>
+						{id ? "Update Ticket" : "Create Ticket"}
+					</button>
+				</form>
+
+				{id && (
+					<button
+						onClick={handleDelete}
+						className={styles.deleteBtn}
+						disabled={loading}
+					>
+						Delete Ticket
+					</button>
+				)}
+			</div>
 		</div>
 	);
 }

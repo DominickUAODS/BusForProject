@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { IPassenger } from "../../interfaces/IPassenger";
+import styles from "./PassengerForm.module.css";
 
 // Типизация данных для пассажира
 // interface Passenger {
@@ -101,33 +102,62 @@ function PassengerForm() {
 	if (loading) return <div>Loading...</div>;
 
 	return (
-		<div>
-			<h2>{id ? "Edit Passenger" : "Create Passenger"}</h2>
-			{error && <div style={{ color: "red" }}>{error}</div>}
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>First name</label>
-					<input type="text" name="first_name" value={passenger?.first_name} onChange={handleChange} required />
-				</div>
-				<div>
-					<label>Last name</label>
-					<input type="text" name="last_name" value={passenger?.last_name} onChange={handleChange} required />
-				</div>
-				<div>
-					<label>User ID</label>
-					<input type="text" name="user_id" value={passenger?.user_id} onChange={handleChange} required />
-				</div>
-				<button type="submit" disabled={loading}>{id ? "Update Passenger" : "Create Passenger"}</button>
-			</form>
-			{id && (
-				<button
-					onClick={handleDelete}
-					style={{ marginTop: "10px", backgroundColor: "red", color: "white" }}
-					disabled={loading}
-				>
-					Delete Passenger
-				</button>
-			)}
+		<div className={styles.comp}>
+			<div className={styles.cont}>
+				<h2>{id ? "Edit Passenger" : "Create Passenger"}</h2>
+				{error && <div className={styles.error}>{error}</div>}
+				<form onSubmit={handleSubmit}>
+					<div className={styles.formGroup}>
+						<label>First name</label>
+						<input
+							type="text"
+							name="first_name"
+							value={passenger?.first_name}
+							onChange={handleChange}
+							required
+							className={styles.input}
+						/>
+					</div>
+					<div className={styles.formGroup}>
+						<label>Last name</label>
+						<input
+							type="text"
+							name="last_name"
+							value={passenger?.last_name}
+							onChange={handleChange}
+							required
+							className={styles.input}
+						/>
+					</div>
+					<div className={styles.formGroup}>
+						<label>User ID</label>
+						<input
+							type="text"
+							name="user_id"
+							value={passenger?.user_id}
+							onChange={handleChange}
+							required
+							className={styles.input}
+						/>
+					</div>
+					<button
+						type="submit"
+						disabled={loading}
+						className={styles.submitBtn}
+					>
+						{id ? "Update Passenger" : "Create Passenger"}
+					</button>
+				</form>
+				{id && (
+					<button
+						onClick={handleDelete}
+						className={styles.deleteBtn}
+						disabled={loading}
+					>
+						Delete Passenger
+					</button>
+				)}
+			</div>
 		</div>
 	);
 }

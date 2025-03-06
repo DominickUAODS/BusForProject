@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../helpers/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import './LoginPage.css';
+import styles from './LoginPage.module.css';
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
 	const auth = useContext(AuthContext);
 	const navigate = useNavigate();
@@ -18,6 +18,7 @@ const Login: React.FC = () => {
 
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
+	
 		const response = await fetch(`${API_SERVER}/token-access/`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -34,20 +35,38 @@ const Login: React.FC = () => {
 	};
 
 	return (
-		<div className="login-comp"> {/* Контейнер для логина */}
-			<div className="login-cont"> {/* Контейнер для формы */}
-				<div className="login-form">
+		<div className={styles.loginComp}>
+			<div className={styles.loginCont}>
+				<div className={styles.loginForm}>
 					<h2>Вход</h2>
 					<form onSubmit={handleLogin}>
-						<div className="form-group">
+						<div className={styles.formGroup}>
 							<label htmlFor="username">Логин</label>
-							<input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="auth__input"	placeholder="Логин" />
+							<input required
+								type="text"
+								id="username"
+								name="username"
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+								className={styles.authInput}
+								placeholder="Логин"
+							/>
 						</div>
-						<div className="form-group">
+						<div className={styles.formGroup}>
 							<label htmlFor="password">Пароль</label>
-							<input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="auth__input" placeholder="Пароль" />
+							<input required
+								type="password"
+								id="password"
+								name="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								className={styles.authInput}
+								placeholder="Пароль"
+							/>
 						</div>
-						<button type="submit" className="lk-login__form-action">Войти</button>
+						<button type="submit" className={styles.btn}>
+							Войти
+						</button>
 					</form>
 				</div>
 			</div>
@@ -55,4 +74,4 @@ const Login: React.FC = () => {
 	);
 };
 
-export default Login;
+export default LoginPage;

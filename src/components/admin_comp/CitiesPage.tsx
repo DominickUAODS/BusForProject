@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ICity } from "../../interfaces/ICity";
+import styles from "./CitiesPage.module.css";
 
 const CitiesPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -59,33 +60,37 @@ const CitiesPage = () => {
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
-		<div>
-			<h2>Cities</h2>
-			<Link to="/cities/new">Create New City</Link>
-			<table>
-				<thead>
-					<tr>
-						<th>Name EN</th>
-						<th>Name UA</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{cities.map((city) => (
-						<tr key={city.id}>
-							<td>{city.name_en}</td>
-							<td>{city.name_ua}</td>
-							<td>
-								<Link to={`/cities/edit/${city.id}`}>Edit</Link>
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+		<div className={styles.comp}>
+			<div className={styles.cont}>
+				<div className={styles.title}><h2>Cities</h2></div>
+				<Link to="/cities/new" className={styles.createLink}>Create New City</Link>
+				<div className={styles.table}>
+					<table>
+						<thead>
+							<tr>
+								<th>Name EN</th>
+								<th>Name UA</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{cities.map((city) => (
+								<tr key={city.id}>
+									<td>{city.name_en}</td>
+									<td>{city.name_ua}</td>
+									<td>
+										<Link to={`/cities/edit/${city.id}`} className={styles.editLink}>Edit</Link>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 
-			<div>
-				<button onClick={handlePreviousPage} disabled={!previousPage}>Previous</button>
-				<button onClick={handleNextPage} disabled={!nextPage}>Next</button>
+				<div className={styles.pagination}>
+					<button className={styles.pageBtn} onClick={handlePreviousPage} disabled={!previousPage}>Previous</button>
+					<button className={styles.pageBtn} onClick={handleNextPage} disabled={!nextPage}>Next</button>
+				</div>
 			</div>
 		</div>
 	);

@@ -3,14 +3,14 @@
 	justify-content: center;
 	width: 100vw;
 	min-height: 100vh;
-	background-color: #f4f4f4;
+	background-color: #e3e1df;
 	align-items: center;
 	padding: 20px;
 }
 
 .cont {
 	width: 100%;
-	width: 1000px;
+	max-width: 1000px;
 	background-color: white;
 	padding: 20px;
 	border-radius: 8px;
@@ -19,9 +19,9 @@
 
 .title {
 	text-align: center;
+	margin-bottom: 20px;
 	font-size: 24px;
 	font-weight: 600;
-	margin-bottom: 20px;
 }
 
 .createLink {
@@ -37,9 +37,9 @@
 }
 
 .table {
-	/* width: 100%; */
+	width: 100%;
 	border-collapse: collapse;
-	margin-bottom: 20px;
+	background-color: azure;
 }
 
 .table th,
@@ -102,6 +102,11 @@
 }
 
 @media only screen and (max-width: 766px) {
+	.comp {
+		padding: 10px;
+		align-items: flex-start;
+	}
+
 	.cont {
 		padding: 15px;
 		margin-top: 20px;

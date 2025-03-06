@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { ITicket } from "../../interfaces/ITicket";
+import styles from "./TicketsPage.module.css";
 
 const TicketsPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -65,33 +66,48 @@ const TicketsPage = () => {
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
-		<div>
-			<h2>Tickets</h2>
-			<Link to="/tickets/new">Create New Ticket</Link>
-			<table>
-				<thead>
-					<tr>
-						<th>Is used</th>
-						<th>Passenger ID</th>
-						<th>Race ID</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{tickets.map((ticket) => (
-						<tr key={ticket.id}>
-							<td>{ticket.is_used}</td>
-							<td>{ticket.passenger_id}</td>
-							<td>{ticket.race_id}</td>
-							<td><Link to={`/tickets/edit/${ticket.id}`}>Edit</Link></td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+		<div className={styles.comp}>
+			<div className={styles.cont}>
+				<div className={styles.title}>Tickets</div>
+				<Link to="/tickets/new" className={styles.createLink}>Create New Ticket</Link>
 
-			<div>
-				<button onClick={handlePreviousPage} disabled={!previousPage}>Previous</button>
-				<button onClick={handleNextPage} disabled={!nextPage}>Next</button>
+				<table className={styles.table}>
+					<thead>
+						<tr>
+							<th>Is Used</th>
+							<th>Passenger ID</th>
+							<th>Race ID</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{tickets.map((ticket) => (
+							<tr key={ticket.id}>
+								<td>{ticket.is_used}</td>
+								<td>{ticket.passenger_id}</td>
+								<td>{ticket.race_id}</td>
+								<td><Link to={`/tickets/edit/${ticket.id}`} className={styles.editLink}>Edit</Link></td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+
+				<div className={styles.pagination}>
+					<button
+						onClick={handlePreviousPage}
+						disabled={!previousPage}
+						className={styles.pageBtn}
+					>
+						Previous
+					</button>
+					<button
+						onClick={handleNextPage}
+						disabled={!nextPage}
+						className={styles.pageBtn}
+					>
+						Next
+					</button>
+				</div>
 			</div>
 		</div>
 	);

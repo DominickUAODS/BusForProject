@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { IPassenger } from "../../interfaces/IPassenger";
+import styles from "./PassengersPage.module.css";
 
 const PassengersPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -65,33 +66,52 @@ const PassengersPage = () => {
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
-		<div>
-			<h2>Passengers</h2>
-			<Link to="/passengers/new">Create New Passenger</Link>
-			<table>
-				<thead>
-					<tr>
-						<th>First name</th>
-						<th>Last name</th>
-						<th>User ID</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{passengers.map((passenger) => (
-						<tr key={passenger.id}>
-							<td>{passenger.first_name}</td>
-							<td>{passenger.last_name}</td>
-							<td>{passenger.user_id}</td>
-							<td><Link to={`/passengers/edit/${passenger.id}`}>Edit</Link></td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+		<div className={styles.comp}>
+			<div className={styles.cont}>
+				<h2 className={styles.title}>Passengers</h2>
+				<Link to="/passengers/new" className={styles.createLink}>Create New Passenger</Link>
 
-			<div>
-				<button onClick={handlePreviousPage} disabled={!previousPage}>Previous</button>
-				<button onClick={handleNextPage} disabled={!nextPage}>Next</button>
+				<table className={styles.table}>
+					<thead>
+						<tr>
+							<th>First name</th>
+							<th>Last name</th>
+							<th>User ID</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{passengers.map((passenger) => (
+							<tr key={passenger.id}>
+								<td>{passenger.first_name}</td>
+								<td>{passenger.last_name}</td>
+								<td>{passenger.user_id}</td>
+								<td>
+									<Link to={`/passengers/edit/${passenger.id}`} className={styles.editLink}>
+										Edit
+									</Link>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+
+				<div className={styles.pagination}>
+					<button
+						onClick={handlePreviousPage}
+						disabled={!previousPage}
+						className={styles.pageBtn}
+					>
+						Previous
+					</button>
+					<button
+						onClick={handleNextPage}
+						disabled={!nextPage}
+						className={styles.pageBtn}
+					>
+						Next
+					</button>
+				</div>
 			</div>
 		</div>
 	);

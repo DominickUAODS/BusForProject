@@ -2,49 +2,20 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../helpers/AuthProvider";
 import styles from "./Dashboard.module.css";
-
-interface User {
-	_id: string;
-	name: string;
-	email: string;
-	role: string;
-}
-
-interface City {
-	_id: string;
-	name: string;
-	country: string;
-}
-
-interface Race {
-	_id: string;
-	name: string;
-	date: string;
-	city: string;
-}
-
-interface Passenger {
-	_id: string;
-	name: string;
-	age: number;
-	race: string;
-}
-
-interface Ticket {
-	_id: string;
-	raceId: string;
-	passengerId: string;
-	seatNumber: string;
-}
+import { IUser } from "../../interfaces/IUser";
+import { ICity } from "../../interfaces/ICity";
+import { IRace } from "../../interfaces/IRace";
+import { IPassenger } from "../../interfaces/IPassenger";
+import { ITicket } from "../../interfaces/ITicket";
 
 function Dashboard() {
 	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
-	const [users, setUsers] = useState<User[]>([]);
-	const [cities, setCities] = useState<City[]>([]);
-	const [races, setRaces] = useState<Race[]>([]);
-	const [passengers, setPassengers] = useState<Passenger[]>([]);
-	const [tickets, setTickets] = useState<Ticket[]>([]);
+	const [users, setUsers] = useState<IUser[]>([]);
+	const [cities, setCities] = useState<ICity[]>([]);
+	const [races, setRaces] = useState<IRace[]>([]);
+	const [passengers, setPassengers] = useState<IPassenger[]>([]);
+	const [tickets, setTickets] = useState<ITicket[]>([]);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -79,7 +50,6 @@ function Dashboard() {
 			fetchData("passengers", setPassengers);
 			fetchData("tickets", setTickets);
 		}
-		
 	}, [authContext]);
 
 	const handleDelete = async (type: string, id: string) => {
@@ -95,11 +65,11 @@ function Dashboard() {
 				return handleDelete(type, id);
 			}
 			if (!response.ok) throw new Error(`Failed to delete ${type}`);
-			setUsers(users.filter((user) => user._id !== id));
-			setCities(cities.filter((city) => city._id !== id));
-			setRaces(races.filter((race) => race._id !== id));
-			setPassengers(passengers.filter((passenger) => passenger._id !== id));
-			setTickets(tickets.filter((ticket) => ticket._id !== id));
+			setUsers(users.filter((user) => user.id !== id));
+			setCities(cities.filter((city) => city.id !== id));
+			setRaces(races.filter((race) => race.id !== id));
+			setPassengers(passengers.filter((passenger) => passenger.id !== id));
+			setTickets(tickets.filter((ticket) => ticket.id !== id));
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Error deleting the item.");
 		}
@@ -110,20 +80,19 @@ function Dashboard() {
 	return (
 		<div className={styles.dashboard}>
 			<h2>Dashboard</h2>
-			{error && <div style={{ color: "red" }}>{error}</div>}
-			{[
-				/* eslint-disable */
-				{ title: "Users", data: users as Record<string, any>[], path: "users", columns: ["name", "email", "role"] },
-				{ title: "Cities", data: cities as Record<string, any>[], path: "cities", columns: ["name", "country"] },
-				{ title: "Races", data: races as Record<string, any>[], path: "races", columns: ["name", "date", "city"] },
-				{ title: "Passengers", data: passengers as Record<string, any>[], path: "passengers", columns: ["name", "age", "race"] },
-				{ title: "Tickets", data: tickets as Record<string, any>[], path: "tickets", columns: ["raceId", "passengerId", "seatNumber"] },
-				/* eslint-enable */
+			{error && <div className={styles.error}>{error}</div>}
+			{[{ title: "Users", data: users, path: "users", columns: ["username", "email", "first_name", "last_name", "email", "is_staff", "is_superuser", "is_active", "last_login", "date_joined"] },
+			{ title: "Cities", data: cities, path: "cities", columns: ["name_en", "name_ua"] },
+			{ title: "Races", data: races, path: "races", columns: ["time_start", "time_end", "cost", "places", "city_from", "city_to"] },
+			{ title: "Passengers", data: passengers, path: "passengers", columns: ["first_name", "last_name", "user_id"] },
+			{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger_id", "race_id"] },
 			].map(({ title, data, path, columns }) => (
-				<div key={path}>
-					<h3>{title}</h3>
-					<Link to={`/${path}/new`}>Create New {title.slice(0, -1)}</Link>
-					<table>
+				<div key={path} className={styles.tableContainer}>
+					<h3>
+						<Link to={`/${path}`} className={styles.sectionLink}>{title}</Link>
+					</h3>
+					<Link to={`/${path}/new`} className={styles.createLink}>Create New {title.slice(0, -1)}</Link>
+					<table className={styles.table}>
 						<thead>
 							<tr>
 								{columns.map((col) => (
@@ -134,12 +103,12 @@ function Dashboard() {
 						</thead>
 						<tbody>
 							{data.map((item) => (
-								<tr key={item._id}>
+								<tr key={item.id}>
 									{columns.map((col) => (
 										<td key={col}>{item[col as keyof typeof item]}</td>
 									))}
 									<td>
-										<button onClick={() => handleDelete(path, item._id)}>Delete</button>
+										<button className={styles.deleteBtn} onClick={() => handleDelete(path, item.id)}>Delete</button>
 									</td>
 								</tr>
 							))}

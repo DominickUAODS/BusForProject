@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { ICity } from "../../interfaces/ICity";
+import styles from "./CityForm.module.css";
 
 export default function CityForm() {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -35,10 +36,10 @@ export default function CityForm() {
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-			setCity((prevCity) => ({
-				...prevCity!,
-				[name]: value,
-			}));
+		setCity((prevCity) => ({
+			...prevCity!,
+			[name]: value,
+		}));
 	};
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -91,31 +92,32 @@ export default function CityForm() {
 	if (loading) return <div>Loading...</div>;
 
 	return (
-		<div>
-			<h2>{id ? "Edit City" : "Create City"}</h2>
-			{error && <div style={{ color: "red" }}>{error}</div>}
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Name EN</label>
-					<input type="text" name="name_en" value={city?.name_en} onChange={handleChange} required />
-				</div>
-				<div>
-					<label>Name UA</label>
-					<input type="text" name="name_ua" value={city?.name_ua} onChange={handleChange} required />
-				</div>
-				<button type="submit" disabled={loading}>
-					{id ? "Update City" : "Create City"}
-				</button>
-			</form>
-			{id && (
-				<button
-					onClick={handleDelete}
-					style={{ marginTop: "10px", backgroundColor: "red", color: "white" }}
-					disabled={loading}
-				>
-					Delete City
-				</button>
-			)}
+		<div className={styles.comp}>
+			<div className={styles.cont}>
+				<h2>{id ? "Edit City" : "Create City"}</h2>
+				{error && <div className={styles.error}>{error}</div>}
+				<form onSubmit={handleSubmit}>
+					<div>
+						<label>Name EN</label>
+						<input type="text" name="name_en" value={city?.name_en} onChange={handleChange} required />
+					</div>
+					<div>
+						<label>Name UA</label>
+						<input type="text" name="name_ua" value={city?.name_ua} onChange={handleChange} required />
+					</div>
+					<button type="submit" disabled={loading}>{id ? "Update City" : "Create City"}</button>
+				</form>
+				{id && (
+					<button
+						onClick={handleDelete}
+						className={styles.deleteBtn}
+						style={{ marginTop: "10px" }}
+						disabled={loading}
+					>
+						Delete City
+					</button>
+				)}
+			</div>
 		</div>
 	);
 };
