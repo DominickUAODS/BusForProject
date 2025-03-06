@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoginPage from "./components/admin_comp/LoginPage";
 import Dashboard from "./components/admin_comp/Dashboard";
@@ -13,6 +13,7 @@ import RaceForm from "./components/admin_comp/RaceForm";
 import PassengerForm from "./components/admin_comp/PassengerForm";
 import TicketForm from "./components/admin_comp/TicketForm";
 import IndexComp from './components/index_comp/IndexComp';
+import RacesComp from "./components/races_comp/RacesComp";
 import { AuthProvider, useAuth } from "./helpers/AuthProvider";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ function PrivateRoute({ children, requiredRole }: { children: React.ReactNode; r
 	return <>{children}</>;
 }
 
+
 function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
@@ -35,6 +37,7 @@ function App() {
 				<Router>
 					<Routes>
 						<Route path="/" element={<IndexComp />} />
+						<Route path="/races" element={<RacesComp />} />
 
 						<Route path="/admin/login" element={<LoginPage />} />
 
