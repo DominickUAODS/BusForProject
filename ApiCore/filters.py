@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 from django.db.models import Q
-from .models import City, Race, Passenger, Ticket
+from .models import City, Race, Passenger, Ticket, User
 
 
 class CityFilter(filters.FilterSet):
@@ -47,3 +47,12 @@ class TicketFilter(filters.FilterSet):
     class Meta:
         model = Ticket
         fields = ['passenger', 'race', 'is_used']
+
+class UserFilter(filters.FilterSet):
+    username = filters.CharFilter(field_name='username', lookup_expr='icontains')
+    first_name = filters.CharFilter(field_name='first_name', lookup_expr='icontains')
+    last_name = filters.CharFilter(field_name='last_name', lookup_expr='icontains')
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name']

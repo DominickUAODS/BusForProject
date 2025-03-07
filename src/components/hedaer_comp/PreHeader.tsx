@@ -1,9 +1,16 @@
 
 import "./PreHeader.css";
 import logo from "../../assets/images/mainLogo.svg"; 
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BurgerMenu from "./BurgerMenu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../helpers/AuthProvider";
+const API_SERVER = import.meta.env.VITE_API_SERVER;
+import { jwtDecode } from "jwt-decode";
+
+
+
+
 
 interface PreHeaderProps {
   logoSrc?: string;
@@ -15,12 +22,70 @@ interface PreHeaderProps {
 export default function PreHeader({ logoSrc,backgroundColor,textColor,iconColor, iconColorBurger}: PreHeaderProps) {
     const [isSupportOpen, setIsSupportOpen] = useState(false);
     const navigate = useNavigate();
+    const authContext = useContext(AuthContext);
+    const isAuthenticated = authContext?.isAuthenticated;
+    const [email, setEmail] = useState<string | null>(null);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const accessToken = authContext?.accessToken;
+
+    const toggleDropdown = () => {
+      setIsDropdownVisible(!isDropdownVisible);
+      setIsSupportOpen(false); 
+    };
+
+    useEffect(() => {
+      if (accessToken) {
+          try {
+              const decodedToken: any = jwtDecode(accessToken);
+              const userId = decodedToken.user_id;
+              console.log('Decoded userId:', userId); 
+
+              if (!userId) {
+                console.error('userId не найден в токене');
+                return;
+              }
+
+              const fetchEmailByUserId = async () => {
+                try {
+                    const response = await fetch(`${API_SERVER}/users/${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`, 
+                        },
+                    });
+             
+                    if (!response.ok) {
+                        throw new Error('Ошибка авторизации');
+                    }
+             
+                    const data = await response.json();
+                    
+                    if (data && data.email) {
+                        const userEmail = data.email;
+                        setEmail(userEmail); 
+                        localStorage.setItem("userEmail", userEmail); 
+                    }
+                } catch (error) {
+                    console.error("Ошибка при получении email:", error);
+                }
+             };
+             
+
+              fetchEmailByUserId();
+          } catch (error) {
+              console.error("Ошибка декодирования токена:", error);
+          }
+      }
+  }, [accessToken]);
+      
+      
+
     return (
       <div className="pre-header"
       style={{
         backgroundColor: backgroundColor || 'defaultColor', 
       }}>
-        <img className="logo-img" src={logoSrc || logo} alt="logo" />
+        <img onClick={()=>navigate("/")}className="logo-img" src={logoSrc || logo} alt="logo" />
   
         {/* Бургер-меню */}
         <BurgerMenu iconColorBurger={iconColorBurger}/>
@@ -32,6 +97,7 @@ export default function PreHeader({ logoSrc,backgroundColor,textColor,iconColor,
           }} onClick={(e) => {
           e.stopPropagation(); 
           setIsSupportOpen(!isSupportOpen);
+          setIsDropdownVisible(false);
           }}>
             <div className="support-img">
               <svg width="16" height="16" viewBox="0 0 16 16" fill={iconColor}>
@@ -39,7 +105,7 @@ export default function PreHeader({ logoSrc,backgroundColor,textColor,iconColor,
               </svg>
             </div>
             <span  className="support-span">Служба підтримки</span>
-            <div className={`Style__Dropdown-sc-1dw2ijm-3 etmmWV fade-enter-done ${isSupportOpen ? 'open' : 'closed'}`}>
+            <div className={`drop-sup Style__Dropdown-sc-1dw2ijm-3 etmmWV fade-enter-done ${isSupportOpen ? 'open' : 'closed'}`}>
               <div className="Style__Item-sc-1dw2ijm-2 cvgauG">
                 <div className="Style__Icon-sc-1dw2ijm-1 gBoMEe">
                   <div className="Style__BackgroundIcon-mn97w4-0 cpizZW"></div>
@@ -75,15 +141,40 @@ export default function PreHeader({ logoSrc,backgroundColor,textColor,iconColor,
   
           <div className="account" style={{
               color: textColor || 'defaultTextColor', 
-              }} onClick={() => navigate("/new/account")}>
+              }} 
+              onClick={() => {
+                if (!isAuthenticated) {
+                  navigate("/new/account");
+                } else {
+                  toggleDropdown(); 
+                }
+              }}>
             <div className="account-img">
               <svg width="16" height="16" viewBox="0 0 16 16" fill={iconColor}>
                 <path fillRule="evenodd" d="M8 7.78c2.095 0 3.793-1.742 3.793-3.89C11.793 1.74 10.095 0 8 0S4.207 1.741 4.207 3.89c0 2.148 1.698 3.89 3.793 3.89zm0-1.203c-1.447 0-2.62-1.203-2.62-2.687 0-1.485 1.173-2.688 2.62-2.688s2.62 1.203 2.62 2.688c0 1.484-1.173 2.687-2.62 2.687z"></path>
                 <path d="M15 13.755v1.644a.594.594 0 0 1-.586.601.594.594 0 0 1-.586-.601v-1.644c0-1.485-1.174-2.688-2.621-2.688H4.793c-1.447 0-2.62 1.204-2.62 2.688v1.644a.594.594 0 0 1-.587.601.594.594 0 0 1-.586-.601v-1.644c0-2.149 1.698-3.89 3.793-3.89h6.414c2.095 0 3.793 1.742 3.793 3.89z"></path>
               </svg>
             </div>
-            <span className="account-span">Особистий кабінет</span>
+           {isAuthenticated? (<span>{email}</span>) : (<span className="account-span">Особистий кабінет</span>)}
+           
           </div>
+
+          {isAuthenticated && isDropdownVisible && (
+        <div className="drop-acc Style__Dropdown-sc-1dw2ijm-3 etmmWV fade-enter-done">
+          <div className="Style__Item-sc-1dw2ijm-2 cvgauG">
+            <div className="Style__Icon-sc-1dw2ijm-1 gBoMEe">
+              <div className="Style__BackgroundIcon-mn97w4-0 ieFIjF"></div>
+            </div>
+            <span onClick= {()=>navigate("/new/account/history")} className="Style__Title-sc-1dw2ijm-0 kFslWY">Мої поїздки</span>
+          </div>
+          <div className="Style__Item-sc-1dw2ijm-2 cvgauG">
+            <div className="Style__Icon-sc-1dw2ijm-1 gBoMEe">
+              <div className="Style__BackgroundIcon-mn97w4-0 nefpq"></div>
+            </div>
+            <span onClick= {()=>authContext.logout()}className="Style__Title-sc-1dw2ijm-0 kFslWY">Вийти з аккаунту</span>
+          </div>
+        </div>
+      )}
   
           <div className="language-switch">
             <div className="language-switch-box" style={{borderColor:iconColor}}>
@@ -101,3 +192,5 @@ export default function PreHeader({ logoSrc,backgroundColor,textColor,iconColor,
       </div>
     );
   }
+
+

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -47,30 +48,28 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
     'django_filters',
-    'django_extensions'
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
+    'django_extensions',
 
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_METHODS = [
-    "GET",
-    "POST",
-    "OPTIONS",
-    "PUT",
-    "PATCH",
-    "DELETE"
-]
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS':[
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+}
 
-CORS_ALLOW_HEADERS = [
-    "content-type",
-    "authorization",
-    "x-requested-with",
-]
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000"
-]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -103,6 +102,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'RestApiServer.wsgi.application'
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -115,6 +116,12 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+        'OPTIONS': {
+            'charset': os.getenv('DB_CHARSET'),
+            'connect_timeout': int(os.getenv('DB_TIMEOUT')),
+            'read_timeout': int(os.getenv('DB_TIMEOUT')),
+            'write_timeout': int(os.getenv('DB_TIMEOUT')),
+        },
     }
 }
 

@@ -193,3 +193,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# .vscode
+.vscode
+vscode
+BusForProject.code-workspace

@@ -217,6 +217,11 @@ a {
     margin-top: 0px;
     margin-bottom: 16px;
 }
+
+.lk-login__form-action .btn-primary:hover{
+--bs-btn-hover-bg: rgb(249, 37, 63)  !important;
+--bs-btn-hover-border-color: white !important;
+}
 @media only screen and (max-width: 766px) {
     .register-comp {
         align-items: flex-start;

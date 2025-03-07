@@ -11,3 +11,88 @@
     margin-bottom: 16px;
     font-size: 28px;
 }
+
+@media only screen and (max-width: 766px) {
+    .grid-cont{
+        padding: 0px 12px;
+    }
+    .tab-list{
+        margin: 0;
+    }
+    
+    .eXYpNB {
+        margin-right: 0px;
+        margin-left: 0px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .u-p-f{
+        padding-top: 55px;
+        width: 100%;
+    }
+    
+    .frLZaI {
+        padding: 0px 12px;
+    }
+    
+    .hHjola {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    .order-info__header .status {
+        display: block;
+        font-size: 12px;
+        margin-left: 0;
+        margin-right: 0;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+
+    .order-info__header .status>* {
+        padding-right: 0;
+        padding-left: 0;
+        margin-bottom: 3px;
+    }
+
+    .order-info__header .status>:last-child {
+        margin-bottom: 0;
+    }
+
+    .order-actions {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding-right: 20px;
+        padding-bottom: 12px;
+        justify-content: space-between;
+        -webkit-box-pack: justify;
+    }
+
+    .order-actions--triple>:first-child, .order-actions--triple>:nth-child(2) {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+    }
+
+    .order-actions .btn-return {
+        padding-right: 22px;
+        padding-left: 22px;
+    }
+
+    .order-actions .btn span:last-child, .order-actions .dropdown__close span:last-child, .order-actions .ticket__close span:last-child {
+        width: 100%;
+        text-align: center;
+        display: flex;
+    }
+
+    .order-actions>* {
+        margin-bottom: 20px;
+    }
+
+    .order-actions--triple>:nth-child(3) {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        margin-top: 0;
+    }
+}

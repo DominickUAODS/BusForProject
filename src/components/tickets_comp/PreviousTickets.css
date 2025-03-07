@@ -95,4 +95,59 @@
 .order-actions .btn-return {
     padding: 13px 35px;
     align-items: center;
+    border: 1.3px solid #f9253f  ;
+    display: flex;
+}
+
+.back-icon,
+.review-i{
+    margin-right: 10px;
+    margin-left: -10px;
+}
+
+.return,
+.review{
+    color:#424543 !important;
+    font-size: 14px;
+}
+
+.btn{
+    text-align: center;
+    user-select: none;
+}
+
+.gMInnu {
+    display: inline-block;
+    width: auto;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 0px;
+    outline: 0px;
+    position: relative;
+    color: rgb(255, 255, 255);
+    background-color: rgb(249, 37, 63);
+    padding: 13px 30px;
+    font-size: 16px;
+    border-radius: 4px;
+    line-height: 20px;
+    transition: all 0.28s ease-in-out 0s;
+    will-change: transform;
+}
+
+
+.order-actions .btn-again button {
+    font-size: 14px;
+    width: 100%;
+}
+
+.btn-primary {
+    --bs-btn-hover-bg: white !important;
+    --bs-btn-hover-border-color: rgb(249, 37, 63) !important;
 }
