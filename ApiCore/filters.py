@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 from django.db.models import Q
-from .models import City, Race, Passenger, Ticket
+from .models import City, Race, Passenger, Ticket, User
 
 
 class CityFilter(filters.FilterSet):
@@ -14,20 +14,21 @@ class CityFilter(filters.FilterSet):
         fields = []
 
 class RaceFilter(filters.FilterSet):
-    city_from = filters.NumberFilter(field_name='city_from', lookup_expr='exact')
-    city_to = filters.NumberFilter(field_name='city_to', lookup_expr='exact')
-    time_start_after = filters.DateTimeFilter(field_name='time_start', lookup_expr='gte')
-    time_start_until = filters.DateTimeFilter(field_name='time_start', lookup_expr='lte')
-    time_end_after = filters.DateTimeFilter(field_name='time_end', lookup_expr='gte')
-    time_end_until = filters.DateTimeFilter(field_name='time_end', lookup_expr='lte')
-    min_cost = filters.NumberFilter(field_name='cost', lookup_expr='gte')
-    max_cost = filters.NumberFilter(field_name='cost', lookup_expr='lte')
-    min_places = filters.NumberFilter(field_name='places', lookup_expr='gte')
-    max_places = filters.NumberFilter(field_name='places', lookup_expr='lte')
+    city_from = filters.NumberFilter(field_name='city_from', lookup_expr='exact', required=False)
+    city_to = filters.NumberFilter(field_name='city_to', lookup_expr='exact', required=False)
+    time_start_after = filters.DateTimeFilter(field_name='time_start', lookup_expr='gte', required=False)
+    time_start_until = filters.DateTimeFilter(field_name='time_start', lookup_expr='lte', required=False)
+    time_end_after = filters.DateTimeFilter(field_name='time_end', lookup_expr='gte', required=False)
+    time_end_until = filters.DateTimeFilter(field_name='time_end', lookup_expr='lte', required=False)
+    min_cost = filters.NumberFilter(field_name='cost', lookup_expr='gte', required=False)
+    max_cost = filters.NumberFilter(field_name='cost', lookup_expr='lte', required=False)
+    min_places = filters.NumberFilter(field_name='places', lookup_expr='gte', required=False)
+    max_places = filters.NumberFilter(field_name='places', lookup_expr='lte', required=False)
 
     class Meta:
         model = Race
         fields = ['city_from', 'city_to']
+
 
 class PassengerFilter(filters.FilterSet):
     user = filters.NumberFilter(field_name='user', lookup_expr='exact')
@@ -46,3 +47,12 @@ class TicketFilter(filters.FilterSet):
     class Meta:
         model = Ticket
         fields = ['passenger', 'race', 'is_used']
+
+class UserFilter(filters.FilterSet):
+    username = filters.CharFilter(field_name='username', lookup_expr='icontains')
+    first_name = filters.CharFilter(field_name='first_name', lookup_expr='icontains')
+    last_name = filters.CharFilter(field_name='last_name', lookup_expr='icontains')
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name']

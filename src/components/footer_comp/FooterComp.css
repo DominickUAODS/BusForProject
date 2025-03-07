@@ -4,10 +4,13 @@
 }
 
 .responsive-cont{
-    padding: 0 32px;
-    width: 100%;
-    max-width: 1044px;
-    margin: 0 auto;
+
+    background-color: white;
+        padding: 0 32px;
+        width: 100%;
+        max-width: 1044px;
+        margin: 0 auto;
+
 }
 
 .partners {
@@ -77,7 +80,7 @@
 }
 
 .footer__list a {
-    color: inherit;
+    color: inherit !important;
     font-size: 14px;
     line-height: 18px;
     text-decoration: none;
@@ -131,6 +134,8 @@
     font-size: 12px;
     background-color: #fff;
     padding: 15px 0;
+    width: 100%;
+    margin: 0;
 }
 
 .footer__legal .info-cookie {
@@ -149,4 +154,123 @@
 
 .footer__legal p {
     color: #a7a7a7;
+}
+
+@media only screen and (max-width: 766px) {
+
+.responsive-container {
+    padding: 0 16;
+}
+
+.partners{
+    padding-top: 26px;
+    padding-bottom: 26px;
+}
+
+
+.partners--dekstop{
+ display: none !important;
+}
+
+.partners--mobile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+}
+
+.partners--desktop {
+    display: none;
+}
+
+.partners__section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.partners__section:first-child {
+    margin-bottom: 26px;
+}
+.footer {
+    padding-bottom: 10px;
+}
+
+.responsive-container {
+    padding: 0 16px;
+}
+
+.col-xs-12 {
+    width: 100%;
+}
+
+.col-xs-4 {
+    width: auto;
+}
+
+.div.row.footer__xxs >* {
+    width: 100%;
+}
+
+
+.col-sm-4 {
+    flex: 0 0 1!important;
+    width: 100% !important;
+}
+
+
+
+.footer__list li {
+    margin-bottom: 26px;
+}
+
+.footer .text-muted#footer_information{
+    padding-top:0;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: bolder;
+    color: #a7a7a7 !important;
+}
+
+.footer .text-muted{
+    letter-spacing: 2px;
+    font-size: 16px;
+    padding-top: 20px;
+    font-weight: bolder;
+    color: #a7a7a7 !important;
+}
+
+.footer__list a {
+    line-height: 22px;
+    font-size: 18px;
+}
+
+.footer__interactive {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.footer__block {
+    width: 100%;
+}
+
+.footer__mobile-app {
+    padding-bottom: 27px;
+}
+
+.app-ios {
+    margin-right: 16px;
+}
+
+.responsive-container {
+    padding: 0 16px;
+}
+
 }

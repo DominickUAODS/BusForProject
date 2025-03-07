@@ -5,7 +5,6 @@
     left: 0;
     width: 100vw; 
     height: 80px;
-    background-color: rgb(45, 209, 255);
     display: flex;
     align-items: center;
     z-index: 10000;
@@ -61,4 +60,123 @@
     padding: 0px 16px;
     cursor: pointer;
     border-radius: 18px;
+}
+
+.burger-menu{
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+.burger-menu2{
+    padding: 16px 12px;
+
+}
+
+.Style__Dropdown-sc-1dw2ijm-3.closed {
+ display: none;
+    transition: height 0.3s ease-in-out;
+}
+
+.Style__Dropdown-sc-1dw2ijm-3.open {
+    height: auto;
+    overflow: visible;
+}
+
+.etmmWV {
+    position: absolute;
+    right: 0px;
+    margin-top: 250px;
+    margin-left: 90px;
+    z-index: 10;
+    padding: 12px 0px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(212, 214, 218);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px 0px;
+}
+
+.fade-enter-done {
+    opacity: 1;
+}
+.support{
+    position: relative;
+}
+.cvgauG {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px 20px 8px 43px;
+    cursor: pointer;
+}
+
+.gBoMEe {
+    position: absolute;
+    left: 20px;
+}
+
+.cpizZW {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/assets/phone_logos/default-f6a0a0619e525a0baabff59cad62834decfd98652cd04ef8b669000f1fbe7d5e.svg) center center no-repeat;
+}
+
+.dxKBSf {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/assets/phone_logos/vodafone-2910c1552f97d490ba0cd325dbd5256449fea26076916a65225b88b52cd560bd.svg) center center no-repeat;
+}
+
+.liwZWI {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/assets/phone_logos/kyivstar-01b810f0fac52c062101f09b9eed5aa44edbdc897573fd1b57d24efd3cbbbd7f.svg) center center no-repeat;
+}
+
+.jiQNfo {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/assets/phone_logos/lifecell-f2a4142bc782b285df653c2cd025f6562e5d5bb329b77a554c8adfb01788f6f7.svg) center center no-repeat;
+}
+
+.dtYNbo {
+    width: 16px;
+    height: 16px;
+    background: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/faq-icon-bcb9c9ce0523d5512c27a61788f043b0.svg) center center no-repeat;
+}
+.kFslWY {
+    font-size: 14px;
+    color: rgb(39, 36, 36);
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 766px) {
+    .pre-header {
+        padding: 0px 12px;
+        height: 60px;
+    }
+    .burger-menu {
+        display: block;
+      }
+    
+      .menu {
+        display: none;
+        flex-direction: column;
+        background: #333;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 20px;
+        border-radius: 5px;
+      }
+    
+      .menu.open {
+        display: flex;
+      }
+
+      
 }

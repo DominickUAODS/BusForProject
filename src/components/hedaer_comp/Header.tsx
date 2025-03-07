@@ -6,7 +6,7 @@ import TicketForm from "./TicketForm";
 export default function Header() {
 	return (
 		<div className="header">
-           <PreHeader/>
+           <PreHeader backgroundColor=" rgb(45, 209, 255)" textColor="white" iconColor="white" iconColorBurger="white"/>
 			<div className="header-data">
 				<div className="header-info">
 					<div className="header-info-title">

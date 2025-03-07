@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 .header {
-    width: 100vw; 
+    width: 100vw;
     background-color: rgb(45, 209, 255);
     margin-bottom: 0px;
     height: auto;
@@ -9,6 +9,8 @@
     padding-bottom: 114px;
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.42857;
+    display: flex;
+    flex: 1 1 0%
 }
 .header-data{
     width: 100%;
@@ -16,6 +18,7 @@
     padding: 0px 32px;
     margin: 0px auto;
 }
+
 
 .header-info{
     margin-top: 124px;
@@ -68,4 +71,104 @@ a {
 
 img {
     vertical-align: middle;
+}
+
+
+@media only screen and (max-width: 766px) {
+    .header-data{
+        padding-bottom: 10px;
+        padding-top: 20px;
+        padding-left:  12px;
+        padding-right:  16px;
+    }
+    .header-info{
+        margin-top: 20px;
+        flex-direction: column;
+        -webkit-box-align: start;
+        align-items: start;
+    }
+    .redirection-info-subtitle{
+        font-size: 16px;
+    }
+    
+    .ticket-form{
+        flex-wrap: wrap;
+        padding-right: 0px;
+        padding-left: 0px;
+        padding-top: 1px;
+        
+    }
+    .field-from,
+    .field-to{
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: -1px;
+        position: relative;
+        flex: 1 1 100%;
+    }
+    
+    .field-date{
+        margin-right: -1px;
+        margin-left: 0px;
+        margin-top: -1px;
+        flex: 1 1 50%;
+        position: relative;
+        border-bottom-left-radius: 4px;
+    }
+    
+    .field-from-v1{
+        position:unset;
+    }
+    
+    .button-switch{
+        top: calc(100% - 25px);
+        width: 50px;
+        height: 50px;
+        right: 1px;
+        background: white;
+        border-radius: 50%;
+        transform: rotate(90deg) scaleX(-1)
+    }
+    
+    .field-psngrs{
+        margin-right: -1px;
+        margin-left: 0px;
+        margin-top: -1px;
+        flex: 1 1 50%;
+        position: relative;
+        border-bottom-right-radius: 4px;
+    }
+    
+    .btn-search{
+        margin-left: 0px;
+        margin-top: 12px;
+    }
+    
+    .overlay{
+        display:none;
+    }
+    
+    .field-to-info{
+        display: flex;
+    }
+    
+    .span-input-field-to{
+        display: flex;
+    }
+    
+    .span-input-field-date{
+        display: flex;
+    }
+    
+    .span-input-field-psngrs{
+        display: flex;
+    }
+    
+    .header{
+        padding-bottom: 77px;
+    }
+    
+    
+    
+    
 }

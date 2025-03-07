@@ -1,0 +1,96 @@
+.support, .account{
+    color: black;
+}
+
+
+
+.language-switch-box{
+ 
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px 16px;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 18px;
+
+}
+
+.language-switch-box span{
+    color: black;
+}
+
+.account-div{
+    display: flex;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    flex-direction: column;
+
+
+}
+
+.account-tabs-cont{
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px;
+    background-color: white;
+    width:100vw;
+    
+}
+
+.account-tabs{
+    margin-top: -2px;
+    background-color: white;
+}
+
+.grid-cont{
+    width: 100%;
+    max-width: 1044px;
+    padding: 0px 32px;
+    margin: 0px auto;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    background-color: white;
+}
+
+.tab-list{
+    display: flex;
+    margin: 0px 0px 0px -16px;
+    list-style-type: none;
+}
+
+.u-p-h-div-form{
+    padding: 32px 12px 44px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px;
+}
+
+.eXYpNB {
+    flex: 0 0 auto;
+    margin-right: 18px;
+    margin-left: 18px;
+}
+
+.eXYpNB .account__tab_active {
+    border-bottom: 2px solid rgb(249, 37, 63);
+    opacity: 1;
+}
+
+.eXYpNB .account__tab {
+    display: block;
+    padding: 15px 0px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(39, 36, 36) !important;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    outline: none;
+    opacity: 0.4;
+}
