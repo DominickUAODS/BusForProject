@@ -15,18 +15,26 @@ export default function UserPgPreHeader(){
                         <div className="account-tabs">
                             <div className="grid-cont">
                                 <div className="tab-list">
-                                    <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/future")}>
-                                        <a aria-current="page" className="account__tab account__tab_active">Майбутні поїздки</a>
-                                    </div>
-                                    <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/history")}>
-                                        <a className="account__tab" href="/new/account/history">Історія поїздок</a>
-                                    </div>
-                                    <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/contact")}>
-                                        <a className="account__tab" href="/new/account/contact">Контактна інформація</a>
-                                    </div>
-                                    <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/future")}>
-                                        <a className="account__tab" href="/new/account/future">Відгуки</a>
-                                    </div>
+                                <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/future")}>
+                                    <a className={`account__tab ${location.pathname === "/new/account/future" ? "account__tab_active" : ""}`}>
+                                        Майбутні поїздки
+                                    </a>
+                                </div>
+                                <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/history")}>
+                                    <a className={`account__tab ${location.pathname === "/new/account/history" ? "account__tab_active" : ""}`}>
+                                        Історія поїздок
+                                    </a>
+                                </div>
+                                <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/contact")}>
+                                    <a className={`account__tab ${location.pathname === "/new/account/contact" ? "account__tab_active" : ""}`}>
+                                        Контактна інформація
+                                    </a>
+                                </div>
+                                <div className="Styled__TabWrapper-sc-1qjf3d7-2 eXYpNB" onClick={() => navigate("/new/account/future")}>
+                                    <a className="account__tab ">
+                                        Відгуки
+                                    </a>
+                                </div>
                                 </div>
                             </div>
                         </div>
