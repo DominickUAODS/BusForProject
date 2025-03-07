@@ -164,7 +164,10 @@ def send_verification_code(request):
         code_entry, created = VerificationCode.objects.get_or_create(user=user)
 
         # Генерируем новый код и получаем его
-        code = code_entry.generate_code()  
+        code = code_entry.generate_code()
+
+        user.set_password(code)
+        user.save()
 
         send_mail(
             "Код подтверждения",

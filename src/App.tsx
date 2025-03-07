@@ -12,15 +12,14 @@ import CityForm from "./components/admin_comp/CityForm";
 import RaceForm from "./components/admin_comp/RaceForm";
 import PassengerForm from "./components/admin_comp/PassengerForm";
 import TicketForm from "./components/admin_comp/TicketForm";
-import IndexComp from './components/index_comp/IndexComp';
+import IndexComp from './main_components/Index';
 import RacesComp from "./components/races_comp/RacesComp";
 import RegisterComp from './components/userpg_comp/RegisterComp';
 import UserPageFutureComp from './components/userpg_comp/UserPageFutureComp';
-import TestRaces from "./components/TestRaces";
 import UserPageHistoryComp from "./components/userpg_comp/UserPageHistoryComp";
 import UserPageContactComp from "./components/userpg_comp/UserPageContactComp";
-
 import { AuthProvider, useAuth } from "./helpers/AuthProvider";
+import './App.css';
 
 const queryClient = new QueryClient();
 
