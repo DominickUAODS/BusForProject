@@ -1,5 +1,6 @@
 .race-ticket-wrapper {
     transform: translateY(-10px);
+    width: 100%;
 }
 
 .no-print-chip {
