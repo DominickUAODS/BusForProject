@@ -35,7 +35,6 @@ const UsersPage = () => {
 			}
 
 			const data = await response.json();
-			console.log(data);
 			setUsers(data.results);
 			setNextPage(data.next); // Сохраняем ссылку на следующую страницу
 			setPreviousPage(data.previous); // Сохраняем ссылку на предыдущую страницу

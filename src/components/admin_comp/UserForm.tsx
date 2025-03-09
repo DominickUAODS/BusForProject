@@ -34,7 +34,6 @@ function UserForm() {
 				.then((data) => {
 					setUser(data);
 					setLoading(false);
-					console.log(data);
 				})
 				.catch((error) => {
 					setError(error instanceof Error ? error.message : "An unexpected error occurred");
