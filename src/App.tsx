@@ -47,7 +47,7 @@ function App() {
 						<Route path="/new/account" element={<RegisterComp />} />
 						<Route path="/new/account/future" element={<UserPageFutureComp />} />
 						<Route path="/new/account/history" element={<UserPageHistoryComp />} />
-						<Route path="/new/account/contact" element={<UserPageContactComp />} />
+						<Route path="/new/account/contact" element={<UserPageContactComp/>} />
 
 						<Route path="/admin/login" element={<LoginPage />} />
 

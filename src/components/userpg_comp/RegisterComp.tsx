@@ -9,18 +9,25 @@ export default function RegisterComp() {
 	const [email, setEmail] = useState("");
 	const [code, setCode] = useState("");
 	const [isCodeSent, setIsCodeSent] = useState(false);
-	const [attempts, setAttempts] = useState(0);
+
+	const [emailError, setEmailError] = useState<string>(""); 
+	const [codeError, setCodeError] = useState<string>("");
 	const navigate = useNavigate();
 
 	if (!auth) {
 		throw new Error("Login must be used within an AuthProvider");
 	}
 
-	// Функция отправки кода на email
 	const sendCode = async () => {
+
 		if (!email) {
-			alert("Введіть e-mail");
+			setEmailError("Введіть e-mail");
 			return;
+		} else if (!/\S+@\S+\.\S+/.test(email)) {
+			setEmailError("Неправильна пошта");
+			return;
+		} else {
+			setEmailError(""); 
 		}
 
 		try {
@@ -44,12 +51,14 @@ export default function RegisterComp() {
 		}
 	};
 
-
 	// Функция проверки кода
 	const verifyCode = async () => {
-		if (!email || !code) {
-			alert("Введіть e-mail та код");
+		if (!code) {
+			setCodeError("Введіть код");
 			return;
+		}
+		else {
+			setCodeError(""); 
 		}
 
 		try {
@@ -63,6 +72,8 @@ export default function RegisterComp() {
 			if (!response.ok) {
 				const verifyError = await response.json();
 				throw new Error(verifyError.error || "Ошибка верификации кода");
+				setCodeError("Невірний код!")
+				return;
 			}
 
 			const username = email;
@@ -85,22 +96,14 @@ export default function RegisterComp() {
 				console.log("Код введен:", code);
 				navigate("/new/account/future");
 			} else {
-				const newAttempts = attempts + 1;
-				setAttempts(newAttempts);
-				setCode("");
-
-				if (newAttempts >= 3) {
-					setIsCodeSent(false);
-					setEmail("");
-					setAttempts(0);
-				} else {
-					console.log("else"); // чтобы убрать ошибку
-				}
+				setCodeError("Невірний код!")
+				return;
 			}
 
 		} catch (error) {
 			console.error("Помилка з'єднання:", error);
-			alert("Сталася помилка, спробуйте ще раз.");
+			setCodeError("Невірний код!")
+				return;
 		}
 	};
 
@@ -158,7 +161,8 @@ export default function RegisterComp() {
 
 								<form className="lk-login__form">
 									<div>
-										<label className="lk-login__subtitle">E-mail</label>
+									{!emailError ?  (<label className="lk-login__subtitle">E-mail</label>) : (<label className="text-danger lk-login__subtitle" htmlFor="auth">{emailError}</label>)}
+	
 										<div className="form-group">
 											<input
 												type="email"
@@ -184,14 +188,14 @@ export default function RegisterComp() {
 										<p className="Style__Text-sc-1ykzu8y-1 SIeTo">Введіть код, відправлений на вашу пошту</p>
 									</div>
 									<div>
-										<label className="lk-login__subtitle">Код підтвердження</label>
+									{!codeError ?  (<label className="lk-login__subtitle">Код підтвердження</label>) : (<label className="text-danger lk-login__subtitle" >Неправильний код</label>)}
+									
 										<input
 											type="text"
 											className="form-control lk-login__field"
 											value={code}
 											onChange={(e) => setCode(e.target.value)}
 										/>
-										{attempts > 0 && <p style={{ color: "rgb(249, 37, 63)" }}>Спробуйте ще раз ({3 - attempts} спроб залишилось)</p>}
 										<div className="lk-login__form-action">
 											<button type="button" onClick={verifyCode} className="btn btn-primary btn-block">
 												Підтвердити

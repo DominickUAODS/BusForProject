@@ -46,6 +46,12 @@
     align-items: center;
     -webkit-box-align: center;
     display: flex;
+    
+}
+
+.status_cust{
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .order-info__header .status__item .icon {
@@ -146,6 +152,8 @@
     font-size: 14px;
     width: 100%;
 }
+
+
 
 .btn-primary {
     --bs-btn-hover-bg: white !important;

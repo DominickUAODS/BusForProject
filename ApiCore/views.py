@@ -136,7 +136,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def perform_update(self, serializer):
-        if not self.request.user.is_staff and serializer.instance.user != self.request.user:
+        if not self.request.user.is_staff and serializer.instance.id != self.request.user.id:
             raise PermissionDenied("You do not have permission to update this user.")
         serializer.save()
 

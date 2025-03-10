@@ -7,11 +7,8 @@ import { AuthContext } from "../../helpers/AuthProvider";
 const API_SERVER = import.meta.env.VITE_API_SERVER;
 
 export default function UserPageHistoryComp(){
-    const [userData,setUserData] = useState(null);
-    const [passengers, setPassengers] = useState([]);
     const [tickets, setTickets] = useState([]);
     const authContext = useContext(AuthContext);
-    const isAuthenticated = authContext?.isAuthenticated;
     const accessToken = authContext?.accessToken;
 
     useEffect(() => {
