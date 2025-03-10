@@ -20,6 +20,9 @@ import UserPageHistoryComp from "./components/userpg_comp/UserPageHistoryComp";
 import UserPageContactComp from "./components/userpg_comp/UserPageContactComp";
 import { AuthProvider, useAuth } from "./helpers/AuthProvider";
 import './App.css';
+import PlacesOnRaceComp from "./components/ticketing_comp/PlacesOnRaceComp";
+import TicketingComp from "./components/ticketing_comp/TicketingComp";
+import TcktOnGmail from "./components/ticketing_comp/TcktOnGmail";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +51,9 @@ function App() {
 						<Route path="/new/account/future" element={<UserPageFutureComp />} />
 						<Route path="/new/account/history" element={<UserPageHistoryComp />} />
 						<Route path="/new/account/contact" element={<UserPageContactComp/>} />
+						<Route path="/preloaders/seats/:id" element={<PlacesOnRaceComp/>}/>
+						<Route path = "/new/checkout/:id" element={<TicketingComp/>}/>
+						<Route path = "/new/done/ticket" element={<TcktOnGmail/>}/>
 
 						<Route path="/admin/login" element={<LoginPage />} />
 
