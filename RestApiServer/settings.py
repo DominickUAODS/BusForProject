@@ -29,7 +29,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 SECRET_KEY = 'django-insecure-s0by*10sv()ym2%9v+hl!9fvcl*dfxgdi4&z&xtw$8b4jt3bml'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -104,6 +104,15 @@ WSGI_APPLICATION = 'RestApiServer.wsgi.application'
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+ALLOWED_HOSTS = [
+    '*',
+]
+# ALLOWED_HOSTS = [
+#     'd9ae-192-162-210-54.ngrok-free.app',
+#     '.localhost',
+#     '127.0.0.1',
+# ]
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
