@@ -44,7 +44,7 @@ export default function PlacesOnRaceComp() {
             ticketId = generateTicketId(); 
         }
     
-        navigate(`/new/checkout/${ticketId}`);
+        navigate(`/new/checkout/${ticketId}/${raceId}`);
     };
 
     useEffect(() => {

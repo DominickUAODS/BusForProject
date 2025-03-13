@@ -1,0 +1,9 @@
+.preorder__wrapper-cust{
+    margin-top: 50px !important;
+    background-color: #fff;
+    padding: 32px 40px 44px;
+    margin-top: 20px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+}

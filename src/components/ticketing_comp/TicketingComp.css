@@ -186,4 +186,590 @@ p {
     border: 1px solid #272424;
     border-radius: 6px;
     font-size: 14px;
+    
+}
+
+
+.checkout__seatmap .checkout-seatmap__item button span:first-child {
+    position: absolute;
+    left: 20px;
+}
+
+.checkout__customer {
+    margin-top: 16px;
+}
+
+.checkout-panel {
+    margin-bottom: 16px;
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+}
+
+.checkout__customer-title {
+    margin-bottom: 5px;
+    font-size: 26px;
+    line-height: 1.15;
+}
+
+.checkout__customer-text {
+    position: relative;
+    padding-left: 32px;
+    margin: 5px 0 24px -32px;
+}
+
+.checkout__customer-form {
+    margin-bottom: 17px;
+    display: flex;
+}
+
+
+.checkout__customer-form>div:first-child {
+    margin-right: 6px;
+}
+
+.checkout__customer-form>div {
+    float: none;
+    padding: 0;
+}
+
+.checkout__customer-form>div:last-child {
+    margin-left: 6px;
+}
+
+.checkout__customer-form>div {
+    float: none;
+    padding: 0;
+}
+
+.auth__input {
+    padding: 0 0 0 26px;
+}
+
+.auth__plus {
+    position: absolute;
+    top: 11px;
+    left: 16px;
+    z-index: 10;
+    font-size: 16px;
+    color: #a7a7a7 !important;
+}
+
+.checkout__customer-promo{
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.checkout__customer-promo .subscribe--new {
+    width: calc(50% - 6px);
+    margin: 0;
+}
+
+.checkout .flat__form {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: none;
+    margin: 0;
+    overflow: auto;
+}
+
+.checkout__customer-promo .subscribe--new .checkbox {
+    padding-left: 3px;
+}
+
+.checkout .flat__form .checkbox {
+    padding: 0 0 0 1px;
+    align-items: center;
+    display: flex;
+}
+
+.flat__form .checkbox {
+    padding: 16px;
+    margin: 0;
+}
+
+.checkbox {
+    position: relative;
+    overflow: hidden;
+}
+
+.checkbox>input[type=checkbox] {
+    position: absolute;
+    left:-100%;
+    
+}
+
+.checkbox input[type=checkbox]{
+    margin-left: -20px;
+    margin: 4px 0 0;
+    box-sizing: border-box;
+    padding: 0;
+
+}
+
+#checkbox-8a2088390baa6:checked::after {
+    content: '\2713';  /* Юникод для галочки */
+    color: white;      /* Белый цвет галочки */
+    font-size: 16px;   /* Размер галочки */
+    position: absolute;
+    top: 0;
+    left: 4px;         /* Позиционирование галочки внутри чекбокса */
+}
+
+
+  
+
+.checkout__customer-promo .subscribe--new .checkbox>label {
+    padding-top: 3px !important;
+}
+
+.flat__form .verify-panel__checkbox>label {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 32px;
+}
+
+.verify-panel__checkbox>label {
+    padding-left: 25px;
+    margin: 0;
+    font-size: 14px !important;
+    color: #000;
+    text-transform: none;
+    -webkit-transform: translateY(0) !important;
+    transform: translateY(0) !important;
+}
+
+.checkbox>label {
+    position: relative;
+    padding-left: 36px;
+    cursor: pointer;
+}
+
+.checkbox label, .radio label {
+    min-height: 20px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.checkout__customer-promo .subscribe--new .checkbox span {
+    color: #272424;
+
+}
+
+.checkout__customer-promo span {
+    width: 50%;
+    color: #f9253f;
+    cursor: pointer;
+}
+
+.checkout__payment {
+    margin-top: 16px;
+}
+
+.checkout-panel {
+    margin-bottom: 16px;
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+}
+
+.checkout__payment-header {
+    margin-bottom: 11px;
+    padding-bottom: 13px;
+    font-size: 26px;
+    border-bottom: 1px solid #e5e5e5;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.checkout__payment-header .price, .checkout__payment-header .price__fraction {
+    font-size: 26px;
+}
+
+.price {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.checkout__payment-info {
+    margin-bottom: 16px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.checkout__payment-info-text {
+    margin-right: 13px;
+}
+
+.checkout__payment-info-text {
+    margin-right: 13px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.checkout__payment-info-icons div:first-child {
+    margin-left: 0;
+}
+
+.checkout__payment-info-icons .filling-info__pay-maestro {
+    width: 36px !important;
+    height: 28px !important;
+}
+
+.checkout__payment-info-icons div {
+    margin: 0 6px;
+}
+
+.filling-info__pay-maestro {
+    width: 37px;
+    height: 29px;
+    background-image: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/maestro-ce6bccf29339c356bb722173343583e1.svg);
+}
+
+.filling-info__pay-item {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.checkout__payment-info-icons .filling-info__pay-mastercard {
+    width: 35px !important;
+    height: 28px !important;
+}
+
+.filling-info__pay-mastercard {
+    width: 36px;
+    height: 29px;
+    background-image: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/logo-mastercard-new-f13a795e7fd7657ca7eb58771dae2c0a.svg);
+}
+
+.checkout__payment-info-icons div:last-child {
+    margin-right: 0;
+}
+
+.checkout__payment-info-icons .filling-info__pay-visa {
+    width: 43px;
+    height: 14px;
+}
+
+.checkout__payment-info-icons div {
+    margin: 0 6px;
+}
+
+.filling-info__pay-visa {
+    width: 43px;
+    height: 14px;
+    background-image: url(https://busfor.ua/packs/_/assets/stylesheets/new/common/images/visa-3b2dc31e67a4a857938dad9c051d6361.svg);
+    margin-left: 16px;
+}
+
+.checkout__payment-info-icons{
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.flat__form .verify-panel__checkbox>label:before {
+    width: 24px;
+    height: 24px;
+    margin-top: 0;
+}
+
+.checkout__custom-checkbox .checkbox label:before {
+    width: 24px;
+    height: 24px;
+    top: 0;
+}
+
+.verify-panel__checkbox>label:before {
+    top: 0;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+    border-radius: 2.5px;
+}
+
+.checkbox>label .icon, .checkbox>label:before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0;
+    -webkit-transition: all .14s cubic-bezier(.55,0,.1,1);
+    transition: all .14s cubic-bezier(.55,0,.1,1);
+    will-change: transform, auto;
+}
+
+.checkbox>label:before {
+    border: 1px solid #a7a7a7;
+    content: "";
+}
+
+.checkout .flat__form {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: none;
+    margin: 0;
+    overflow: auto;
+}
+
+
+/* Скрываем стандартный чекбокс */
+.verify-panel__checkbox input[type="checkbox"] {
+    display: none;
+}
+
+/* Стили для кастомного чекбокса */
+.verify-panel__checkbox label::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+
+.verify-panel__checkbox input[type="checkbox"]:checked + label::before {
+    background-color: #32c453; 
+    content: '\2713'; 
+    border-color: #32c453;     
+    color: white;     
+    padding-left: 4px;
+}
+
+.verify-panel__checkbox input[type="checkbox"]:checked + label i {
+ 
+    color: white;     
+    position: absolute;
+    top: 50% !important;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+}
+
+
+
+
+
+.verify-panel__checkbox input[type="checkbox"]:checked + label i {
+    display: inline-block;
+}
+
+
+.m-verify-panel__policy {
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-right: 30px;
+    margin-top: 10px;
+}
+
+.flat__form .verify-panel__checkbox>label {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 32px;
+}
+
+.checkout__custom-checkbox .checkbox label {
+    padding-top: 0 !important;
+}
+
+.checkout__agreement label {
+    font-size: 16px !important;
+}
+
+.checkout__custom-checkbox .checkbox label .verify-panel__checkbox-icon {
+    display: none;
+}
+
+.checkout__agreement label .verify-panel__checkbox-icon {
+    top: -1px !important;
+}
+
+.flat__form .verify-panel__checkbox-icon {
+    top: 1px !important;
+    font-size: 17px;
+    line-height: 1;
+    margin: 0 14px 0 -30px !important;
+}
+
+.verify-panel__checkbox-icon {
+    position: relative;
+    top: -2px !important;
+    z-index: 1;
+    margin: 0 14px 0 -23px !important;
+    font-family: fontello;
+    font-size: 7px;
+    font-weight: 600;
+    color: transparent;
+}
+
+.interactive-link.text-primary, .interactive-link.ticket-error__icon, .ticket-error--on-open .interactive-link.icon-wrap {
+    border-bottom-color: rgba(249, 37, 63, .4);
+    color: #f9253f !important;
+}
+
+.interactive-link {
+    cursor: pointer;
+    border-bottom: 1px dashed;
+}
+
+.checkout-submit-btn .btn--checkout {
+    width: 100%;
+    border-radius: 4px;
+    -webkit-transform: none;
+    transform: none;
+    font-size: 14px;
+}
+
+.btn.disabled, .disabled.dropdown__close, .disabled.ticket__close, .dropdown__close[disabled], .ticket__close[disabled], fieldset[disabled] .btn, fieldset[disabled] .dropdown__close, fieldset[disabled] .ticket__close {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: .2;
+}
+
+.btn-group-sm>.btn, .btn-group-sm>.dropdown__close, .btn-group-sm>.ticket__close, .btn-sm, .dropdown__close, .ticket__close {
+    padding: 13px 30px;
+    font-size: 16px;
+    border-radius: 38px / 36px;
+}
+
+.btn-primary, .dropdown__close, .ticket__close {
+    color: #fff;
+    background-color: #f9253f;
+    border-color: #f9253f;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: all .28s cubic-bezier(.55,0,.1,1);
+    transition: all .28s cubic-bezier(.55,0,.1,1);
+    will-change: transform;
+}
+
+.btn-primary, .dropdown__close, .ticket__close {
+    color: #fff;
+    background-color: #f9253f !important;
+    border-color: #f9253f !important;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: all .28s cubic-bezier(.55,0,.1,1);
+    transition: all .28s cubic-bezier(.55,0,.1,1);
+    will-change: transform;
+}
+
+.checkout__security {
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 12px;
+    color: #a7a7a7;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.checkout__security-text {
+    line-height: 1.17;
+    position: relative;
+    margin-bottom: 0;
+    padding-left: 16px;
+}
+
+@media only screen and (max-width: 766px) {
+.mobile-checkout {
+    margin-top: -80px;
+    padding-top: 40px;
+    position: relative;
+}
+
+.h4 {
+    padding: 16px;
+    font-size: 18px;
+}
+
+.flat__form {
+    background: #fff;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    border-radius: 6px;
+    margin: 12px 0;
+    overflow: hidden;
+}
+
+.row-slim {
+    margin-right: -5px;
+    margin-left: -5px;
+}
+
+.flat__form-wrapper {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-left: -1px;
+    margin-right: -1px;
+}
+
+.flat__form-wrapper .first_name {
+    -ms-flex-preferred-size: calc(50% + 2px);
+    flex-basis: calc(50% + 2px);
+}
+
+.flat__form-wrapper .first_name {
+    -ms-flex-preferred-size: calc(50% + 2px);
+    flex-basis: calc(50% + 2px);
+}
+
+.col-md-8 {
+    width:100%;
+}
+
+.verify-panel__picker-btn {
+width:100%;
+}
+
+.verify-panel__picker{
+    width:100%;
+    min-width:415.600px;
+}
+
 }

@@ -203,11 +203,11 @@ export default function UserPageContactComp(){
                     </div>
             </div>
             <div className="Styled__Title-sc-1bdw08h-2 gWeyqy">Дані пасажирів</div>
-            {psngrs.map((psngr:any) => (
-                                <PassengerComponent onDelete={handleDeletePassenger}  key={psngr.id} psngr_id={psngr.id} />
-                            ))}
-
+            <div className="passengers-container">
+                {psngrs.map((psngr: any) => (
+                <PassengerComponent onDelete={handleDeletePassenger} key={psngr.id} psngr_id={psngr.id} />
+                ))}
+            </div>
         </div>
-        
     </div>);
 }

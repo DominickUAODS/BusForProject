@@ -71,6 +71,11 @@ class PassengerViewSet(viewsets.ModelViewSet):
         if self.request.method in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']:
             return [IsAuthenticated()]
         return super().get_permissions()
+    
+
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
     def perform_update(self, serializer):
         if not self.request.user.is_staff and serializer.instance.user != self.request.user:

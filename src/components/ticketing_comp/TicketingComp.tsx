@@ -1,7 +1,203 @@
+import { useNavigate, useParams } from "react-router-dom";
+import FooterComp from "../footer_comp/FooterComp";
 import TcktPreHeader from "./TcktPreHeader";
 import "./TicketingComp.css"
+import { jwtDecode } from "jwt-decode";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../helpers/AuthProvider";
+import { Ticket } from "../../models/Ticket";
+import { Passenger } from "../../models/Passenger";
+const API_SERVER = import.meta.env.VITE_API_SERVER;
 
 export default function TicketingComp(){
+    const navigate = useNavigate();
+    const { raceId } = useParams();
+    const race_id = Number(raceId);
+    
+    const [email, setEmail] = useState<string | null>(null);
+    const authContext = useContext(AuthContext);
+    const accessToken = authContext?.accessToken;
+    
+    const [passName, setPassName] = useState<string | null>(null);
+    const [passSuN, setPassSuN] = useState<string | null>(null);
+    const [psngr, setPsngr] = useState<Passenger | undefined>(undefined);
+    const [arrPass, setArrPass] = useState<Passenger[]>([]);
+    const [phone, setPhone] = useState<string | null>(null);
+    
+    if (!accessToken) return;
+    
+    const decodedToken: any = jwtDecode(accessToken);
+    const userId = decodedToken.user_id;
+    useEffect(() => {
+        const fetchEmailByUserId = async () => {
+            if (!accessToken) {
+                console.error("Отсутствует токен авторизации");
+                return;
+            }
+    
+            try {
+                const response = await fetch(`${API_SERVER}/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Ошибка авторизации');
+                }
+    
+                const data = await response.json();
+    
+                if (data?.email) {
+                    setEmail(data.email);
+                    localStorage.setItem("userEmail", data.email);
+                }
+            } catch (error) {
+                console.error("Ошибка при получении email:", error);
+            }
+        };
+
+        const fetchPassengerByUserId = async () => {
+            let allPassengers: any = [];
+            let nextPageUrl = `${API_SERVER}/passengers/?page=1`; 
+        
+            try {
+                while (nextPageUrl) {
+                    const response = await fetch(nextPageUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error('Ошибка авторизации или получения данных');
+                    }
+        
+                    const data = await response.json();
+        
+                    if (data.results) {
+                        allPassengers = [...allPassengers, ...data.results]; 
+                        nextPageUrl = data.next; 
+                    } else {
+                        throw new Error('Ответ сервера не содержит данных');
+                    }
+                }
+    
+                setArrPass(allPassengers);
+        
+            } catch (error) {
+                console.error("Ошибка при получении пассажиров:", error);
+            }
+        };
+        
+        
+        fetchPassengerByUserId();
+        fetchEmailByUserId();
+    }, [accessToken, userId]);
+    
+    
+    
+    const handleTicketing = async () => {
+        let foundPassenger = arrPass.find(
+            (passenger) => passenger.user === userId && passenger.last_name === passSuN
+        );
+    
+        console.log("Найденный пассажир до обновления:", foundPassenger);
+    
+        if (!foundPassenger) {
+            console.log("Пассажир не найден, создаем нового...");
+            const newPassenger = await handleCreatePassenger();
+    
+            if (newPassenger) {
+                console.log("Создан пассажир:", newPassenger);
+                postTicket(newPassenger); 
+            } else {
+                console.log("Ошибка при создании пассажира");
+            }
+        } else {
+            console.log("Используем найденного пассажира:", foundPassenger);
+            postTicket(foundPassenger);
+        }
+    };
+    
+    const handleCreatePassenger = async () => {
+        if (!passName || !passSuN) return null; 
+    
+        try {
+            console.log("Попытка отправки запроса на создание пассажира...");
+            const response = await fetch(`${API_SERVER}/passengers/`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    first_name: passName,
+                    last_name: passSuN,
+                    user: userId,
+                }),
+            });
+    
+            console.log("Response status:", response.status);
+    
+
+            if (!response.ok) {
+                const responseData = await response.json();
+                throw new Error(`Ошибка при создании пассажира: ${responseData?.message || response.statusText}`);
+            }
+
+            const responseData = await response.json();
+            console.log("Response data:", responseData);
+    
+            console.log("Новый пассажир создан:", responseData);
+            setArrPass(prevState => [...prevState, responseData]);
+    
+            return responseData;  
+        } catch (error) {
+            console.error("Ошибка создания пассажира:", error);
+            return null; 
+        }
+    };
+    
+    
+    const postTicket = async (my_psngr: Passenger) => {
+        if (!my_psngr) {
+            console.log("Passenger is null");
+            return;
+        }
+    
+        const ticket: Ticket = {
+            is_used: false,
+            passenger: my_psngr.id,
+            race: race_id,
+        };
+    
+        try {
+            const response = await fetch(`${API_SERVER}/tickets/`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(ticket),
+            });
+    
+            if (!response.ok) throw new Error("Ошибка при создании билета");
+    
+            const data = await response.json();
+            console.log(data);
+            await navigate(`/new/done/ticket/${data.id}`);
+        } catch (error) {
+            console.error("Ошибка создания билета:", error);
+        }
+    };
+  
+
+    
+    
     return(
         <div>
             <TcktPreHeader />
@@ -26,7 +222,14 @@ export default function TicketingComp(){
                                                     <div className="">
                                                         <div>
                                                             <div>
-                                                                <input id="checkout_passenger1_1021051141151169511097109101" type="text" className="form-control" placeholder="Іван"  name="VNUGIXqXP_" value=""/>
+                                                                <input 
+                                                                id="checkout_passenger1_1021051141151169511097109101" 
+                                                                type="text" 
+                                                                className="form-control" 
+                                                                placeholder="Іван"  
+                                                                value={passName || ""}
+                                                                onChange={(e) => setPassName(e.target.value)}
+                                                                />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -38,7 +241,13 @@ export default function TicketingComp(){
                                                     <div className="">
                                                         <div>
                                                             <div>
-                                                                <input id="checkout_passenger1_108971151169511097109101" type="text" className="form-control" placeholder="Франко"   name="yzFaJ_t3P-_" value=""/>
+                                                                <input 
+                                                                value={passSuN || ""}
+                                                                onChange={(e) => setPassSuN(e.target.value)}
+                                                                id="checkout_passenger1_108971151169511097109101" 
+                                                                type="text" 
+                                                                className="form-control" 
+                                                                placeholder="Франко"    />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -78,14 +287,19 @@ export default function TicketingComp(){
                             <div className="col-md-6 col-sm-6 col-xs-6">
                                 <label className="m-verify-panel__form-label">E-mail</label>
                                 <div className="form-group">
-                                    <input id="checkout_email" type="email" className="form-control" placeholder="ashevchenko@gmail.com"  name="" value=""/>
+                                    <input id="checkout_email" disabled type="email" className="form-control" placeholder="ashevchenko@gmail.com"   value={email || undefined}/>
                                 </div>
                             </div>
                             <div className="col-md-6 col-sm-6 col-xs-6">
                                 <label className="m-verify-panel__form-label">Телефон</label>
                                 <div className="form-group">
                                     <div>
-                                        <input id="checkout_phone" name="phone" type="tel"    placeholder="380 __ ___ ____" className="auth__input" value=""/>
+                                        <input value={phone || "" || undefined}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                        id="checkout_phone"  
+                                        type="tel"    
+                                        placeholder="380 __ ___ ____" 
+                                        className="auth__input"/>
                                         <span className="auth__plus text-muted">+</span>
                                     </div>
                                 </div>
@@ -94,8 +308,8 @@ export default function TicketingComp(){
                         <div className="checkout__customer-promo checkout__custom-checkbox">
                             <div className="subscribe--new flat__form">
                                 <div className="checkbox checkbox-primary verify-panel__checkbox">
-                                    <input type="checkbox" id="checkbox-8a2088390baa6"/>
-                                    <label>
+                                    <input type="checkbox" id="checkbox-8a2088390baa6" />
+                                    <label htmlFor="checkbox-8a2088390baa6">
                                         <i className="verify-panel__checkbox-icon"></i>
                                         <span>Надсилайте мені знижки та ідеї бюджетних подорожей</span>
                                     </label>
@@ -126,34 +340,42 @@ export default function TicketingComp(){
                         </div>
                         </div>
                         <div className="checkout__agreement checkout__custom-checkbox flat__form">
-                            <div className="m-verify-panel__policy"><div className="checkbox checkbox-primary verify-panel__checkbox">
-                                <input type="checkbox" id="checkbox-5572acde85dec"/>
-                                <label>
-                                    <i className="verify-panel__checkbox-icon"></i>
-                                    <span>Я приймаю умови 
-                                        <span data-type="agreement" className="interactive-link text-primary">публічної оферти</span>, 
-                                        <span data-type="privacyPolicy" className="interactive-link text-primary">політики конфіденційності</span> і 
-                                        <span data-type="refundPolicy" className="interactive-link text-primary">повернення</span>.
-                                    </span>
-                                </label>
+                            <div className="m-verify-panel__policy">
+                                <div className="checkbox checkbox-primary verify-panel__checkbox">
+                                    <input type="checkbox" id="checkbox-5572acde85dec"/>
+                                    <label htmlFor="checkbox-5572acde85dec">
+                                        <i className="verify-panel__checkbox-icon"></i>
+                                        <span>Я приймаю умови   
+                                            <span data-type="agreement" className="interactive-link text-primary"> публічної оферти</span>, 
+                                            <span data-type="privacyPolicy" className="interactive-link text-primary"> політики конфіденційності</span> і 
+                                            <span data-type="refundPolicy" className="interactive-link text-primary"> повернення</span>.
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="m-verify-panel__policy">
+                                <div className="checkbox checkbox-primary verify-panel__checkbox">
+                                    <input type="checkbox" id="checkbox-eb4a326830f26"/>
+                                    <label htmlFor="checkbox-eb4a326830f26">
+                                        <i className="verify-panel__checkbox-icon"></i>
+                                        <span>
+                                            <span data-type="dataProcessingAgreement" className="interactive-link text-primary">Згода на обробку персональних даних</span>.
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div className="m-verify-panel__policy">
-                            <div className="checkbox checkbox-primary verify-panel__checkbox">
-                                <input type="checkbox" id="checkbox-eb4a326830f26"/>
-                                <label>
-                                    <i className="verify-panel__checkbox-icon"></i>
-                                    <span>
-                                        <span data-type="dataProcessingAgreement" className="interactive-link text-primary">Згода на обробку персональних даних</span>.
-                                    </span>
-                                </label>
-                            </div>
                         </div>
-                    </div>
-                </div>
                 <div className="checkout-submit-btn">
                     <div>
-                        <button type="submit" id="checkout_submit" className="btn btn-primary btn-sm disabled btn--checkout">Перейти до оплати
+                    <button 
+                        onClick={async () => {
+                           await handleTicketing(); 
+                           
+                        }} 
+                        type="submit" 
+                        id="checkout_submit" 
+                        className="btn btn-primary btn-sm btn--checkout">Перейти до оплати
                         </button>
                     </div>
                     </div>
@@ -165,7 +387,8 @@ export default function TicketingComp(){
                     </div>
                 </div>
             </div>
-
+            <FooterComp/>
         </div>
+
     );
 }

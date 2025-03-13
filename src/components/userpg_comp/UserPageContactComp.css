@@ -190,6 +190,16 @@ input:not([type=checkbox]):not([type=radio]), textarea {
         font-size: 16px;
     }
 
+    .passengers-container {
+        max-height: 300px;
+        overflow-y: auto; 
+        scrollbar-width: none; 
+    }
+    
+    .passengers-container::-webkit-scrollbar {
+        display: none; 
+    }
+    
 @media only screen and (max-width: 766px) {
         .grid-cont{
             padding: 0px 12px;
