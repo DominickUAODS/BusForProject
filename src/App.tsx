@@ -54,7 +54,7 @@ function App() {
 						{/* Основные страницы */}
 						<Route path="/admin/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 						<Route path="/cities" element={<PrivateRoute><CitiesPage /></PrivateRoute>} />
-						<Route path="/races" element={<PrivateRoute><RacesPage /></PrivateRoute>} />
+						<Route path="/racess" element={<PrivateRoute><RacesPage /></PrivateRoute>} />
 						<Route path="/passengers" element={<PrivateRoute><PassengersPage /></PrivateRoute>} />
 						<Route path="/tickets" element={<PrivateRoute><TicketsPage /></PrivateRoute>} />
 
@@ -64,8 +64,8 @@ function App() {
 						<Route path="/users/edit/:id" element={<PrivateRoute requiredRole="admin"><UserForm /></PrivateRoute>} />
 						<Route path="/cities/new" element={<PrivateRoute requiredRole="admin"><CityForm /></PrivateRoute>} />
 						<Route path="/cities/edit/:id" element={<PrivateRoute requiredRole="admin"><CityForm /></PrivateRoute>} />
-						<Route path="/races/new" element={<PrivateRoute requiredRole="admin"><RaceForm /></PrivateRoute>} />
-						<Route path="/races/edit/:id" element={<PrivateRoute requiredRole="admin"><RaceForm /></PrivateRoute>} />
+						<Route path="/racess/new" element={<PrivateRoute requiredRole="admin"><RaceForm /></PrivateRoute>} />
+						<Route path="/racess/edit/:id" element={<PrivateRoute requiredRole="admin"><RaceForm /></PrivateRoute>} />
 						<Route path="/passengers/new" element={<PrivateRoute requiredRole="admin"><PassengerForm /></PrivateRoute>} />
 						<Route path="/passengers/edit/:id" element={<PrivateRoute requiredRole="admin"><PassengerForm /></PrivateRoute>} />
 						<Route path="/tickets/new" element={<PrivateRoute requiredRole="admin"><TicketForm /></PrivateRoute>} />

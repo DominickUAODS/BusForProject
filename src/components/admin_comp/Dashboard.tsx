@@ -83,7 +83,7 @@ function Dashboard() {
 			{error && <div className={styles.error}>{error}</div>}
 			{[{ title: "Users", data: users, path: "users", columns: ["username", "email", "first_name", "last_name", "email", "is_staff", "is_superuser", "is_active", "last_login", "date_joined"] },
 			{ title: "Cities", data: cities, path: "cities", columns: ["name_en", "name_ua"] },
-			{ title: "Races", data: races, path: "races", columns: ["time_start", "time_end", "cost", "places", "city_from", "city_to"] },
+			{ title: "Races", data: races, path: "racess", columns: ["time_start", "time_end", "cost", "places", "city_from", "city_to"] },
 			{ title: "Passengers", data: passengers, path: "passengers", columns: ["first_name", "last_name", "user_id"] },
 			{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger_id", "race_id"] },
 			].map(({ title, data, path, columns }) => (

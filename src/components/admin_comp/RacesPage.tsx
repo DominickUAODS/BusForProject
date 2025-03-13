@@ -110,7 +110,7 @@ const RacesPage = () => {
 		<div className={styles.comp}>
 			<div className={styles.cont}>
 				<div className={styles.title}>Races</div>
-				<Link to="/races/new" className={styles.createLink}>Create New Race</Link>
+				<Link to="/racess/new" className={styles.createLink}>Create New Race</Link>
 				<div className={styles.table}>
 					<table>
 						<thead>
@@ -133,7 +133,7 @@ const RacesPage = () => {
 									<td>{race.places}</td>
 									<td>{cityFromData[race.city_from]?.name_ua}</td>
 									<td>{cityToData[race.city_to]?.name_ua}</td>
-									<td><Link to={`/races/edit/${race.id}`} className={styles.editLink}>Edit</Link></td>
+									<td><Link to={`/racess/edit/${race.id}`} className={styles.editLink}>Edit</Link></td>
 								</tr>
 							))}
 						</tbody>
