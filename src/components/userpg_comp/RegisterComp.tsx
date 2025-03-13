@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../helpers/AuthProvider";
 import "./RegisterComp.css";
+import loaderImage from "../../assets/images/bouncing-ball.png";
+import Loader from "../tickets_comp/Loader";
 
 export default function RegisterComp() {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -9,7 +11,7 @@ export default function RegisterComp() {
 	const [email, setEmail] = useState("");
 	const [code, setCode] = useState("");
 	const [isCodeSent, setIsCodeSent] = useState(false);
-
+	const [isLoading, setIsLoading] = useState(false);
 	const [emailError, setEmailError] = useState<string>(""); 
 	const [codeError, setCodeError] = useState<string>("");
 	const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function RegisterComp() {
 	}
 
 	const sendCode = async () => {
-
+		setIsLoading(true); 
 		if (!email) {
 			setEmailError("Введіть e-mail");
 			return;
@@ -45,9 +47,14 @@ export default function RegisterComp() {
 			} else {
 				alert(data.error);
 			}
+			await new Promise((resolve) => setTimeout(resolve, 1400)); 
+            setIsCodeSent(true);
 		} catch (error) {
 			console.error("Помилка з'єднання:", error);
 			alert("Сталася помилка, спробуйте ще раз.");
+		}
+		finally{
+			setIsLoading(false);
 		}
 	};
 
@@ -174,9 +181,13 @@ export default function RegisterComp() {
 											/>
 										</div>
 										<div className="lk-login__form-action">
+										{isLoading ? (
+											<Loader/>
+										) : (
 											<button type="button" onClick={sendCode} className="btn btn-primary btn-block">
 												Надіслати код на пошту
 											</button>
+										)}
 										</div>
 									</div>
 								</form>
