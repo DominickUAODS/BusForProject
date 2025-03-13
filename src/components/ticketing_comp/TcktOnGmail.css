@@ -7,3 +7,39 @@
     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
     box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
 }
+
+.h5-gmail-ticket{
+    margin-top: 40px !important;
+}
+
+.ticket-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.ticket-container div {
+    margin-bottom: 12px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.ticket-container span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.ticket-container span strong {
+    color: #d9534f;
+}
+
+.ticket-container div:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    color: #2a9d8f;
+}

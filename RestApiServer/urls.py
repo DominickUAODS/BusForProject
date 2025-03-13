@@ -34,4 +34,5 @@ urlpatterns = [
     path('token-refresh/', TokenRefreshView.as_view(),name="token-refresh"),
     path("send-code/", send_verification_code, name="send_code"),
     path("verify-code/", verify_code, name="verify_code"),
+    path("send-ticket/", send_ticket, name="send_ticket")
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

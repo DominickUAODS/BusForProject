@@ -209,6 +209,39 @@ def verify_code(request):
             return JsonResponse({"message": "Код підтверджено"})
         else:
             return JsonResponse({"error": "Невірний код"}, status=400)
+        
+@csrf_exempt
+def send_ticket(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Метод не дозволений"}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        email = data.get("email")
+        passenger = data.get("passenger")
+        route = data.get("route")
+        departure_time = data.get("departure_time")
+        arrival_time = data.get("arrival_time")
+
+        if not email or not passenger or not route or not departure_time or not arrival_time:
+            return JsonResponse({"error": "Всі поля обов'язкові"}, status=400)
+
+        subject = "Ваш електронний квиток"
+        message = (
+            f"Шановний {passenger},\n\n"
+            f"Ваш квиток на рейс:\n"
+            f"Маршрут: {route}\n"
+            f"Час відправки: {departure_time}\n"
+            f"Час прибуття: {arrival_time}\n\n"
+            f"Дякуємо за вибір нашої компанії!"
+        )
+
+        send_mail(subject, message, "taya13taya@gmail.com", [email], fail_silently=False)
+
+        return JsonResponse({"message": "Квиток успішно відправлено на e-mail"})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 #main components
 def index(request):
