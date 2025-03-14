@@ -3,7 +3,7 @@
 	justify-content: center;
 	width: 100vw;
 	min-height: 100vh;
-	background-color: #e3e1df;
+	background-color: #f4f4f4; /* Обновленный цвет фона */
 	align-items: center;
 	padding: 20px;
 }
@@ -19,9 +19,9 @@
 
 .title {
 	text-align: center;
-	margin-bottom: 20px;
 	font-size: 24px;
 	font-weight: 600;
+	margin-bottom: 20px;
 }
 
 .createLink {
@@ -38,8 +38,9 @@
 
 .table {
 	width: 100%;
+	table-layout: auto;
 	border-collapse: collapse;
-	background-color: azure;
+	margin-bottom: 20px;
 }
 
 .table th,
@@ -50,6 +51,7 @@
 }
 
 .table th {
+	width: 40%;
 	background-color: #f1f1f1;
 	font-weight: bold;
 }
@@ -101,6 +103,7 @@
 	cursor: not-allowed;
 }
 
+/* Мобильный адаптивный стиль */
 @media only screen and (max-width: 766px) {
 	.comp {
 		padding: 10px;
@@ -120,10 +123,31 @@
 		font-size: 14px;
 	}
 
+	.table {
+		width: 100%;
+		display: block;
+	}
+
 	.table th,
 	.table td {
+		display: block;
+		width: 100%;
 		font-size: 14px;
 		padding: 8px;
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+	}
+
+	.table th {
+		background-color: #f1f1f1;
+		font-weight: bold;
+		padding-top: 10px;
+	}
+
+	.table tr {
+		display: block;
+		width: 100%;
+		margin-bottom: 10px;
 	}
 
 	.pageBtn {

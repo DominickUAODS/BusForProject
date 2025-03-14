@@ -7,6 +7,7 @@ import { ICity } from "../../interfaces/ICity";
 import { IRace } from "../../interfaces/IRace";
 import { IPassenger } from "../../interfaces/IPassenger";
 import { ITicket } from "../../interfaces/ITicket";
+import AdminHeader from "./AdminHeader";
 
 function Dashboard() {
 	const authContext = useContext(AuthContext);
@@ -29,7 +30,10 @@ function Dashboard() {
 			if (!authContext?.accessToken) return;
 			try {
 				const response = await fetch(`${endpoint}`, {
-					headers: { Authorization: `Bearer ${authContext.accessToken}` },
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${authContext.accessToken}`,
+					},
 				});
 				if (response.status === 401) {
 					await authContext.refreshAccessToken();
@@ -58,7 +62,10 @@ function Dashboard() {
 		try {
 			const response = await fetch(`/${type}/${id}`, {
 				method: "DELETE",
-				headers: { Authorization: `Bearer ${authContext.accessToken}` },
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${authContext.accessToken}`,
+				},
 			});
 			if (response.status === 401) {
 				await authContext.refreshAccessToken();
@@ -78,45 +85,48 @@ function Dashboard() {
 	if (!authContext?.isAuthenticated || authContext.role !== "admin") return <p>Access Denied</p>;
 
 	return (
-		<div className={styles.dashboard}>
-			<h2>Dashboard</h2>
-			{error && <div className={styles.error}>{error}</div>}
-			{[{ title: "Users", data: users, path: "users", columns: ["username", "email", "first_name", "last_name", "email", "is_staff", "is_superuser", "is_active", "last_login", "date_joined"] },
-			{ title: "Cities", data: cities, path: "cities", columns: ["name_en", "name_ua"] },
-			{ title: "Races", data: races, path: "racess", columns: ["time_start", "time_end", "cost", "places", "city_from", "city_to"] },
-			{ title: "Passengers", data: passengers, path: "passengers", columns: ["first_name", "last_name", "user_id"] },
-			{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger_id", "race_id"] },
-			].map(({ title, data, path, columns }) => (
-				<div key={path} className={styles.tableContainer}>
-					<h3>
-						<Link to={`/${path}`} className={styles.sectionLink}>{title}</Link>
-					</h3>
-					<Link to={`/${path}/new`} className={styles.createLink}>Create New {title.slice(0, -1)}</Link>
-					<table className={styles.table}>
-						<thead>
-							<tr>
-								{columns.map((col) => (
-									<th key={col}>{col}</th>
-								))}
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{data.map((item) => (
-								<tr key={item.id}>
+		<>
+			<AdminHeader />
+			<div className={styles.dashboard}>
+				<h2>Dashboard</h2>
+				{error && <div className={styles.error}>{error}</div>}
+				{[{ title: "Users", data: users, path: "users", columns: ["username", "email", "first_name", "last_name", "email", "is_staff", "is_superuser", "is_active", "last_login", "date_joined"] },
+				{ title: "Cities", data: cities, path: "cities", columns: ["name_en", "name_ua"] },
+				{ title: "Races", data: races, path: "racess", columns: ["time_start", "time_end", "cost", "places", "city_from", "city_to"] },
+				{ title: "Passengers", data: passengers, path: "passengers", columns: ["first_name", "last_name", "user_id"] },
+				{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger_id", "race_id"] },
+				].map(({ title, data, path, columns }) => (
+					<div key={path} className={styles.tableContainer}>
+						<h3>
+							<Link to={`/${path}`} className={styles.sectionLink}>{title}</Link>
+						</h3>
+						<Link to={`/${path}/new`} className={styles.createLink}>Create New {title.slice(0, -1)}</Link>
+						<table className={styles.table}>
+							<thead>
+								<tr>
 									{columns.map((col) => (
-										<td key={col}>{item[col as keyof typeof item]}</td>
+										<th key={col}>{col}</th>
 									))}
-									<td>
-										<button className={styles.deleteBtn} onClick={() => handleDelete(path, item.id)}>Delete</button>
-									</td>
+									<th>Actions</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			))}
-		</div>
+							</thead>
+							<tbody>
+								{data.map((item) => (
+									<tr key={item.id}>
+										{columns.map((col) => (
+											<td key={col}>{item[col as keyof typeof item]}</td>
+										))}
+										<td>
+											<button className={styles.deleteBtn} onClick={() => handleDelete(path, item.id)}>Delete</button>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				))}
+			</div>
+		</>
 	);
 }
 

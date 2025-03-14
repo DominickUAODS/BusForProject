@@ -101,6 +101,7 @@
 	cursor: not-allowed;
 }
 
+/* Мобильный адаптивный стиль */
 @media only screen and (max-width: 766px) {
 	.cont {
 		padding: 15px;
@@ -115,10 +116,31 @@
 		font-size: 14px;
 	}
 
+	.table {
+		width: 100%;
+		display: block;
+	}
+
 	.table th,
 	.table td {
+		display: block;
+		width: 100%;
 		font-size: 14px;
 		padding: 8px;
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+	}
+
+	.table th {
+		background-color: #f1f1f1;
+		font-weight: bold;
+		padding-top: 10px;
+	}
+
+	.table tr {
+		display: block;
+		width: 100%;
+		margin-bottom: 10px;
 	}
 
 	.pageBtn {

@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLocalStorage";
 import { ITicket } from "../../interfaces/ITicket";
 import styles from "./TicketsPage.module.css";
+import AdminHeader from "./AdminHeader";
+import { IRace } from "../../interfaces/IRace";
+import { IPassenger } from "../../interfaces/IPassenger";
 
 const TicketsPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -11,6 +14,8 @@ const TicketsPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [nextPage, setNextPage] = useState<string | null>(null); // Ссылка на следующую страницу
 	const [previousPage, setPreviousPage] = useState<string | null>(null); // Ссылка на предыдущую страницу
+	const [passengers, setPassengers] = useState<{ [key: number]: IPassenger }>({});
+	const [races, setRaces] = useState<{ [key: number]: IRace }>({});
 	const { accessToken } = GetAuthTokensFromLocalStorage();
 
 	const fetchTickets = async (url: string) => {
@@ -37,10 +42,54 @@ const TicketsPage = () => {
 			setTickets(data.results);
 			setNextPage(data.next); // Сохраняем ссылку на следующую страницу
 			setPreviousPage(data.previous); // Сохраняем ссылку на предыдущую страницу
+
+			fetchPassengerData(data.results);
+			fetchRaceData(data.results);
+
 		} catch (error) {
 			setError(error instanceof Error ? error.message : "An unexpected error occurred");
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	// Fetch passenger data by ID
+	const fetchPassengerData = async (tickets: ITicket[]) => {
+		const passengerIds = Array.from(new Set(tickets.map((ticket) => ticket.passenger)));
+		for (const passengerId of passengerIds) {
+			if (passengerId) {
+				const response = await fetch(`${API_SERVER}/passengers/${passengerId}`, {
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${accessToken}`,
+					},
+				});
+
+				if (response.ok) {
+					const passengerData = await response.json();
+					setPassengers((prev) => ({ ...prev, [passengerData.id]: passengerData }));
+				}
+			}
+		}
+	};
+
+	// Fetch race data by ID
+	const fetchRaceData = async (tickets: ITicket[]) => {
+		const raceIds = Array.from(new Set(tickets.map((ticket) => ticket.race)));
+		for (const raceId of raceIds) {
+			if (raceId) {
+				const response = await fetch(`${API_SERVER}/races/${raceId}`, {
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${accessToken}`,
+					},
+				});
+
+				if (response.ok) {
+					const raceData = await response.json();
+					setRaces((prev) => ({ ...prev, [raceData.id]: raceData }));
+				}
+			}
 		}
 	};
 
@@ -66,50 +115,41 @@ const TicketsPage = () => {
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
-		<div className={styles.comp}>
-			<div className={styles.cont}>
-				<div className={styles.title}>Tickets</div>
-				<Link to="/tickets/new" className={styles.createLink}>Create New Ticket</Link>
+		<>
+			<AdminHeader />
+			<div className={styles.comp}>
+				<div className={styles.cont}>
+					<div className={styles.title}>Tickets</div>
+					<Link to="/tickets/new" className={styles.createLink}>Create New Ticket</Link>
 
-				<table className={styles.table}>
-					<thead>
-						<tr>
-							<th>Is Used</th>
-							<th>Passenger ID</th>
-							<th>Race ID</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tickets.map((ticket) => (
-							<tr key={ticket.id}>
-								<td>{ticket.is_used}</td>
-								<td>{ticket.passenger_id}</td>
-								<td>{ticket.race_id}</td>
-								<td><Link to={`/tickets/edit/${ticket.id}`} className={styles.editLink}>Edit</Link></td>
+					<table className={styles.table}>
+						<thead>
+							<tr>
+								<th>Is Used</th>
+								<th>Passenger</th>
+								<th>Race</th>
+								<th>Actions</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{tickets.map((ticket) => (
+								<tr key={ticket.id}>
+									<td>{ticket.is_used ? 'Yes' : 'No'}</td>
+									<td>{passengers[ticket.passenger]?.first_name} {passengers[ticket.passenger]?.last_name}</td>
+									<td>{races[ticket.race]?.time_start}</td>
+									<td><Link to={`/tickets/edit/${ticket.id}`} className={styles.editLink}>Edit</Link></td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 
-				<div className={styles.pagination}>
-					<button
-						onClick={handlePreviousPage}
-						disabled={!previousPage}
-						className={styles.pageBtn}
-					>
-						Previous
-					</button>
-					<button
-						onClick={handleNextPage}
-						disabled={!nextPage}
-						className={styles.pageBtn}
-					>
-						Next
-					</button>
+					<div className={styles.pagination}>
+						<button onClick={handlePreviousPage} disabled={!previousPage} className={styles.pageBtn}>Previous</button>
+						<button onClick={handleNextPage} disabled={!nextPage} className={styles.pageBtn}>Next</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

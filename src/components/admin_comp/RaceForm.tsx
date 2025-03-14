@@ -5,6 +5,7 @@ import Select from "react-select"; // Импортируем компонент 
 import { IRace } from "../../interfaces/IRace";
 import { ICity } from "../../interfaces/ICity";
 import styles from "./RaceForm.module.css";
+import AdminHeader from "./AdminHeader";
 //import { parseISO, format } from 'date-fns';
 
 // Типизация данных для гонки
@@ -193,105 +194,108 @@ function RaceForm() {
 	// };
 
 	return (
-		<div className={styles.comp}>
-			<div className={styles.cont}>
-				<h2>{id ? "Edit Race" : "Create Race"}</h2>
+		<>
+			<AdminHeader />
+			<div className={styles.comp}>
+				<div className={styles.cont}>
+					<h2>{id ? "Edit Race" : "Create Race"}</h2>
 
-				{error && <div className={styles.error}>{error}</div>}
+					{error && <div className={styles.error}>{error}</div>}
 
-				<form onSubmit={handleSubmit}>
-					<div className={styles.formGroup}>
-						<label htmlFor="time_start">Start time</label>
-						<input
-							type="datetime-local"
-							name="time_start"
-							value={race?.time_start}
-							onChange={handleChange}
-							required
-						/>
-					</div>
+					<form onSubmit={handleSubmit}>
+						<div className={styles.formGroup}>
+							<label htmlFor="time_start">Start time</label>
+							<input
+								type="datetime-local"
+								name="time_start"
+								value={race?.time_start}
+								onChange={handleChange}
+								required
+							/>
+						</div>
 
-					<div className={styles.formGroup}>
-						<label htmlFor="time_end">End time</label>
-						<input
-							type="datetime-local"
-							name="time_end"
-							value={race?.time_end}
-							onChange={handleChange}
-							required
-						/>
-					</div>
+						<div className={styles.formGroup}>
+							<label htmlFor="time_end">End time</label>
+							<input
+								type="datetime-local"
+								name="time_end"
+								value={race?.time_end}
+								onChange={handleChange}
+								required
+							/>
+						</div>
 
-					<div className={styles.formGroup}>
-						<label htmlFor="cost">Cost</label>
-						<input
-							type="number"
-							name="cost"
-							value={race?.cost}
-							min="0.01"
-							step="0.01"
-							onChange={handleChange}
-							required
-						/>
-					</div>
+						<div className={styles.formGroup}>
+							<label htmlFor="cost">Cost</label>
+							<input
+								type="number"
+								name="cost"
+								value={race?.cost}
+								min="0.01"
+								step="0.01"
+								onChange={handleChange}
+								required
+							/>
+						</div>
 
-					<div className={styles.formGroup}>
-						<label htmlFor="places">Places</label>
-						<input
-							type="number"
-							name="places"
-							value={race?.places}
-							min="10"
-							max="50"
-							onChange={handleChange}
-							required
-						/>
-					</div>
+						<div className={styles.formGroup}>
+							<label htmlFor="places">Places</label>
+							<input
+								type="number"
+								name="places"
+								value={race?.places}
+								min="10"
+								max="50"
+								onChange={handleChange}
+								required
+							/>
+						</div>
 
-					{/* City From - выпадающий список с поиском */}
-					<div className={styles.formGroup}>
-						<label htmlFor="city_from">City From</label>
-						<Select
-							name="city_from"
-							options={cityOptions}
-							value={cityOptions.find((city) => city.value === race?.city_from)}
-							onChange={(selectedOption) => handleCityChange(selectedOption, "city_from")}
-							isLoading={loading}
-							placeholder="Select City From"
-							required
-						/>
-					</div>
+						{/* City From - выпадающий список с поиском */}
+						<div className={styles.formGroup}>
+							<label htmlFor="city_from">City From</label>
+							<Select
+								name="city_from"
+								options={cityOptions}
+								value={cityOptions.find((city) => city.value === race?.city_from)}
+								onChange={(selectedOption) => handleCityChange(selectedOption, "city_from")}
+								isLoading={loading}
+								placeholder="Select City From"
+								required
+							/>
+						</div>
 
-					{/* City To - выпадающий список с поиском */}
-					<div className={styles.formGroup}>
-						<label htmlFor="city_to">City To</label>
-						<Select
-							name="city_to"
-							options={cityOptions}
-							value={cityOptions.find((city) => city.value === race?.city_to)}
-							onChange={(selectedOption) => handleCityChange(selectedOption, "city_to")}
-							isLoading={loading}
-							placeholder="Select City To"
-							required
-						/>
-					</div>
+						{/* City To - выпадающий список с поиском */}
+						<div className={styles.formGroup}>
+							<label htmlFor="city_to">City To</label>
+							<Select
+								name="city_to"
+								options={cityOptions}
+								value={cityOptions.find((city) => city.value === race?.city_to)}
+								onChange={(selectedOption) => handleCityChange(selectedOption, "city_to")}
+								isLoading={loading}
+								placeholder="Select City To"
+								required
+							/>
+						</div>
 
-					<button type="submit" disabled={loading}>
-						{id ? "Update Race" : "Create Race"}
-					</button>
-				</form>
+						<button type="submit" disabled={loading}>
+							{id ? "Update Race" : "Create Race"}
+						</button>
+					</form>
 
-				{id && (
-					<button
-						onClick={handleDelete}
-						className={styles.deleteBtn}
-						disabled={loading}
-					>
-						Delete Race
-					</button>
-				)}
+					{id && (
+						<button
+							onClick={handleDelete}
+							className={styles.deleteBtn}
+							disabled={loading}
+						>
+							Delete Race
+						</button>
+					)}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

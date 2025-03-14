@@ -4,6 +4,7 @@ import { IRace } from "../../interfaces/IRace";
 import { format } from 'date-fns';
 import { ICity } from "../../interfaces/ICity";
 import styles from "./RacesPage.module.css";
+import AdminHeader from "./AdminHeader";
 
 const RacesPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -107,57 +108,60 @@ const RacesPage = () => {
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
-		<div className={styles.comp}>
-			<div className={styles.cont}>
-				<div className={styles.title}>Races</div>
-				<Link to="/racess/new" className={styles.createLink}>Create New Race</Link>
-				<div className={styles.table}>
-					<table>
-						<thead>
-							<tr>
-								<th>Start Time</th>
-								<th>End Time</th>
-								<th>Cost</th>
-								<th>Places</th>
-								<th>City from</th>
-								<th>City to</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							{races.map((race) => (
-								<tr key={race.id}>
-									<td>{format(new Date(race.time_start), 'dd.MM.yyyy HH:mm')}</td>
-									<td>{format(new Date(race.time_end), 'dd.MM.yyyy HH:mm')}</td>
-									<td>{race.cost}</td>
-									<td>{race.places}</td>
-									<td>{cityFromData[race.city_from]?.name_ua}</td>
-									<td>{cityToData[race.city_to]?.name_ua}</td>
-									<td><Link to={`/racess/edit/${race.id}`} className={styles.editLink}>Edit</Link></td>
+		<>
+			<AdminHeader />
+			<div className={styles.comp}>
+				<div className={styles.cont}>
+					<div className={styles.title}>Races</div>
+					<Link to="/racess/new" className={styles.createLink}>Create New Race</Link>
+					<div className={styles.table}>
+						<table>
+							<thead>
+								<tr>
+									<th>Start Time</th>
+									<th>End Time</th>
+									<th>Cost</th>
+									<th>Places</th>
+									<th>City from</th>
+									<th>City to</th>
+									<th>Action</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+							</thead>
+							<tbody>
+								{races.map((race) => (
+									<tr key={race.id}>
+										<td>{format(new Date(race.time_start), 'dd.MM.yyyy HH:mm')}</td>
+										<td>{format(new Date(race.time_end), 'dd.MM.yyyy HH:mm')}</td>
+										<td>{race.cost}</td>
+										<td>{race.places}</td>
+										<td>{cityFromData[race.city_from]?.name_ua}</td>
+										<td>{cityToData[race.city_to]?.name_ua}</td>
+										<td><Link to={`/racess/edit/${race.id}`} className={styles.editLink}>Edit</Link></td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 
-				<div className={styles.pagination}>
-					<button
-						onClick={handlePreviousPage}
-						className={styles.pageBtn}
-						disabled={!previousPage}
-					>
-						Previous
-					</button>
-					<button
-						onClick={handleNextPage}
-						className={styles.pageBtn}
-						disabled={!nextPage}
-					>
-						Next
-					</button>
+					<div className={styles.pagination}>
+						<button
+							onClick={handlePreviousPage}
+							className={styles.pageBtn}
+							disabled={!previousPage}
+						>
+							Previous
+						</button>
+						<button
+							onClick={handleNextPage}
+							className={styles.pageBtn}
+							disabled={!nextPage}
+						>
+							Next
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
