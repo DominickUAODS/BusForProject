@@ -1,0 +1,29 @@
+.bUqoGt {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    height: 60px;
+    padding: 20px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 20px;
+    color: black;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px;
+}
+
+.dTaPQg {
+    display: flex;
+}
+
+.lgnPAG {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.HlbTb {
+    cursor: pointer;
+}

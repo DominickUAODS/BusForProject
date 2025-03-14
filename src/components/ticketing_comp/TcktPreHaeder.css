@@ -1,0 +1,63 @@
+.bKAMRJ {
+    display: flex;
+    padding-top: 80px;
+    width: 100%;
+    background-color: white;
+    padding-left: 17%;
+}
+
+.bwDVRZ {
+    display: flex;
+}
+
+.bwDVRZ .Style__StepText-sc-8or44v-1 {
+    font-weight: 500;
+    color: rgb(7, 69, 81);
+}
+
+.guEUQo {
+    display: inline-block;
+    height: 100%;
+    padding: 14px 0px;
+    font-size: 16px;
+    color: rgb(39, 36, 36);
+    vertical-align: middle;
+}
+
+.bwDVRZ-active,
+.cUrbmx-active{
+    border-bottom: 2px solid rgb(249, 37, 63) !important;
+    opacity: 1 !important;
+
+}
+
+.cUrbmx-active .Style__StepText-sc-8or44v-1{
+    color: rgb(39, 36, 36);
+}
+
+.hPTOik {
+    position: relative;
+    display: flex;
+    width: 40px;
+}
+
+.cUrbmx {
+    display: flex;
+}
+
+.cUrbmx .Style__StepText-sc-8or44v-1 {
+    color: rgb(210, 210, 210);
+}
+
+.hPTOik::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 7px;
+    height: 7px;
+    content: "";
+    border-right: 1px solid rgb(39, 36, 36);
+    border-bottom: 1px solid rgb(39, 36, 36);
+    transform: translate(-50%, -50%) rotate(-45deg);
+}

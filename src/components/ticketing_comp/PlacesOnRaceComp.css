@@ -1,0 +1,255 @@
+.dHEYr {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px;
+}
+
+.checkout-details {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.responsive-container {
+    padding: 0 20px;
+    width: 100%;
+    max-width: 1044px;
+    margin: 0 auto;
+}
+
+.checkout-details__toggle .checkout-details__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.icon-down-arrow:before, .icon-up-arrow:before {
+    font-size: 50%;
+}
+
+.icon-down-arrow:before {
+    content: "\E80E";
+}
+
+.icon-down-arrow:before {
+    width: 1.7em;
+    line-height: 1.1em;
+}
+
+[class*=" icon-"]:before, [class^=icon-]:before {
+    font-family: fontello;
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    -webkit-font-feature-settings: normal;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.checkout-details__toggle .checkout-details__content .title {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 2px;
+}
+
+.checkout-details__toggle .checkout-details__content .text {
+    color: #a7a7a7;
+    line-height: 18px;
+    text-transform: lowercase;
+}
+
+.checkout-details__toggle .price__fraction {
+    font-size: 14px;
+}
+
+.justify-end, .tag__layout {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.justify-between, .special-route__destination-grid {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.align-center, .dp__month-header, .number-select__value--immutable, .special-route__destination, .special-route__destination-item, .special-route__panel-body, .subscription__response, .ticket-error--on-open, .ticket__rating {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.flex, .ticket-error--on-open {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.my-text-primary, .ticket-error--on-open .icon-wrap, .ticket-error__icon {
+    color: #f9253f !important;
+}
+
+.checkout-details__toggle .icon {
+    margin-left: 3px;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.icon-arr{
+    margin-left: 5px;
+}
+
+.responsive-container {
+    padding: 0 32px;
+    width: 100%;
+    max-width: 1044px;
+    margin: 0 auto;
+}
+
+.row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.col-xs-12 {
+    width: 100%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.preorder__wrapper {
+    background-color: #fff;
+    padding: 32px 40px 44px;
+    margin-top: 20px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+}
+
+.preorder {
+    position: relative;
+}
+
+.preorder-seatmap {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.preorder-seatmap__title {
+    text-align: center;
+}
+
+.preorder-seatmap__title--free {
+    margin-bottom: 30px;
+}
+
+.preorder-seatmap__seat-select {
+    font-size: 20px;
+}
+
+.preorder-seatmap__bus-model {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #818682;
+}
+
+.preorder-seatmap__bus-model>span:last-child {
+    color: #272424;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.preorder-seatmap__bus-model .icon {
+    font-size: 16px;
+    vertical-align: middle;
+    margin-left: 4px;
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+}
+
+.preorder-seatmap__free {
+    text-align: center;
+    color: #424543;
+}
+
+.preorder-seatmap__free-seat-count {
+    margin-bottom: 12px;
+    font-size: 26px;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+.cwhlwq {
+    display: flex;
+    flex-flow: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.cwhlwq > button {
+    width: auto;
+    margin: 0px auto;
+    background-color: rgb(249, 37, 63);
+}
+
+.fehIwU {
+    display: inline-block;
+    width: auto;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 0px;
+    outline: 0px;
+    position: relative;
+    color: rgb(255, 255, 255);
+    background-color: rgb(249, 37, 63);
+    padding: 13px 30px;
+    font-size: 14px;
+    border-radius: 4px;
+    line-height: 20px;
+    transition: all 0.28s ease-in-out 0s;
+    will-change: transform;
+}

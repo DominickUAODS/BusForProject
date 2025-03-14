@@ -75,8 +75,8 @@
 }
 
 .eXYpNB .account__tab_active {
-    border-bottom: 2px solid rgb(249, 37, 63);
-    opacity: 1;
+    border-bottom: 2px solid rgb(249, 37, 63) !important;
+    opacity: 1 !important;
 }
 
 .eXYpNB .account__tab {

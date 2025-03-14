@@ -1,0 +1,161 @@
+.new-account__order {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    position: relative;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
+.order-info {
+    padding: 20px 20px 18px;
+    display: flex;
+}
+
+.flex-1-1{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.order-info__header .direction {
+    margin-bottom: 7px;
+    font-size: 22px;
+    line-height: 1.18;
+}
+
+.order-info__header .status {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: -10px;
+    margin-left: -10px;
+    align-items: center;
+    -webkit-box-align: center;
+    display: flex;
+}
+
+.order-info__header .status>* {
+    padding-right: 9px;
+    padding-left: 9px;
+    align-items: center;
+    -webkit-box-align: center;
+    display: flex;
+    
+}
+
+.status_cust{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.order-info__header .status__item .icon {
+    margin-right: 2px;
+    font-size: 16px;
+}
+
+.order-info__header .status__item{
+    align-items: center;
+    -webkit-box-align: center;
+    display: flex;
+}
+
+.order-info__header .status__item .icon {
+    margin-right: 6px;
+    font-size: 16px;
+}
+
+.order-actions {
+    padding-right: 25px;
+    padding-left: 20px;
+    margin-right: -10px;
+    margin-left: -10px;
+    justify-content: flex-end;
+    -webkit-box-pack: end;
+    align-items: center;
+    -webkit-box-align: center;
+    display: flex;
+
+}
+
+.order-actions>* {
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-bottom: 24px;
+    margin-top: 24px;
+}
+
+.order-actions .btn, .order-actions .dropdown__close, .order-actions .ticket__close {
+    height: 48px;
+    font-size: 14px;
+    -webkit-transform: none;
+    transform: none;
+    border-radius: 4px;
+}
+
+.order-actions .btn-return {
+    padding: 13px 35px;
+    align-items: center;
+    border: 1.3px solid #f9253f  ;
+    display: flex;
+}
+
+.back-icon,
+.review-i{
+    margin-right: 10px;
+    margin-left: -10px;
+}
+
+.return,
+.review{
+    color:#424543 !important;
+    font-size: 14px;
+}
+
+.btn{
+    text-align: center;
+    user-select: none;
+}
+
+.gMInnu {
+    display: inline-block;
+    width: auto;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 0px;
+    outline: 0px;
+    position: relative;
+    color: rgb(255, 255, 255);
+    background-color: rgb(249, 37, 63);
+    padding: 13px 30px;
+    font-size: 16px;
+    border-radius: 4px;
+    line-height: 20px;
+    transition: all 0.28s ease-in-out 0s;
+    will-change: transform;
+}
+
+
+.order-actions .btn-again button {
+    font-size: 14px;
+    width: 100%;
+}
+
+
+
+.btn-primary {
+    --bs-btn-hover-bg: white !important;
+    --bs-btn-hover-border-color: rgb(249, 37, 63) !important;
+}

@@ -80,6 +80,7 @@ export default function RacesComp() {
                 <span className="races-description">Розклад автобусів {city1?.name_ua} - {city2?.name_ua} на {date.getDate()} {uaMonthNames[date.getMonth()]}</span>
                 {city1 && city2 && races.map((race) => (
                     <RaceTicket
+                        race_id={race.id}
                         key={race.id}
                         city_from={city1}
                         city_to={city2}

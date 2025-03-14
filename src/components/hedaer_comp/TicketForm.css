@@ -23,6 +23,7 @@
     flex: 1 1 100%;
     margin-right: -1px;
     margin-left: -1px;
+
 }
 
 .field-from-v1,
@@ -346,7 +347,10 @@ select {
        width: 100%;
    }
 
-
+   .span-input-field-date input,
+   .span-input-field-psngrs input{
+    margin: 0 !important;
+   }
 
 @media only screen and (max-width: 766px) {
     .header-data{

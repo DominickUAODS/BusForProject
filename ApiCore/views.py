@@ -71,6 +71,11 @@ class PassengerViewSet(viewsets.ModelViewSet):
         if self.request.method in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']:
             return [IsAuthenticated()]
         return super().get_permissions()
+    
+
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
     def perform_update(self, serializer):
         if not self.request.user.is_staff and serializer.instance.user != self.request.user:
@@ -136,7 +141,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def perform_update(self, serializer):
-        if not self.request.user.is_staff and serializer.instance.user != self.request.user:
+        if not self.request.user.is_staff and serializer.instance.id != self.request.user.id:
             raise PermissionDenied("You do not have permission to update this user.")
         serializer.save()
 
@@ -204,6 +209,39 @@ def verify_code(request):
             return JsonResponse({"message": "Код підтверджено"})
         else:
             return JsonResponse({"error": "Невірний код"}, status=400)
+        
+@csrf_exempt
+def send_ticket(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Метод не дозволений"}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        email = data.get("email")
+        passenger = data.get("passenger")
+        route = data.get("route")
+        departure_time = data.get("departure_time")
+        arrival_time = data.get("arrival_time")
+
+        if not email or not passenger or not route or not departure_time or not arrival_time:
+            return JsonResponse({"error": "Всі поля обов'язкові"}, status=400)
+
+        subject = "Ваш електронний квиток"
+        message = (
+            f"Шановний {passenger},\n\n"
+            f"Ваш квиток на рейс:\n"
+            f"Маршрут: {route}\n"
+            f"Час відправки: {departure_time}\n"
+            f"Час прибуття: {arrival_time}\n\n"
+            f"Дякуємо за вибір нашої компанії!"
+        )
+
+        send_mail(subject, message, "taya13taya@gmail.com", [email], fail_silently=False)
+
+        return JsonResponse({"message": "Квиток успішно відправлено на e-mail"})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 #main components
 def index(request):
