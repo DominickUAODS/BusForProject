@@ -4,6 +4,7 @@ import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLo
 import { ICity } from "../../interfaces/ICity";
 import styles from "./CityForm.module.css";
 import AdminHeader from "./AdminHeader";
+import CustomLoading from "../CustomLoading";
 
 export default function CityForm() {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -90,37 +91,39 @@ export default function CityForm() {
 		}
 	};
 
-	if (loading) return <div>Loading...</div>;
+	//if (loading) return <div>Loading...</div>;
 
 	return (
 		<>
 			<AdminHeader />
 			<div className={styles.comp}>
-				<div className={styles.cont}>
-					<h2>{id ? "Edit City" : "Create City"}</h2>
-					{error && <div className={styles.error}>{error}</div>}
-					<form onSubmit={handleSubmit}>
-						<div>
-							<label>Name EN</label>
-							<input type="text" name="name_en" value={city?.name_en} onChange={handleChange} required />
-						</div>
-						<div>
-							<label>Name UA</label>
-							<input type="text" name="name_ua" value={city?.name_ua} onChange={handleChange} required />
-						</div>
-						<button type="submit" disabled={loading}>{id ? "Update City" : "Create City"}</button>
-					</form>
-					{id && (
-						<button
-							onClick={handleDelete}
-							className={styles.deleteBtn}
-							style={{ marginTop: "10px" }}
-							disabled={loading}
-						>
-							Delete City
-						</button>
-					)}
-				</div>
+				{loading ? (<CustomLoading />) : (
+					<div className={styles.cont}>
+						<h2>{id ? "Edit City" : "Create City"}</h2>
+						{error && <div className={styles.error}>{error}</div>}
+						<form onSubmit={handleSubmit}>
+							<div>
+								<label>Name EN</label>
+								<input type="text" name="name_en" value={city?.name_en} onChange={handleChange} required />
+							</div>
+							<div>
+								<label>Name UA</label>
+								<input type="text" name="name_ua" value={city?.name_ua} onChange={handleChange} required />
+							</div>
+							<button type="submit" disabled={loading}>{id ? "Update City" : "Create City"}</button>
+						</form>
+						{id && (
+							<button
+								onClick={handleDelete}
+								className={styles.deleteBtn}
+								style={{ marginTop: "10px" }}
+								disabled={loading}
+							>
+								Delete City
+							</button>
+						)}
+					</div>
+				)}
 			</div>
 		</>
 	);

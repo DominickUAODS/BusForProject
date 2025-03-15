@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: center;
 	width: 100vw;
-	min-height: 100vh;
+	min-height: 90vh;
 	background-color: #e3e1df;
 	align-items: center;
 	padding: 20px;
@@ -50,6 +50,7 @@
 }
 
 .table th {
+	width: 20%;
 	background-color: #f1f1f1;
 	font-weight: bold;
 }
@@ -120,10 +121,31 @@
 		font-size: 14px;
 	}
 
+	.table {
+		display: block;
+		width: 100%;
+	}
+
 	.table th,
 	.table td {
+		display: block;
+		width: 100%;
 		font-size: 14px;
 		padding: 8px;
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+	}
+
+	.table th {
+		background-color: #f1f1f1;
+		font-weight: bold;
+		padding-top: 10px;
+	}
+
+	.table tr {
+		display: block;
+		width: 100%;
+		margin-bottom: 10px;
 	}
 
 	.pageBtn {

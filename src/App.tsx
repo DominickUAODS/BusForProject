@@ -52,8 +52,8 @@ function App() {
 						<Route path="/new/account/history" element={<UserPageHistoryComp />} />
 						<Route path="/new/account/contact" element={<UserPageContactComp/>} />
 						<Route path="/preloaders/seats/:id" element={<PlacesOnRaceComp/>}/>
-						<Route path = "/new/checkout/:id/:raceId" element={<TicketingComp/>}/>
-						<Route path = "/new/done/ticket/:ticketId" element={<TcktOnGmail/>}/>
+						<Route path="/new/checkout/:id/:raceId" element={<TicketingComp/>}/>
+						<Route path="/new/done/ticket/:ticketId" element={<TcktOnGmail/>}/>
 
 						<Route path="/admin/login" element={<LoginPage />} />
 

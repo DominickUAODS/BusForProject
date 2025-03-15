@@ -97,9 +97,7 @@ function Dashboard() {
 				{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger_id", "race_id"] },
 				].map(({ title, data, path, columns }) => (
 					<div key={path} className={styles.tableContainer}>
-						<h3>
-							<Link to={`/${path}`} className={styles.sectionLink}>{title}</Link>
-						</h3>
+						<h3><Link to={`/${path}`} className={styles.sectionLink}>{title}</Link></h3>
 						<Link to={`/${path}/new`} className={styles.createLink}>Create New {title.slice(0, -1)}</Link>
 						<table className={styles.table}>
 							<thead>

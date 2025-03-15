@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: center;
 	width: 100vw;
-	min-height: 100vh;
+	min-height: 90vh;
 	background-color: #f4f4f4;
 	align-items: center;
 	padding: 20px;
@@ -85,7 +85,7 @@
 .pageBtn {
 	padding: 10px 20px;
 	margin: 0 10px;
-	background-color: #007bff;
+	background-color: rgb(249, 37, 63);
 	color: white;
 	border: none;
 	border-radius: 4px;
@@ -94,12 +94,45 @@
 }
 
 .pageBtn:hover {
-	background-color: #0056b3;
+	background-color: rgb(200, 30, 50);
 }
 
 .pageBtn:disabled {
 	background-color: #ccc;
 	cursor: not-allowed;
+}
+
+@media only screen and (max-width: 1000px) {
+	.table {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 10px;
+		width: 100%;
+	}
+
+	.table th,
+	.table td {
+		display: block;
+		width: 100%;
+		font-size: 14px;
+		padding: 10px;
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+	}
+
+	.table th {
+		background-color: #f1f1f1;
+		font-weight: bold;
+	}
+
+	.table tr {
+		display: contents;
+	}
+
+	.pageBtn {
+		font-size: 14px;
+		padding: 8px 16px;
+	}
 }
 
 /* Мобильный адаптивный стиль */
@@ -149,3 +182,4 @@
 		padding: 8px 16px;
 	}
 }
+
