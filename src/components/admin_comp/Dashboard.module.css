@@ -3,9 +3,9 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 20px;
+	width: 100vw;
 	background-color: #f4f4f4;
-	min-height: 90vh;
+	padding: 20px;
 }
 
 .error {
@@ -27,6 +27,7 @@
 	width: 100%;
 	border-collapse: collapse;
 	margin-top: 20px;
+	overflow-x: auto;
 }
 
 .table th,
@@ -37,6 +38,7 @@
 }
 
 .table th {
+	width: 25%;
 	background-color: #f1f1f1;
 	font-weight: bold;
 }
@@ -62,6 +64,8 @@
 }
 
 .deleteBtn {
+	width: 70px;
+	margin: 5px;
 	padding: 8px 16px;
 	background-color: #ff4d4d;
 	color: white;
@@ -79,7 +83,25 @@
 	cursor: not-allowed;
 }
 
-@media only screen and (max-width: 768px) {
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+
+	/* Use CSS grid to display tables in two columns */
+	.tableContainer {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px;
+	}
+
+	.table {
+		width: 100%;
+		overflow-x: auto;
+	}
 
 	.table th,
 	.table td {
@@ -87,16 +109,47 @@
 		padding: 8px;
 	}
 
-	.tableContainer {
-		padding: 15px;
-	}
-
 	.createLink {
 		font-size: 14px;
 	}
 
 	.deleteBtn {
+		margin: 3px;
 		font-size: 14px;
 		padding: 6px 12px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+
+	.tableContainer {
+		display: block;
+		width: 100%;
+		padding: 10px;
+	}
+
+	.table th,
+	.table td {
+		font-size: 12px;
+		padding: 6px;
+		width: 100%;
+	}
+
+	.createLink {
+		font-size: 12px;
+	}
+
+	.deleteBtn {
+		margin: 3px;
+		font-size: 12px;
+		padding: 5px 10px;
+	}
+
+	.dashboard {
+		padding: 10px;
+	}
+
+	.tableContainer+.tableContainer {
+		margin-top: 20px;
 	}
 }

@@ -7,6 +7,7 @@ import styles from "./TicketForm.module.css";
 import AdminHeader from "./AdminHeader";
 import { IPassenger } from "../../interfaces/IPassenger";
 import { IRace } from "../../interfaces/IRace";
+import CustomLoading from "../CustomLoading";
 
 // Типизация данных для билета
 // interface Ticket {
@@ -215,7 +216,7 @@ function TicketForm() {
 		}
 	};
 
-	if (loading) return <div>Loading...</div>;
+	//if (loading) return <div>Loading...</div>;
 
 	const passengerOptions = passengers.map((passenger) => ({
 		value: passenger.id,
@@ -231,90 +232,92 @@ function TicketForm() {
 		<>
 			<AdminHeader />
 			<div className={styles.comp}>
-				<div className={styles.cont}>
-					<h2>{id ? "Edit Ticket" : "Create Ticket"}</h2>
+				{loading ? (<CustomLoading />) : (
+					<div className={styles.cont}>
+						<h2>{id ? "Edit Ticket" : "Create Ticket"}</h2>
 
-					{error && <div className={styles.error}>{error}</div>}
+						{error && <div className={styles.error}>{error}</div>}
 
-					<form onSubmit={handleSubmit}>
-						<div className={styles.formGroup}>
-							<label>Is User</label>
-							<input
-								type="text"
-								name="is_used"
-								value={ticket?.is_used}
-								onChange={handleChange}
-								required
-							/>
-						</div>
+						<form onSubmit={handleSubmit}>
+							<div className={styles.formGroup}>
+								<label>Is User</label>
+								<input
+									type="text"
+									name="is_used"
+									value={ticket?.is_used}
+									onChange={handleChange}
+									required
+								/>
+							</div>
 
-						<div className={styles.formGroup}>
-							<label>Passenger ID</label>
-							<input
-								type="text"
-								name="passenger"
-								value={ticket?.passenger}
-								onChange={handleChange}
-								required
-							/>
-						</div>
+							<div className={styles.formGroup}>
+								<label>Passenger ID</label>
+								<input
+									type="text"
+									name="passenger"
+									value={ticket?.passenger}
+									onChange={handleChange}
+									readOnly
+								/>
+							</div>
 
-						<div className={styles.formGroup}>
-							<label htmlFor="passenger">Passenger</label>
-							<Select
-								name="passenger"
-								options={passengerOptions}
-								value={passengerOptions.find((option) => option.value === ticket?.passenger)}
-								onChange={(selectedOption) => handleSelectChange(selectedOption, "passenger")}
-								isLoading={loading}
-								placeholder="Select Passenger"
-								required
-							/>
-						</div>
+							<div className={styles.formGroup}>
+								<label htmlFor="passenger">Passenger</label>
+								<Select
+									name="passenger"
+									options={passengerOptions}
+									value={passengerOptions.find((option) => option.value === ticket?.passenger)}
+									onChange={(selectedOption) => handleSelectChange(selectedOption, "passenger")}
+									isLoading={loading}
+									placeholder="Select Passenger"
+									required
+								/>
+							</div>
 
-						<div className={styles.formGroup}>
-							<label>Race ID</label>
-							<input
-								type="text"
-								name="race"
-								value={ticket?.race}
-								onChange={handleChange}
-								required
-							/>
-						</div>
+							<div className={styles.formGroup}>
+								<label>Race ID</label>
+								<input
+									type="text"
+									name="race"
+									value={ticket?.race}
+									onChange={handleChange}
+									readOnly
+								/>
+							</div>
 
-						<div className={styles.formGroup}>
-							<label htmlFor="race">Race</label>
-							<Select
-								name="race"
-								options={raceOptions}
-								value={raceOptions.find((option) => option.value === ticket?.race)}
-								onChange={(selectedOption) => handleSelectChange(selectedOption, "race")}
-								isLoading={loading}
-								placeholder="Select Race"
-								required
-							/>
-						</div>
+							<div className={styles.formGroup}>
+								<label htmlFor="race">Race</label>
+								<Select
+									name="race"
+									options={raceOptions}
+									value={raceOptions.find((option) => option.value === ticket?.race)}
+									onChange={(selectedOption) => handleSelectChange(selectedOption, "race")}
+									isLoading={loading}
+									placeholder="Select Race"
+									required
+								/>
+							</div>
 
-						<button
-							type="submit"
-							className={styles.submitBtn}
-							disabled={loading}
-						>
-							{id ? "Update Ticket" : "Create Ticket"}
-						</button>
-					</form>
+							<button
+								type="submit"
+								className={styles.submitBtn}
+								disabled={loading}
+							>
+								{id ? "Update Ticket" : "Create Ticket"}
+							</button>
+						</form>
 
-					{id && (
-						<button
-							onClick={handleDelete}
-							className={styles.deleteBtn}
-							disabled={loading}
-						>
-							Delete Ticket
-						</button>
-					)}
-				</div>
+						{id && (
+							<button
+								onClick={handleDelete}
+								className={styles.deleteBtn}
+								disabled={loading}
+							>
+								Delete Ticket
+							</button>
+						)}
+					</div>
+				)}
 			</div>
 		</>
 	);

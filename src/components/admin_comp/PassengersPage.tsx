@@ -4,12 +4,13 @@ import { GetAuthTokensFromLocalStorage } from "../../helpers/GetAuthTokensFromLo
 import { IPassenger } from "../../interfaces/IPassenger";
 import styles from "./PassengersPage.module.css";
 import AdminHeader from "./AdminHeader";
+import CustomLoading from "../CustomLoading";
 
 
 const PassengersPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
 	const [passengers, setPassengers] = useState<IPassenger[]>([]);
-	const [users, setUsers] = useState<{userId: string, userName: string}[]>([]);
+	const [users, setUsers] = useState<{ userId: string, userName: string }[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [nextPage, setNextPage] = useState<string | null>(null); // Ссылка на следующую страницу
@@ -61,15 +62,15 @@ const PassengersPage = () => {
 						"Authorization": `Bearer ${accessToken}`,
 					},
 				});
-	
+
 				if (!userResponse.ok) {
 					throw new Error(`Failed to fetch user with ID ${userId}`);
 				}
-	
+
 				const userData = await userResponse.json();
 				return { userId, userName: userData.username }; // Возвращаем ID пользователя и его имя
 			}));
-	
+
 			// Теперь у вас есть имена пользователей для каждого ID, обновляем состояние
 			setUsers(usersData);
 		} catch (error) {
@@ -95,57 +96,59 @@ const PassengersPage = () => {
 		}
 	};
 
-	if (loading) return <div>Loading passengers...</div>;
+	//if (loading) return <div>Loading passengers...</div>;
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
 		<>
 			<AdminHeader />
 			<div className={styles.comp}>
-				<div className={styles.cont}>
-					<h2 className={styles.title}>Passengers</h2>
-					<Link to="/passengers/new" className={styles.createLink}>Create New Passenger</Link>
+				{loading ? (<CustomLoading />) : (
+					<div className={styles.cont}>
+						<h2 className={styles.title}>Passengers</h2>
+						<Link to="/passengers/new" className={styles.createLink}>Create New Passenger</Link>
 
-					<table className={styles.table}>
-						<thead>
-							<tr>
-								<th>First name</th>
-								<th>Last name</th>
-								<th>User ID</th>
-								<th>User Name</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{passengers.map((passenger) => (
-								<tr key={passenger.id}>
-									<td>{passenger.first_name}</td>
-									<td>{passenger.last_name}</td>
-									<td>{passenger.user}</td>
-									<td>{users.find((user) => user.userId === passenger.user)?.userName || 'Unknown'}</td>
-									<td><Link to={`/passengers/edit/${passenger.id}`} className={styles.editLink}>Edit</Link></td>
+						<table className={styles.table}>
+							<thead>
+								<tr>
+									<th>First name</th>
+									<th>Last name</th>
+									<th>User ID</th>
+									<th>User Name</th>
+									<th>Actions</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{passengers.map((passenger) => (
+									<tr key={passenger.id}>
+										<td>{passenger.first_name}</td>
+										<td>{passenger.last_name}</td>
+										<td>{passenger.user}</td>
+										<td>{users.find((user) => user.userId === passenger.user)?.userName || 'Unknown'}</td>
+										<td><Link to={`/passengers/edit/${passenger.id}`} className={styles.editLink}>Edit</Link></td>
+									</tr>
+								))}
+							</tbody>
+						</table>
 
-					<div className={styles.pagination}>
-						<button
-							onClick={handlePreviousPage}
-							disabled={!previousPage}
-							className={styles.pageBtn}
-						>
-							Previous
-						</button>
-						<button
-							onClick={handleNextPage}
-							disabled={!nextPage}
-							className={styles.pageBtn}
-						>
-							Next
-						</button>
+						<div className={styles.pagination}>
+							<button
+								onClick={handlePreviousPage}
+								disabled={!previousPage}
+								className={styles.pageBtn}
+							>
+								Previous
+							</button>
+							<button
+								onClick={handleNextPage}
+								disabled={!nextPage}
+								className={styles.pageBtn}
+							>
+								Next
+							</button>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</>
 	);

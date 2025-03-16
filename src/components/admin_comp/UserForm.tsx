@@ -6,6 +6,8 @@ import { IUser } from "../../interfaces/IUser";
 import styles from "./UserForm.module.css";
 import AdminHeader from "./AdminHeader";
 import CustomLoading from "../CustomLoading";
+import bcrypt from "bcryptjs";
+import { v4 as uuidv4 } from 'uuid';
 
 function UserForm() {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -59,6 +61,17 @@ function UserForm() {
 		e.preventDefault();
 		setLoading(true);
 		try {
+			if (!id && user) {
+				if (user.password) {
+					const hashedPassword = await bcrypt.hash(user.password, 10);
+					user.password = hashedPassword;
+				} else {
+					const uuid = uuidv4();
+					const hashedPassword = await bcrypt.hash(uuid, 10);
+					user.password = hashedPassword;
+				}
+			}
+
 			const response = await fetch(id ? `${API_SERVER}/users/${id}/` : `${API_SERVER}/users/`, {
 				method: id ? "PUT" : "POST",
 				headers: {
@@ -67,9 +80,9 @@ function UserForm() {
 				},
 				body: JSON.stringify(user),
 			});
-			console.log(response);
+
 			if (!response.ok) {
-				throw new Error("Failed to save city");
+				throw new Error("Failed to save or create user");
 			}
 
 			navigate("/users");
@@ -141,7 +154,6 @@ function UserForm() {
 									name="first_name"
 									value={user?.first_name}
 									onChange={handleChange}
-									required
 								/>
 							</div>
 
@@ -152,7 +164,6 @@ function UserForm() {
 									name="last_name"
 									value={user?.last_name}
 									onChange={handleChange}
-									required
 								/>
 							</div>
 
@@ -182,6 +193,16 @@ function UserForm() {
 									type="checkbox"
 									name="is_active"
 									checked={user?.is_active ?? false}
+									onChange={handleChange}
+								/>
+							</div>
+
+							<div className={styles.formGroup}>
+								<label>Password</label>
+								<input
+									type="password"
+									name="password"
+									value={user?.password}
 									onChange={handleChange}
 								/>
 							</div>

@@ -23,17 +23,37 @@ import './App.css';
 import PlacesOnRaceComp from "./components/ticketing_comp/PlacesOnRaceComp";
 import TicketingComp from "./components/ticketing_comp/TicketingComp";
 import TcktOnGmail from "./components/ticketing_comp/TcktOnGmail";
+import { useEffect } from "react";
+import { useRefreshAuth } from "./helpers/RefreshAuth";
 
 const queryClient = new QueryClient();
 
 function PrivateRoute({ children, requiredRole }: { children: React.ReactNode; requiredRole?: "admin" }) {
 	const auth = useAuth();
+	const refreshAuth = useRefreshAuth();
+
+	useEffect(() => {
+		const refreshIfNeeded = async () => {
+			if (auth.isAuthenticated) {
+				try {
+					await refreshAuth(); // Attempt to refresh the access token if needed
+				} catch (error) {
+					console.error("Failed to refresh token", error);
+				}
+			}
+		};
+
+		refreshIfNeeded();
+	}, [auth.isAuthenticated, refreshAuth]);
+
 	if (!auth.isAuthenticated) {
-		return <Navigate to="/login" />;
+		return <Navigate to="/admin/login" />;
 	}
+
 	if (requiredRole && auth.role !== requiredRole) {
 		return <Navigate to="/" />;
 	}
+
 	return <>{children}</>;
 }
 
@@ -50,10 +70,10 @@ function App() {
 						<Route path="/new/account" element={<RegisterComp />} />
 						<Route path="/new/account/future" element={<UserPageFutureComp />} />
 						<Route path="/new/account/history" element={<UserPageHistoryComp />} />
-						<Route path="/new/account/contact" element={<UserPageContactComp/>} />
-						<Route path="/preloaders/seats/:id" element={<PlacesOnRaceComp/>}/>
-						<Route path="/new/checkout/:id/:raceId" element={<TicketingComp/>}/>
-						<Route path="/new/done/ticket/:ticketId" element={<TcktOnGmail/>}/>
+						<Route path="/new/account/contact" element={<UserPageContactComp />} />
+						<Route path="/preloaders/seats/:id" element={<PlacesOnRaceComp />} />
+						<Route path="/new/checkout/:id/:raceId" element={<TicketingComp />} />
+						<Route path="/new/done/ticket/:ticketId" element={<TcktOnGmail />} />
 
 						<Route path="/admin/login" element={<LoginPage />} />
 

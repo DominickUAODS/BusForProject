@@ -6,6 +6,7 @@ import styles from "./TicketsPage.module.css";
 import AdminHeader from "./AdminHeader";
 import { IRace } from "../../interfaces/IRace";
 import { IPassenger } from "../../interfaces/IPassenger";
+import CustomLoading from "../CustomLoading";
 
 const TicketsPage = () => {
 	const API_SERVER = import.meta.env.VITE_API_SERVER;
@@ -43,8 +44,8 @@ const TicketsPage = () => {
 			setNextPage(data.next); // Сохраняем ссылку на следующую страницу
 			setPreviousPage(data.previous); // Сохраняем ссылку на предыдущую страницу
 
-			fetchPassengerData(data.results);
-			fetchRaceData(data.results);
+			await fetchPassengerData(data.results);
+			await fetchRaceData(data.results);
 
 		} catch (error) {
 			setError(error instanceof Error ? error.message : "An unexpected error occurred");
@@ -111,43 +112,45 @@ const TicketsPage = () => {
 		}
 	};
 
-	if (loading) return <div>Loading tickets...</div>;
+	//if (loading) return <div>Loading tickets...</div>;
 	if (error) return <div style={{ color: "red" }}>{error}</div>;
 
 	return (
 		<>
 			<AdminHeader />
 			<div className={styles.comp}>
-				<div className={styles.cont}>
-					<div className={styles.title}>Tickets</div>
-					<Link to="/tickets/new" className={styles.createLink}>Create New Ticket</Link>
+				{loading ? (<CustomLoading />) : (
+					<div className={styles.cont}>
+						<div className={styles.title}>Tickets</div>
+						<Link to="/tickets/new" className={styles.createLink}>Create New Ticket</Link>
 
-					<table className={styles.table}>
-						<thead>
-							<tr>
-								<th>Is Used</th>
-								<th>Passenger</th>
-								<th>Race</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{tickets.map((ticket) => (
-								<tr key={ticket.id}>
-									<td>{ticket.is_used ? 'Yes' : 'No'}</td>
-									<td>{passengers[ticket.passenger]?.first_name} {passengers[ticket.passenger]?.last_name}</td>
-									<td>{races[ticket.race]?.time_start}</td>
-									<td><Link to={`/tickets/edit/${ticket.id}`} className={styles.editLink}>Edit</Link></td>
+						<table className={styles.table}>
+							<thead>
+								<tr>
+									<th>Is Used</th>
+									<th>Passenger</th>
+									<th>Race</th>
+									<th>Actions</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{tickets.map((ticket) => (
+									<tr key={ticket.id}>
+										<td>{ticket.is_used ? 'Yes' : 'No'}</td>
+										<td>{passengers[ticket.passenger]?.first_name} {passengers[ticket.passenger]?.last_name}</td>
+										<td>{races[ticket.race]?.time_start}</td>
+										<td><Link to={`/tickets/edit/${ticket.id}`} className={styles.editLink}>Edit</Link></td>
+									</tr>
+								))}
+							</tbody>
+						</table>
 
-					<div className={styles.pagination}>
-						<button onClick={handlePreviousPage} disabled={!previousPage} className={styles.pageBtn}>Previous</button>
-						<button onClick={handleNextPage} disabled={!nextPage} className={styles.pageBtn}>Next</button>
+						<div className={styles.pagination}>
+							<button onClick={handlePreviousPage} disabled={!previousPage} className={styles.pageBtn}>Previous</button>
+							<button onClick={handleNextPage} disabled={!nextPage} className={styles.pageBtn}>Next</button>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</>
 	);

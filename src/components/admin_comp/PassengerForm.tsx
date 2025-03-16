@@ -6,6 +6,7 @@ import styles from "./PassengerForm.module.css";
 import AdminHeader from "./AdminHeader";
 import { IUser } from "../../interfaces/IUser";
 import Select from "react-select";
+import CustomLoading from "../CustomLoading";
 
 interface Option {
 	value: string | number;  // Пример: может быть строкой или числом
@@ -133,93 +134,95 @@ function PassengerForm() {
 	};
 
 	const userOptions = users.map((user) => ({
-        value: user.id,
-        label: `${user.username}`,
-    }));
+		value: user.id,
+		label: `${user.username}`,
+	}));
 
-	const handleUserChange = (selectedOption: Option | null, field: string ) => {
-        if (passenger) {
-            setPassenger({
-                ...passenger,
-                user: selectedOption ? selectedOption.value : null, // Обновляем поле user_id
-            });
-        }
-    };
+	const handleUserChange = (selectedOption: Option | null, field: string) => {
+		if (passenger) {
+			setPassenger({
+				...passenger,
+				user: selectedOption ? selectedOption.value : null, // Обновляем поле user_id
+			});
+		}
+	};
 
-	if (loading) return <div>Loading...</div>;
+	//if (loading) return <div>Loading...</div>;
 
 	return (
 		<>
 			<AdminHeader />
 			<div className={styles.comp}>
-				<div className={styles.cont}>
-					<h2>{id ? "Edit Passenger" : "Create Passenger"}</h2>
-					{error && <div className={styles.error}>{error}</div>}
-					<form onSubmit={handleSubmit}>
-						<div className={styles.formGroup}>
-							<label>First name</label>
-							<input
-								type="text"
-								name="first_name"
-								value={passenger?.first_name || ''}
-								onChange={handleChange}
-								required
-								className={styles.input}
-							/>
-						</div>
-						<div className={styles.formGroup}>
-							<label>Last name</label>
-							<input
-								type="text"
-								name="last_name"
-								value={passenger?.last_name || ''}
-								onChange={handleChange}
-								required
-								className={styles.input}
-							/>
-						</div>
-						<div className={styles.formGroup}>
-							<label>User ID</label>
-							<input
-								type="text"
-								name="user"
-								value={passenger?.user || ''}
-								onChange={handleChange}
-								className={styles.input}
-								readOnly
-							/>
-						</div>
-						{/* City To - выпадающий список с поиском */}
-						<div className={styles.formGroup}>
-							<label htmlFor="userName">User Name</label>
-							<Select
-								name="userName"
-								options={userOptions}
-								value={userOptions.find((user) => user.value === passenger?.user)}
-								onChange={(selectedOption) => handleUserChange(selectedOption, "userName")}
-								isLoading={loading}
-								placeholder="Select User Name"
-								required
-							/>
-						</div>
-						<button
-							type="submit"
-							disabled={loading}
-							className={styles.submitBtn}
-						>
-							{id ? "Update Passenger" : "Create Passenger"}
-						</button>
-					</form>
-					{id && (
-						<button
-							onClick={handleDelete}
-							className={styles.deleteBtn}
-							disabled={loading}
-						>
-							Delete Passenger
-						</button>
-					)}
-				</div>
+				{loading ? (<CustomLoading />) : (
+					<div className={styles.cont}>
+						<h2 className={styles.title}>{id ? "Edit Passenger" : "Create Passenger"}</h2>
+						{error && <div className={styles.error}>{error}</div>}
+						<form onSubmit={handleSubmit}>
+							<div className={styles.formGroup}>
+								<label>First name</label>
+								<input
+									type="text"
+									name="first_name"
+									value={passenger?.first_name || ''}
+									onChange={handleChange}
+									required
+									className={styles.input}
+								/>
+							</div>
+							<div className={styles.formGroup}>
+								<label>Last name</label>
+								<input
+									type="text"
+									name="last_name"
+									value={passenger?.last_name || ''}
+									onChange={handleChange}
+									required
+									className={styles.input}
+								/>
+							</div>
+							<div className={styles.formGroup}>
+								<label>User ID</label>
+								<input
+									type="text"
+									name="user"
+									value={passenger?.user || ''}
+									onChange={handleChange}
+									className={styles.input}
+									readOnly
+								/>
+							</div>
+							{/* City To - выпадающий список с поиском */}
+							<div className={styles.formGroup}>
+								<label htmlFor="userName">User Name</label>
+								<Select
+									name="userName"
+									options={userOptions}
+									value={userOptions.find((user) => user.value === passenger?.user)}
+									onChange={(selectedOption) => handleUserChange(selectedOption, "userName")}
+									isLoading={loading}
+									placeholder="Select User Name"
+									required
+								/>
+							</div>
+							<button
+								type="submit"
+								disabled={loading}
+								className={styles.submitBtn}
+							>
+								{id ? "Update Passenger" : "Create Passenger"}
+							</button>
+						</form>
+						{id && (
+							<button
+								onClick={handleDelete}
+								className={styles.deleteBtn}
+								disabled={loading}
+							>
+								Delete Passenger
+							</button>
+						)}
+					</div>
+				)}
 			</div>
 		</>
 	);

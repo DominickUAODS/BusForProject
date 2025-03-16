@@ -8,8 +8,15 @@ import { IRace } from "../../interfaces/IRace";
 import { IPassenger } from "../../interfaces/IPassenger";
 import { ITicket } from "../../interfaces/ITicket";
 import AdminHeader from "./AdminHeader";
+import CustomLoading from "../CustomLoading";
+
+interface PageLinks {
+	next: string | null;
+	previous: string | null;
+}
 
 function Dashboard() {
+	const API_SERVER = import.meta.env.VITE_API_SERVER;
 	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
 	const [users, setUsers] = useState<IUser[]>([]);
@@ -19,40 +26,69 @@ function Dashboard() {
 	const [tickets, setTickets] = useState<ITicket[]>([]);
 	const [error, setError] = useState<string | null>(null);
 
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const [pageLinks, setPageLinks] = useState<{ [key: string]: PageLinks }>({
+		users: { next: null, previous: null },
+		cities: { next: null, previous: null },
+		races: { next: null, previous: null },
+		passengers: { next: null, previous: null },
+		tickets: { next: null, previous: null },
+	});
+
 	useEffect(() => {
 		if (!authContext?.isAuthenticated || authContext.role !== "admin") {
+			authContext?.logout();
 			navigate("/admin/login");
 		}
 	}, [authContext, navigate]);
 
-	useEffect(() => {
-		const fetchData = async <T,>(endpoint: string, setState: React.Dispatch<React.SetStateAction<T[]>>) => {
-			if (!authContext?.accessToken) return;
-			try {
-				const response = await fetch(`${endpoint}`, {
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${authContext.accessToken}`,
-					},
-				});
-				if (response.status === 401) {
-					await authContext.refreshAccessToken();
-					return fetchData(endpoint, setState);
-				}
-				if (!response.ok) throw new Error(`Failed to fetch ${endpoint}`);
-				const data = await response.json();
-				setState(data);
-			} catch (err) {
-				setError(err instanceof Error ? err.message : `Error loading ${endpoint}.`);
-			}
-		};
+	const fetchData = async <T,>(
+		endpoint: string,
+		setState: React.Dispatch<React.SetStateAction<T[]>>,
+		type: string
+	) => {
+		if (!authContext?.accessToken) return;
+		try {
+			const response = await fetch(`${API_SERVER}/${endpoint}`, {
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${authContext.accessToken}`,
+				},
+			});
 
+			if (response.status === 401) {
+				await authContext.refreshAccessToken();
+				if (authContext?.isAuthenticated) {
+					await fetchData(endpoint, setState, type);
+				}
+
+			}
+
+			if (!response.ok) throw new Error(`Failed to fetch ${endpoint}`);
+			const data = await response.json();
+
+			setState(Array.isArray(data.results) ? data.results : []);
+
+			setPageLinks((prev) => ({
+				...prev,
+				[type]: { next: data.next, previous: data.previous },
+			}));
+
+			setLoading(false);
+
+		} catch (err) {
+			setError(err instanceof Error ? err.message : `Error loading ${endpoint}.`);
+		}
+	};
+
+	useEffect(() => {
 		if (authContext?.accessToken) {
-			fetchData("users", setUsers);
-			fetchData("cities", setCities);
-			fetchData("races", setRaces);
-			fetchData("passengers", setPassengers);
-			fetchData("tickets", setTickets);
+			fetchData("users", setUsers, "users");
+			fetchData("cities", setCities, "cities");
+			fetchData("races", setRaces, "races");
+			fetchData("passengers", setPassengers, "passengers");
+			fetchData("tickets", setTickets, "tickets");
 		}
 	}, [authContext]);
 
@@ -60,7 +96,7 @@ function Dashboard() {
 		if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
 		if (!authContext?.accessToken) return;
 		try {
-			const response = await fetch(`/${type}/${id}`, {
+			const response = await fetch(`${API_SERVER}/${type}/${id}`, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
@@ -82,19 +118,53 @@ function Dashboard() {
 		}
 	};
 
+	const handleNextPage = (type: string) => {
+		const nextPage = pageLinks[type].next;
+		if (nextPage) {
+			setLoading(true);
+			fetchData(nextPage, getSetterByType(type), type); // Fetch the next page for the specific type
+		}
+	};
+
+	const handlePreviousPage = (type: string) => {
+		const previousPage = pageLinks[type].previous;
+		if (previousPage) {
+			setLoading(true);
+			fetchData(previousPage, getSetterByType(type), type); // Fetch the previous page for the specific type
+		}
+	};
+
+	const getSetterByType = (type: string) => {
+		switch (type) {
+			case "users":
+				return setUsers;
+			case "cities":
+				return setCities;
+			case "races":
+				return setRaces;
+			case "passengers":
+				return setPassengers;
+			case "tickets":
+				return setTickets;
+			default:
+				return setUsers;
+		}
+	};
+
 	if (!authContext?.isAuthenticated || authContext.role !== "admin") return <p>Access Denied</p>;
 
 	return (
 		<>
 			<AdminHeader />
 			<div className={styles.dashboard}>
-				<h2>Dashboard</h2>
+				{loading ? (<CustomLoading />) : (
+					<h2>Dashboard</h2>)}
 				{error && <div className={styles.error}>{error}</div>}
-				{[{ title: "Users", data: users, path: "users", columns: ["username", "email", "first_name", "last_name", "email", "is_staff", "is_superuser", "is_active", "last_login", "date_joined"] },
+				{[{ title: "Users", data: users, path: "users", columns: ["username", "email", "First name", "last_name", "is_staff", "is_superuser", "is_active", "Last login", "date_joined"] },
 				{ title: "Cities", data: cities, path: "cities", columns: ["name_en", "name_ua"] },
 				{ title: "Races", data: races, path: "racess", columns: ["time_start", "time_end", "cost", "places", "city_from", "city_to"] },
-				{ title: "Passengers", data: passengers, path: "passengers", columns: ["first_name", "last_name", "user_id"] },
-				{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger_id", "race_id"] },
+				{ title: "Passengers", data: passengers, path: "passengers", columns: ["first_name", "last_name", "user"] },
+				{ title: "Tickets", data: tickets, path: "tickets", columns: ["is_used", "passenger", "race"] },
 				].map(({ title, data, path, columns }) => (
 					<div key={path} className={styles.tableContainer}>
 						<h3><Link to={`/${path}`} className={styles.sectionLink}>{title}</Link></h3>
@@ -109,18 +179,29 @@ function Dashboard() {
 								</tr>
 							</thead>
 							<tbody>
-								{data.map((item) => (
-									<tr key={item.id}>
-										{columns.map((col) => (
-											<td key={col}>{item[col as keyof typeof item]}</td>
-										))}
-										<td>
-											<button className={styles.deleteBtn} onClick={() => handleDelete(path, item.id)}>Delete</button>
-										</td>
+								{data && Array.isArray(data) && data.length > 0 ? (
+									data.map((item) => (
+										<tr key={item.id}>
+											{columns.map((col) => (
+												<td key={col}>{item[col as keyof typeof item]}</td>
+											))}
+											<td className={styles.actions}>
+												<button className={styles.deleteBtn} onClick={() => handleDelete(path, item.id)}>Delete</button>
+												<button className={styles.deleteBtn} onClick={() => navigate(`/${path}/edit/${item.id}`)}>Edit</button>
+											</td>
+										</tr>
+									))
+								) : (
+									<tr>
+										<td colSpan={columns.length + 1}>No data available</td>
 									</tr>
-								))}
+								)}
 							</tbody>
 						</table>
+						<div className={styles.pagination}>
+							<button onClick={() => handlePreviousPage(path)} disabled={!pageLinks[path]?.previous} className={styles.pageBtn}>Previous</button>
+							<button onClick={() => handleNextPage(path)} disabled={!pageLinks[path]?.next} className={styles.pageBtn}>Next</button>
+						</div>
 					</div>
 				))}
 			</div>
