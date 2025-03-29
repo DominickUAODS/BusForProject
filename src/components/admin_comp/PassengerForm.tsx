@@ -138,11 +138,11 @@ function PassengerForm() {
 		label: `${user.username}`,
 	}));
 
-	const handleUserChange = (selectedOption: Option | null, field: string) => {
+	const handleUserChange = (selectedOption: Option | null) => {
 		if (passenger) {
 			setPassenger({
 				...passenger,
-				user: selectedOption ? selectedOption.value : null, // Обновляем поле user_id
+				user: selectedOption ? selectedOption.value : "", // Обновляем поле user_id
 			});
 		}
 	};
@@ -198,7 +198,7 @@ function PassengerForm() {
 									name="userName"
 									options={userOptions}
 									value={userOptions.find((user) => user.value === passenger?.user)}
-									onChange={(selectedOption) => handleUserChange(selectedOption, "userName")}
+									onChange={(selectedOption) => handleUserChange(selectedOption)}
 									isLoading={loading}
 									placeholder="Select User Name"
 									required

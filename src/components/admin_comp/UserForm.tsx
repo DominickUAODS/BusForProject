@@ -172,7 +172,7 @@ function UserForm() {
 								<input
 									type="checkbox"
 									name="is_staff"
-									checked={user?.is_staff ?? false}
+									checked={Boolean(user?.is_superuser)}
 									onChange={handleChange}
 								/>
 							</div>
@@ -182,7 +182,7 @@ function UserForm() {
 								<input
 									type="checkbox"
 									name="is_superuser"
-									checked={user?.is_superuser ?? false}
+									checked={Boolean(user?.is_superuser)}
 									onChange={handleChange}
 								/>
 							</div>
@@ -192,7 +192,7 @@ function UserForm() {
 								<input
 									type="checkbox"
 									name="is_active"
-									checked={user?.is_active ?? false}
+									checked={Boolean(user?.is_superuser)}
 									onChange={handleChange}
 								/>
 							</div>

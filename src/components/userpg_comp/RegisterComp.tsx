@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../helpers/AuthProvider";
 import "./RegisterComp.css";
-import loaderImage from "../../assets/images/bouncing-ball.png";
+//import loaderImage from "../../assets/images/bouncing-ball.png";
 import Loader from "../tickets_comp/Loader";
 
 export default function RegisterComp() {

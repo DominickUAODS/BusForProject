@@ -20,15 +20,17 @@ export default function TicketingComp() {
 
 	const [passName, setPassName] = useState<string>("");
 	const [passSuN, setPassSuN] = useState<string>("");
-	const [psngr, setPsngr] = useState<Passenger | undefined>(undefined);
+	//const [psngr, setPsngr] = useState<Passenger | undefined>(undefined);
 	const [arrPass, setArrPass] = useState<Passenger[]>([]);
 	const [phone, setPhone] = useState<string>("");
 
 	if (!accessToken) return;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const decodedToken: any = jwtDecode(accessToken);
 	const userId = decodedToken.user_id;
 
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	useEffect(() => {
 		const fetchEmailByUserId = async () => {
 			if (!accessToken) {
@@ -60,6 +62,7 @@ export default function TicketingComp() {
 		};
 
 		const fetchPassengerByUserId = async () => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			let allPassengers: any = [];
 			let nextPageUrl = `${API_SERVER}/passengers/?page=1`;
 

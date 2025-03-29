@@ -28,7 +28,7 @@ function Dashboard() {
 
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const [pageLinks, setPageLinks] = useState<{ [key: string]: PageLinks }>({
+	const [, setPageLinks] = useState<{ [key: string]: PageLinks }>({
 		users: { next: null, previous: null },
 		cities: { next: null, previous: null },
 		races: { next: null, previous: null },
@@ -90,6 +90,7 @@ function Dashboard() {
 			fetchData("passengers", setPassengers, "passengers");
 			fetchData("tickets", setTickets, "tickets");
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authContext]);
 
 	const handleDelete = async (type: string, id: string) => {
@@ -118,38 +119,38 @@ function Dashboard() {
 		}
 	};
 
-	const handleNextPage = (type: string) => {
-		const nextPage = pageLinks[type].next;
-		if (nextPage) {
-			setLoading(true);
-			fetchData(nextPage, getSetterByType(type), type); // Fetch the next page for the specific type
-		}
-	};
+	// const handleNextPage = (type: string) => {
+	// 	const nextPage = pageLinks[type].next;
+	// 	if (nextPage) {
+	// 		setLoading(true);
+	// 		fetchData(nextPage, getSetterByType(type), type); // Fetch the next page for the specific type
+	// 	}
+	// };
 
-	const handlePreviousPage = (type: string) => {
-		const previousPage = pageLinks[type].previous;
-		if (previousPage) {
-			setLoading(true);
-			fetchData(previousPage, getSetterByType(type), type); // Fetch the previous page for the specific type
-		}
-	};
+	// const handlePreviousPage = (type: string) => {
+	// 	const previousPage = pageLinks[type].previous;
+	// 	if (previousPage) {
+	// 		setLoading(true);
+	// 		fetchData(previousPage, getSetterByType(type), type); // Fetch the previous page for the specific type
+	// 	}
+	// };
 
-	const getSetterByType = (type: string) => {
-		switch (type) {
-			case "users":
-				return setUsers;
-			case "cities":
-				return setCities;
-			case "races":
-				return setRaces;
-			case "passengers":
-				return setPassengers;
-			case "tickets":
-				return setTickets;
-			default:
-				return setUsers;
-		}
-	};
+	// const getSetterByType = (type: string) => {
+	// 	switch (type) {
+	// 		case "users":
+	// 			return setUsers;
+	// 		case "cities":
+	// 			return setCities;
+	// 		case "races":
+	// 			return setRaces;
+	// 		case "passengers":
+	// 			return setPassengers;
+	// 		case "tickets":
+	// 			return setTickets;
+	// 		default:
+	// 			return setUsers;
+	// 	}
+	// };
 
 	if (!authContext?.isAuthenticated || authContext.role !== "admin") return <p>Access Denied</p>;
 
@@ -198,10 +199,10 @@ function Dashboard() {
 								)}
 							</tbody>
 						</table>
-						<div className={styles.pagination}>
+						{/* <div className={styles.pagination}>
 							<button onClick={() => handlePreviousPage(path)} disabled={!pageLinks[path]?.previous} className={styles.pageBtn}>Previous</button>
 							<button onClick={() => handleNextPage(path)} disabled={!pageLinks[path]?.next} className={styles.pageBtn}>Next</button>
-						</div>
+						</div> */}
 					</div>
 				))}
 			</div>

@@ -15,9 +15,12 @@ const TicketsPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [nextPage, setNextPage] = useState<string | null>(null); // Ссылка на следующую страницу
 	const [previousPage, setPreviousPage] = useState<string | null>(null); // Ссылка на предыдущую страницу
-	const [passengers, setPassengers] = useState<{ [key: number]: IPassenger }>({});
-	const [races, setRaces] = useState<{ [key: number]: IRace }>({});
+	//const [passengers, setPassengers] = useState<{ [key: number]: IPassenger }>({});
+	//const [races, setRaces] = useState<{ [key: number]: IRace }>({});
 	const { accessToken } = GetAuthTokensFromLocalStorage();
+
+	const [passengers, setPassengers] = useState<Record<string, IPassenger>>({});
+	const [races, setRaces] = useState<Record<string, IRace>>({});
 
 	const fetchTickets = async (url: string) => {
 		try {
@@ -96,6 +99,7 @@ const TicketsPage = () => {
 
 	useEffect(() => {
 		fetchTickets(`${API_SERVER}/tickets`);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [API_SERVER]);
 
 	const handleNextPage = () => {
